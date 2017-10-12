@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="800.0" prefWidth="1280.0" style="-fx-background-image: url(&quot;file:/home/walt/NetBeansProjects/org.Kumon.main/src/org/kumon/presentation/img/backCeleste2.png&quot;); -fx-background-size: 100% 100%;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.kumon.presentation.DatosController">
+   <children>
+      <GridPane prefHeight="1024.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <ImageView fx:id="imagenPersona" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
+               <image>
+                  <Image url="@img/fotosPersonas/default.png" />
+               </image>
+            </ImageView>
+            <Label text="Datos Personales" underline="true">
+               <font>
+                  <Font size="22.0" />
+               </font></Label>
+            <Label text="Nombre" underline="true" GridPane.rowIndex="1" GridPane.valignment="TOP" />
+            <Label fx:id="labelNombre" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+               <font>
+                  <Font name="P22 Underground" size="20.0" />
+               </font></Label>
+            <Label fx:id="labelApellido" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+               <font>
+                  <Font name="P22 Underground" size="20.0" />
+               </font></Label>
+            <Label text="Apellido" underline="true" GridPane.rowIndex="2" GridPane.valignment="TOP" />
+            <Label text="Documento" underline="true" GridPane.rowIndex="3" GridPane.valignment="TOP" />
+            <Label fx:id="labelDocumento" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+               <font>
+                  <Font name="P22 Underground" size="20.0" />
+               </font></Label>
+            <Label text="Domicilio" underline="true" GridPane.rowIndex="4" GridPane.valignment="TOP" />
+            <Label fx:id="labelDomicilio" GridPane.halignment="CENTER" GridPane.rowIndex="4">
+               <font>
+                  <Font name="P22 Underground" size="20.0" />
+               </font></Label>
+            <Label text="e-mail" underline="true" GridPane.rowIndex="5" GridPane.valignment="TOP" />
+            <Label fx:id="labelEmail" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER">
+               <font>
+                  <Font name="P22 Underground" size="20.0" />
+               </font></Label>
+            <Label text="Teléfono" underline="true" GridPane.rowIndex="6" GridPane.valignment="TOP" />
+            <Label fx:id="labelTelefono" GridPane.halignment="CENTER" GridPane.rowIndex="6">
+               <font>
+                  <Font name="P22 Underground" size="20.0" />
+               </font></Label>
+            <Label text="Sexo" underline="true" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.valignment="TOP" />
+            <Label fx:id="labelSexo" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+               <font>
+                  <Font name="P22 Underground" size="20.0" />
+               </font></Label>
+            <Label text="Fecha de Nacimiento" underline="true" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.valignment="TOP" />
+            <Label fx:id="labelNacimiento" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+               <font>
+                  <Font name="P22 Underground" size="20.0" />
+               </font></Label>
+            <Label text="Nombre de Usuario" underline="true" GridPane.columnIndex="1" GridPane.rowIndex="4" GridPane.valignment="TOP" />
+            <Label fx:id="labelUsuario" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4">
+               <font>
+                  <Font name="P22 Underground" size="20.0" />
+               </font></Label>
+            <Label text="Informacion Adicional" underline="true" GridPane.columnIndex="1" GridPane.rowIndex="5" GridPane.valignment="TOP" />
+            <Label fx:id="labelInfoAdicional" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5">
+               <font>
+                  <Font name="P22 Underground" size="20.0" />
+               </font></Label>
+            <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="LEFT" GridPane.rowIndex="7" GridPane.valignment="BOTTOM">
+               <image>
+                  <Image url="@img/backbutton.png" />
+               </image>
+            </ImageView>
+            <JFXButton fx:id="btnBack" buttonType="RAISED" ellipsisString="" onAction="#btnBackAction" prefHeight="50.0" prefWidth="50.0" ripplerFill="#04f224" text=" " GridPane.halignment="LEFT" GridPane.rowIndex="7" GridPane.valignment="BOTTOM">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </JFXButton>
+            <Label text="Estado de la Cuenta" GridPane.columnIndex="1" GridPane.rowIndex="6" GridPane.valignment="TOP" />
+            <Label fx:id="labelEstadoCuenta" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="6">
+               <font>
+                  <Font name="P22 Underground" size="20.0" />
+               </font>
+            </Label>
+         </children>
+      </GridPane>
+   </children>
+</AnchorPane>

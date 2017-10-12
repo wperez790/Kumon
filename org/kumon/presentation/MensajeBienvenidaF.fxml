@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.Light.Distant?>
+<?import javafx.scene.effect.Lighting?>
+<?import javafx.scene.effect.Shadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" minHeight="600.0" minWidth="800.0" style="-fx-background-image: url(&quot;file:/home/walt/NetBeansProjects/org.Kumon.main/src/org/kumon/presentation/img/KumonFondoBienvenida.png&quot;); -fx-background-size: 100% 100%;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.kumon.presentation.MensajeBienvenidaFController">
+   <children>
+      <Label fx:id="labelBienvenida" layoutX="58.0" layoutY="106.0" text="Bienvenida" textFill="WHITE" underline="true">
+         <font>
+            <Font name="P22 Underground" size="58.0" />
+         </font>
+         <effect>
+            <Lighting diffuseConstant="1.02" specularConstant="1.28" specularExponent="3.33" surfaceScale="5.92">
+               <bumpInput>
+                  <Shadow height="17.7" radius="8.432500000000001" width="18.03" />
+               </bumpInput>
+               <light>
+                  <Light.Distant />
+               </light>
+            </Lighting>
+         </effect>
+      </Label>
+      <Label fx:id="labelNombre" layoutX="627.0" layoutY="106.0" textFill="WHITE" underline="true">
+         <font>
+            <Font name="P22 Underground" size="58.0" />
+         </font>
+         <effect>
+            <Lighting diffuseConstant="1.02" specularConstant="1.28" specularExponent="3.33" surfaceScale="5.92">
+               <bumpInput>
+                  <Shadow height="17.7" radius="8.432500000000001" width="18.03" />
+               </bumpInput>
+               <light>
+                  <Light.Distant />
+               </light>
+            </Lighting>
+         </effect>
+      </Label>
+   </children>
+</AnchorPane>

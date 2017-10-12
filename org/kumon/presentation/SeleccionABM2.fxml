@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.Blend?>
+<?import javafx.scene.effect.Light.Distant?>
+<?import javafx.scene.effect.Lighting?>
+<?import javafx.scene.effect.Shadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="1024.0" style="-fx-background-image: url(&quot;file:/home/walt/NetBeansProjects/org.Kumon.main/src/org/kumon/presentation/img/backCeleste2.png&quot;); -fx-background-size: 100% 100%;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.kumon.presentation.SeleccionABM2Controller">
+   <children>
+      <VBox layoutX="324.0" layoutY="72.0" prefHeight="456.0" prefWidth="377.0">
+         <children>
+            <JFXButton fx:id="btnAlumno" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" onAction="#btnAlumnoAction" ripplerFill="#1ed10a" style="-fx-background-color: #70d0f6;" text="Alumno" textAlignment="CENTER">
+               <font>
+                  <Font size="37.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="60.0" top="15.0" />
+               </VBox.margin>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <effect>
+                  <Blend />
+               </effect></JFXButton>
+            <JFXButton fx:id="btnFamiliar" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" onAction="#btnFamiliarAction" ripplerFill="#1ed10a" style="-fx-background-color: #70d0f6;" text="Familiar" textAlignment="CENTER">
+               <font>
+                  <Font size="37.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="60.0" top="15.0" />
+               </VBox.margin>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <effect>
+                  <Blend />
+               </effect></JFXButton>
+            <JFXButton fx:id="btnAuxiliar" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" onAction="#btnAuxiliarAction" ripplerFill="#1ed10a" style="-fx-background-color: #70d0f6;" text="Auxiliar" textAlignment="CENTER">
+               <font>
+                  <Font size="37.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="60.0" top="15.0" />
+               </VBox.margin>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <effect>
+                  <Blend />
+               </effect></JFXButton>
+            <JFXButton fx:id="btnAdministrador" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER" onAction="#btnAdministradorAction" ripplerFill="#1ed10a" style="-fx-background-color: #70d0f6;" text="Administrador" textAlignment="CENTER">
+               <font>
+                  <Font size="37.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="60.0" top="15.0" />
+               </VBox.margin>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <effect>
+                  <Blend />
+               </effect></JFXButton>
+         </children>
+      </VBox>
+      <Label layoutX="31.0" layoutY="35.0" text="Seleccione la opcion deseada:" textFill="#70d0f6" underline="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <font>
+            <Font size="24.0" />
+         </font>
+         <effect>
+            <Lighting specularConstant="1.02" surfaceScale="4.36">
+               <bumpInput>
+                  <Shadow />
+               </bumpInput>
+               <light>
+                  <Light.Distant />
+               </light>
+            </Lighting>
+         </effect>
+      </Label>
+      <ImageView fitHeight="52.0" fitWidth="64.0" layoutY="98.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0">
+         <image>
+            <Image url="@img/backbutton.png" />
+         </image>
+      </ImageView>
+      <JFXButton fx:id="btnBack" buttonType="RAISED" layoutX="23.0" layoutY="556.0" onAction="#btnBackAction" prefHeight="52.0" prefWidth="52.0" ripplerFill="BLACK" text=" " AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0">
+         <cursor>
+            <Cursor fx:constant="OPEN_HAND" />
+         </cursor>
+      </JFXButton>
+      <ImageView fitHeight="164.0" fitWidth="259.0" layoutX="775.0" layoutY="40.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+         <image>
+            <Image url="@img/Kumonsinfondo.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="160.0" style="-fx-background-color: #5eb4d6;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.kumon.presentation.DrawerController">
+   <children>
+      <JFXButton fx:id="btnCerrarSesion" buttonType="RAISED" onAction="#btnCerrarSesionAction" prefHeight="30.0" prefWidth="160.0" ripplerFill="BLACK" text="Cerrar Sesion">
+         <font>
+            <Font name="P22 Underground" size="20.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+   </children>
+</VBox>

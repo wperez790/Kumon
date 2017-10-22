@@ -83,17 +83,6 @@ public class BajaController implements Initializable {
     @FXML
     private void btnEliminarAction(ActionEvent event) throws Exception {
         Contexto.abrirDeseaEliminar();
-        Image img = new Image("/org/kumon/presentation/img/ok.png");
-            notificacion = Notifications.create();
-            notificacion.title("Resultado de la Operacion");
-            notificacion.text("Registrado con Exito");
-            notificacion.graphic(new ImageView(img));
-            notificacion.hideAfter(Duration.seconds(3));
-            notificacion.position(Pos.CENTER);
-            notificacion.darkStyle();
-            Parent pane = FXMLLoader.load(getClass().getResource("/org/kumon/presentation/SeleccionPersona.fxml"));
-            Contexto.splitPane.getItems().set(0, pane);
-            notificacion.show();
         
     }
 

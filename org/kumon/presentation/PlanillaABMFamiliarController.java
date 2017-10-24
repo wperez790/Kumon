@@ -68,7 +68,6 @@ public class PlanillaABMFamiliarController implements Initializable {
     @FXML
     private JFXTextArea textAreaInfoAdicional;
 
-        
     //auxiliares
     Persona persona = new Persona();
     DaoPersonaImpl personaDB = new DaoPersonaImpl();
@@ -77,30 +76,27 @@ public class PlanillaABMFamiliarController implements Initializable {
     private static Stage primaryStage = new Stage();
     PersonaBO personaBO = new PersonaBO();
     //
-    
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-            comboBoxSexo.getItems().addAll("Masculino", "Femenino");
-    }    
+        comboBoxSexo.getItems().addAll("Masculino", "Femenino");
+    }
 
     @FXML
     private void btnGuardarAction(ActionEvent event) throws Exception {
-        
+
         //CODIGO PARA REGISTRAR FAMILIAR
-                
         boolean ok = false;
-        
-     
+
         persona.setActivo(1);
         persona.setNombre(textFieldNombre.getText());
         //Si dni es INT////////////////////////////////
-        try{
-        persona.setDni(Integer.parseInt(textFieldDocumento.getText()));
-        }
-        catch(Exception e){
+        try {
+            persona.setDni(Integer.parseInt(textFieldDocumento.getText()));
+        } catch (Exception e) {
             e.printStackTrace();
             textFieldDocumento.setUnFocusColor(RED);
             error2 = Notifications.create();
@@ -109,10 +105,10 @@ public class PlanillaABMFamiliarController implements Initializable {
             error2.text("Documento acepta solo valores numéricos");
             error2.hideAfter(Duration.seconds(3));
             error2.position(Pos.BOTTOM_RIGHT);
-            error2.showError();  
+            error2.showError();
         }
         /////////////////////////////////////////////
-        
+
         persona.setApellido(textFieldApellido.getText());
         persona.setIdPersona(textFieldDocumento.getText());
         persona.setDomicilio(textFieldDomicilio.getText());
@@ -121,12 +117,11 @@ public class PlanillaABMFamiliarController implements Initializable {
         persona.setInfo(textAreaInfoAdicional.getText());
         persona.setSexo((String) comboBoxSexo.getValue());
         persona.setEmail(textFieldMail.getText());
-        
-        
+        persona.setNombreImg(textFieldNombreImg.getText());
         //FECHAS Verificacion de Fecha no null y calculo de Edad.
         java.sql.Date date = java.sql.Date.valueOf(datePickerFecha.getValue());
         persona.setFechaNacimiento(date);
-        if(persona.getFechaNacimiento()==null){
+        if (persona.getFechaNacimiento() == null) {
             error2 = Notifications.create();
             error2.title("Error de Parametros");
             error2.darkStyle();
@@ -134,42 +129,38 @@ public class PlanillaABMFamiliarController implements Initializable {
             error2.hideAfter(Duration.seconds(3));
             error2.position(Pos.BOTTOM_RIGHT);
             error2.showError();
-            
+
+        } else {
+            persona.setEdad(personaBO.calcularEdad(datePickerFecha));
+            ok = true;
         }
-        else
-        persona.setEdad(personaBO.calcularEdad(datePickerFecha));
         ////////////////////////////////////////////////////////////////////
-       
-        
-        persona.setNombreImg(textFieldNombreImg.getText());
-        
-        
+
         //Si todo esta ok: REGISTRA
-        if(ok==true){
-            
-        textFieldDocumento.setUnFocusColor(Color.GREEN);
-        personaDB.registrar(persona);
-        Image img = new Image("/org/kumon/presentation/img/ok.png");
-        notificacion = Notifications.create();
-        notificacion.title("Resultado de la Operacion");
-        notificacion.text("Registrado con Exito");
-        notificacion.graphic(new ImageView(img));
-        notificacion.hideAfter(Duration.seconds(3));
-        notificacion.position(Pos.CENTER);
-        notificacion.darkStyle();
-        primaryStage.close();
-        notificacion.show();
-        
-        
+        if (ok == true) {
+
+            textFieldDocumento.setUnFocusColor(Color.GREEN);
+            personaDB.registrar(persona);
+            Image img = new Image("/org/kumon/presentation/img/ok.png");
+            notificacion = Notifications.create();
+            notificacion.title("Resultado de la Operacion");
+            notificacion.text("Registrado con Exito");
+            notificacion.graphic(new ImageView(img));
+            notificacion.hideAfter(Duration.seconds(3));
+            notificacion.position(Pos.CENTER);
+            notificacion.darkStyle();
+            primaryStage.close();
+            notificacion.show();
+
         }
         //
         //
-        
+
     }
-    
-    public void init(){
-         try {
-            
+
+    public void init() {
+        try {
+
             Parent root = FXMLLoader.load(getClass().getResource("/org/kumon/presentation/PlanillaABMFamiliar.fxml"));
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);
@@ -177,7 +168,7 @@ public class PlanillaABMFamiliarController implements Initializable {
             primaryStage.show();
         } catch (Exception e) {
             e.printStackTrace();
-        
+
         }
     }
 
@@ -185,5 +176,5 @@ public class PlanillaABMFamiliarController implements Initializable {
     private void btnCancelarAction(ActionEvent event) {
         primaryStage.close();
     }
-    
+
 }

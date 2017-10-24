@@ -78,8 +78,7 @@ public class PlanillaABMAlumnoController implements Initializable {
     private JFXCheckBox checkBoxIngles;
     @FXML
     private JFXTextArea textAreaInfoAdicional;
-    
-    
+
     //AUXILIARES
     private static Stage primaryStage = new Stage();
     private Notifications notificacion;
@@ -95,22 +94,20 @@ public class PlanillaABMAlumnoController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-               comboBoxSexo.getItems().addAll("Masculino", "Femenino");
-    }    
+        comboBoxSexo.getItems().addAll("Masculino", "Femenino");
+    }
 
     @FXML
     private void btnGuardarAction(ActionEvent event) throws Exception {
-        
-    boolean ok = false;
-        
-     
+
+        boolean ok = false;
+
         persona.setActivo(1);
         persona.setNombre(textFieldNombre.getText());
         //Si dni es INT////////////////////////////////
-        try{
-        persona.setDni(Integer.parseInt(textFieldDocumento.getText()));
-        }
-        catch(Exception e){
+        try {
+            persona.setDni(Integer.parseInt(textFieldDocumento.getText()));
+        } catch (Exception e) {
             e.printStackTrace();
             textFieldDocumento.setUnFocusColor(RED);
             error2 = Notifications.create();
@@ -120,8 +117,7 @@ public class PlanillaABMAlumnoController implements Initializable {
             error2.hideAfter(Duration.seconds(3));
             error2.position(Pos.BOTTOM_RIGHT);
             error2.showError();
-            
-            
+
         }
         /////////////////////////////////////////////
         persona.setInfo(textAreaInfoAdicional.getText());
@@ -131,17 +127,16 @@ public class PlanillaABMAlumnoController implements Initializable {
         persona.setDomicilio(textFieldDomicilio.getText());
         persona.setTelefono(textFieldTelefono.getText());
         persona.setEmail(textFieldMail.getText());
-        if(Contexto.tipoUser == 2)
-        persona.setTipoUser(2);
-        if(Contexto.tipoUser == 1)
-        persona.setTipoUser(1);
+
+        persona.setTipoUser(Contexto.tipoUser);
+
         ///////////////////////////////////////////////////////////////
         persona.setSexo(comboBoxSexo.getValue());
-        
+
         //FECHAS Verificacion de Fecha no null y calculo de Edad.
         java.sql.Date date = java.sql.Date.valueOf(datePickerFecha.getValue());
         persona.setFechaNacimiento(date);
-        if(persona.getFechaNacimiento()==null){
+        if (persona.getFechaNacimiento() == null) {
             error2 = Notifications.create();
             error2.title("Error de Parametros");
             error2.darkStyle();
@@ -149,13 +144,13 @@ public class PlanillaABMAlumnoController implements Initializable {
             error2.hideAfter(Duration.seconds(3));
             error2.position(Pos.BOTTOM_RIGHT);
             error2.showError();
-            
-        }
-        else
-        persona.setEdad(personaBO.calcularEdad(datePickerFecha));
 
-         //Si todo esta ok: REGISTRA
-        if(ok==true){
+        } else {
+            persona.setEdad(personaBO.calcularEdad(datePickerFecha));
+            ok = true;
+        }
+        //Si todo esta ok: REGISTRA
+        if (ok == true) {
             textFieldDocumento.setUnFocusColor(Color.GREEN);
             personaDB.registrar(persona);
             Image img = new Image("/org/kumon/presentation/img/ok.png");
@@ -168,26 +163,16 @@ public class PlanillaABMAlumnoController implements Initializable {
             notificacion.darkStyle();
             primaryStage.close();
             notificacion.show();
-        
-        
+
         }
         //
     }
-    
-        
-        
-        
-        
-        
-        
-        
 
     @FXML
     private void btnCargarFamiliarAction(ActionEvent event) throws IOException {
-        
+
         Contexto.abrirPlanillaABMfamiliar();
-        
-        
+
     }
 
     @FXML
@@ -196,8 +181,8 @@ public class PlanillaABMAlumnoController implements Initializable {
     }
 
     public void init() {
-         try {
-            
+        try {
+
             Parent root = FXMLLoader.load(getClass().getResource("/org/kumon/presentation/PlanillaABMAlumno.fxml"));
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);
@@ -205,8 +190,8 @@ public class PlanillaABMAlumnoController implements Initializable {
             primaryStage.show();
         } catch (Exception e) {
             e.printStackTrace();
-        
+
         }
     }
-    
+
 }

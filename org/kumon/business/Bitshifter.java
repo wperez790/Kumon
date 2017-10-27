@@ -12,24 +12,25 @@ package org.kumon.business;
 public class Bitshifter {
 
     public static String encriptar(String text) {
-        char c;
+        char cArray[] = text.toCharArray();
         String encrypt = null;
-        for(int i = 0; i<text.length() ; i++){
-            c= text.charAt(i);
-            c+=10;
-            encrypt += c;
+        for (int i = 0; i < cArray.length; i++) {
+            cArray[i] = (char) (cArray[i] + (char) 5);
+
         }
+        encrypt = String.valueOf(cArray);
         return encrypt;
     }
+
     public static String desencriptar(String text) {
-        char c;
+        char cArray[] = text.toCharArray();
         String decrypt = null;
-        for(int i = 0; i<text.length() ; i++){
-            c= text.charAt(i);
-            c-=10;
-            decrypt += c;
+        for (int i = 0; i < cArray.length; i++) {
+            cArray[i] = (char) (cArray[i] - (char) 5);
+
         }
+        decrypt = String.valueOf(cArray);
         return decrypt;
     }
-    
+
 }

@@ -13,6 +13,7 @@ import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -32,6 +33,7 @@ import org.controlsfx.control.Notifications;
 import org.kumon.business.PersonaBO;
 import org.kumon.main.Contexto;
 import org.kumon.model.Alumno;
+import org.kumon.model.Asignatura;
 import org.kumon.model.Persona;
 import org.kumon.persist.DaoPersonaImpl;
 
@@ -84,9 +86,11 @@ public class PlanillaABMAlumnoController implements Initializable {
     private Notifications notificacion;
     private Notifications error2;
     Persona persona = new Persona();
-    Alumno alumno = new Alumno();
+    Alumno alumno;
     DaoPersonaImpl personaDB = new DaoPersonaImpl();
     PersonaBO personaBO = new PersonaBO();
+    List<Asignatura> listaAsignaturas;
+    Asignatura asignatura;
     //
 
     /**
@@ -100,8 +104,57 @@ public class PlanillaABMAlumnoController implements Initializable {
     @FXML
     private void btnGuardarAction(ActionEvent event) throws Exception {
 
-        boolean ok = false;
+        boolean ok = cargarDatos(persona);
+        //SETEO ALUMNO//
+        if(checkBoxIngles.isSelected()){
+            asignatura= new Asignatura();
+            asignatura.setIdAsignatura("3");
+            asignatura.setNivel("0");
+            asignatura.setNombre("Ingles");
+            listaAsignaturas.add(asignatura);
+        }
+        if(checkBoxLengua.isSelected()){
+            asignatura= new Asignatura();
+            asignatura.setIdAsignatura("2");
+            asignatura.setNivel("0");
+            asignatura.setNombre("Lengua");
+            listaAsignaturas.add(asignatura);
+        }
+        if(checkBoxMat.isSelected()){
+            asignatura= new Asignatura();
+            asignatura.setIdAsignatura("1");
+            asignatura.setNivel("0");
+            asignatura.setNombre("Matematica");
+            listaAsignaturas.add(asignatura);
+        }
+        alumno.setIdAuxiliar(idAuxiliar);           //comboBox con todas las auxiliares
+        alumno.setIdOrientadora(idOrientadora);      //por defecto seleccionar la orientadora segun la academia o sacar
+        alumno.setListaAsignaturas(listaAsignaturas);
+        alumno.setListaFamiliares(listaFamiliares);  //agregar campo que busque en seleccion persona y agregues un familiar antes cargado
+        ok = cargarDatos(alumno);
 
+        
+        //Si todo esta ok: REGISTRA
+        if (ok == true) {
+            textFieldDocumento.setUnFocusColor(Color.GREEN);
+            personaDB.registrar(persona);
+            Image img = new Image("/org/kumon/presentation/img/ok.png");
+            notificacion = Notifications.create();
+            notificacion.title("Resultado de la Operacion");
+            notificacion.text("Registrado con Exito");
+            notificacion.graphic(new ImageView(img));
+            notificacion.hideAfter(Duration.seconds(3));
+            notificacion.position(Pos.CENTER);
+            notificacion.darkStyle();
+            primaryStage.close();
+            notificacion.show();
+
+        }
+        //
+    }
+
+    private boolean cargarDatos( Persona persona ) {
+        boolean ok = false;
         persona.setActivo(1);
         persona.setNombre(textFieldNombre.getText());
         //Si dni es INT////////////////////////////////
@@ -127,12 +180,9 @@ public class PlanillaABMAlumnoController implements Initializable {
         persona.setDomicilio(textFieldDomicilio.getText());
         persona.setTelefono(textFieldTelefono.getText());
         persona.setEmail(textFieldMail.getText());
-
         persona.setTipoUser(Contexto.tipoUser);
-
         ///////////////////////////////////////////////////////////////
         persona.setSexo(comboBoxSexo.getValue());
-
         //FECHAS Verificacion de Fecha no null y calculo de Edad.
         java.sql.Date date = java.sql.Date.valueOf(datePickerFecha.getValue());
         persona.setFechaNacimiento(date);
@@ -149,23 +199,7 @@ public class PlanillaABMAlumnoController implements Initializable {
             persona.setEdad(personaBO.calcularEdad(datePickerFecha));
             ok = true;
         }
-        //Si todo esta ok: REGISTRA
-        if (ok == true) {
-            textFieldDocumento.setUnFocusColor(Color.GREEN);
-            personaDB.registrar(persona);
-            Image img = new Image("/org/kumon/presentation/img/ok.png");
-            notificacion = Notifications.create();
-            notificacion.title("Resultado de la Operacion");
-            notificacion.text("Registrado con Exito");
-            notificacion.graphic(new ImageView(img));
-            notificacion.hideAfter(Duration.seconds(3));
-            notificacion.position(Pos.CENTER);
-            notificacion.darkStyle();
-            primaryStage.close();
-            notificacion.show();
-
-        }
-        //
+        return ok;
     }
 
     @FXML

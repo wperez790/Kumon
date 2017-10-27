@@ -20,7 +20,6 @@ public class EscribirLeerArchivo {
 
     public static void escribir(String dato, boolean indicadorUser) {
         FileWriter fichero = null;
-        FileWriter fichero2 = null;
         PrintWriter pw = null;
         String direccion;
         if(indicadorUser == false){
@@ -28,7 +27,7 @@ public class EscribirLeerArchivo {
         }
         else{
             direccion ="/home/walt/NetBeansProjects/org.Kumon.main/src/org/kumon/main/user.txt";
-        
+        }
         try {
             fichero = new FileWriter(direccion);
             pw = new PrintWriter(fichero);
@@ -40,14 +39,14 @@ public class EscribirLeerArchivo {
             try {
                 // Nuevamente aprovechamos el finally para 
                 // asegurarnos que se cierra el fichero.
-                if (null != fichero && null != fichero2) {
+                if (null != fichero) {
                     fichero.close();
                 }
             } catch (Exception e2) {
                 e2.printStackTrace();
             }
         }
-        }
+        
     }
 
     public static String leer(boolean indicadorUser) throws FileNotFoundException {

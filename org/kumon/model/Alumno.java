@@ -14,11 +14,16 @@ import java.util.List;
  */
 public class Alumno extends Persona{
    
-    private List<Asignatura> listaAsignaturas = new ArrayList<Asignatura>();
+    private List<Asignatura> listaAsignaturas;
     private String idAuxiliar;
     private String idOrientadora;
-    private List<Familiar> listaFamiliares = new ArrayList<Familiar>();
+    private List<Familiar> listaFamiliares ;
 
+    public Alumno(List<Asignatura> listaAsignaturas, List<Familiar> listaFamiliares) {
+        this.listaAsignaturas = listaAsignaturas;
+        this.listaFamiliares = listaFamiliares;
+    }
+ 
     public List<Familiar> getListaFamiliares() {
         return listaFamiliares;
     }

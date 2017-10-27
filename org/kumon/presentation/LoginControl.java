@@ -99,9 +99,10 @@ public class LoginControl implements Initializable {
         });
         try {
             String u = EscribirLeerArchivo.leer(true); //true indica leer Usuario
-            if (u!=null) {
-                user.setText(u);
-                pass.setText(EscribirLeerArchivo.leer(false));//Cualquier valor diferente de false retorna el user
+            String p = EscribirLeerArchivo.leer(false);
+            if (u != null) {
+                user.setText(Bitshifter.desencriptar(u));
+                pass.setText(Bitshifter.desencriptar(p));//Cualquier valor diferente de false retorna el user
             }
 
         } catch (FileNotFoundException ex) {
@@ -130,12 +131,12 @@ public class LoginControl implements Initializable {
         //Verifica Checkboxes para ver si hay que almacenar datos de loggeo
 
         if (checkBoxGuardarContraseña.isSelected()) {
-            passEncriptado = Bitshifter.desencriptar(pass.getText());
+            passEncriptado = Bitshifter.encriptar(pass.getText());
+            EscribirLeerArchivo.escribir(passEncriptado, false);
         }
         if (checkBoxGuardarUsuario.isSelected()) {
             userEncriptado = Bitshifter.encriptar(user.getText());
-            EscribirLeerArchivo.escribir(user.getText(),true);
-            EscribirLeerArchivo.escribir(pass.getText(),false);
+            EscribirLeerArchivo.escribir(userEncriptado, true);
         }
 
         //Setea el nombre que saldra en el mensaje de bienvenida

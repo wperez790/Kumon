@@ -12,7 +12,7 @@ package org.kumon.model;
 public class Asignatura {
     private String nombre;
     private String nivel;
-    private String idAsignatura;
+    private Integer idAsignatura;
 
     public String getNombre() {
         return nombre;
@@ -30,11 +30,11 @@ public class Asignatura {
         this.nivel = nivel;
     }
 
-    public String getIdAsignatura() {
+    public Integer getIdAsignatura() {
         return idAsignatura;
     }
 
-    public void setIdAsignatura(String idAsignatura) {
+    public void setIdAsignatura(Integer idAsignatura) {
         this.idAsignatura = idAsignatura;
     }
     

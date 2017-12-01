@@ -5,10 +5,16 @@
  */
 package org.kumon.persist;
 
+import org.kumon.model.Familiar;
+
 /**
  *
  * @author Walter
  */
 public class DaoFamiliarImpl {
+
+    public void registrar(Familiar familiar) {
+       
+    }
     
 }

@@ -56,7 +56,7 @@ public class SeleccionPersonaController implements Initializable {
 
      //AUX
     private final PersonaBO personaBO = new PersonaBO();
-    private final DaoPersonaImpl personaDB = Contexto.construirDaoPersonaImpl();
+
     @FXML
     private JFXButton btnBack;
     /**
@@ -82,7 +82,7 @@ public class SeleccionPersonaController implements Initializable {
         /*Seteo de elementos en la Tabla*/
         ObservableList<Person> personas= FXCollections.observableArrayList();
         try {
-            for(Map.Entry<Integer, String> entry: personaDB.obtenerTodos().entrySet()){
+            for(Map.Entry<Integer, String> entry: personaBO.obtenerTodos().entrySet()){
                 personas.add(new Person(entry.getKey(), entry.getValue())); /*Carga en una ObservableList las Personas por dni,nombre*/
                 }
         } catch (Exception ex) {
@@ -131,7 +131,7 @@ public class SeleccionPersonaController implements Initializable {
         Person p =  tablePersonas.getSelectionModel().getSelectedItem().getValue();
         String dni = p.dni.getValue();
         Parent pane;
-        Persona p1 = personaDB.buscarById(Integer.parseInt(dni));
+        Persona p1 = personaBO.buscarById(Integer.parseInt(dni));
         Contexto.setPersona(p1);
         /*Selecciono si es para baja, modificacion o vista de datos*/
         if(Contexto.baja){

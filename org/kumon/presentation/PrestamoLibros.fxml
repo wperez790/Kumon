@@ -2,8 +2,8 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXDatePicker?>
-<?import com.jfoenix.controls.JFXListView?>
 <?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXTreeTableView?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.effect.Light.Distant?>
@@ -12,12 +12,17 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="1024.0" style="-fx-background-image: url(&quot;file:/home/walt/NetBeansProjects/org.Kumon.main/src/org/kumon/presentation/img/backCeleste2.png&quot;); -fx-background-size: 100% 100%;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.kumon.presentation.PrestamoLibrosController">
+<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-image: url(&quot;file:src/org/kumon/presentation/img/backCeleste2.png&quot;); -fx-background-size: 100% 100%;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.kumon.presentation.PrestamoLibrosController">
    <children>
-      <JFXListView layoutX="63.0" layoutY="128.0" />
-      <JFXTextField focusColor="#70d0f6" labelFloat="true" layoutX="156.0" layoutY="94.0" promptText="Buscar" />
-      <JFXButton fx:id="btnPrestar" buttonType="RAISED" layoutX="522.0" layoutY="328.0" onAction="#btnPrestarAction" ripplerFill="#11ee45" style="-fx-background-color: #edf0f4;" text="Prestar Libro">
+      <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0">
+         <image>
+            <Image url="@img/backbutton.png" />
+         </image>
+      </ImageView>
+      <JFXTextField fx:id="textFieldBuscar" focusColor="#70d0f6" labelFloat="true" layoutX="102.0" layoutY="100.0" prefHeight="24.0" prefWidth="251.0" promptText="Buscar" />
+      <JFXButton fx:id="btnPrestar" buttonType="RAISED" layoutX="515.0" layoutY="339.0" onAction="#btnPrestarAction" ripplerFill="#11ee45" style="-fx-background-color: #edf0f4;" text="Prestar Libro" AnchorPane.leftAnchor="478.0" AnchorPane.rightAnchor="606.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -30,20 +35,26 @@
                   <Light.Distant />
                </light>
             </Lighting>
-         </effect></JFXButton>
-      <Label layoutX="63.0" layoutY="47.0" text="Libros" underline="true" />
-      <JFXDatePicker defaultColor="#70d0f6" layoutX="397.0" layoutY="245.0" promptText="dd/MM/yyyy">
+         </effect>
+         <font>
+            <Font name="Garuda" size="14.0" />
+         </font></JFXButton>
+      <Label layoutX="63.0" layoutY="47.0" text="Libros" underline="true" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
+         <font>
+            <Font name="Garuda Bold" size="22.0" />
+         </font></Label>
+      <JFXDatePicker fx:id="datePickerHasta" defaultColor="#70d0f6" layoutX="479.0" layoutY="269.0" promptText="dd/MM/yyyy" AnchorPane.leftAnchor="478.0" AnchorPane.rightAnchor="606.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
       </JFXDatePicker>
-      <Label layoutX="396.0" layoutY="229.0" text="Hasta:" underline="true" />
-      <ImageView fitHeight="35.0" fitWidth="40.0" layoutX="121.0" layoutY="89.0" pickOnBounds="true" preserveRatio="true">
+      <Label layoutX="478.0" layoutY="246.0" text="Hasta:" underline="true" AnchorPane.leftAnchor="478.0" AnchorPane.rightAnchor="606.0" />
+      <ImageView fitHeight="35.0" fitWidth="40.0" layoutX="60.0" layoutY="92.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@img/buscaricono.png" />
          </image>
       </ImageView>
-      <JFXButton fx:id="btnInformacion" buttonType="RAISED" layoutX="396.0" layoutY="328.0" onAction="#btnInformacionAction" ripplerFill="#11ee45" style="-fx-background-color: #edf0f4;" text="Información">
+      <JFXButton fx:id="btnInformacion" buttonType="RAISED" layoutX="478.0" layoutY="407.0" onAction="#btnInformacionAction" ripplerFill="#11ee45" style="-fx-background-color: #edf0f4;" text="Información" AnchorPane.leftAnchor="478.0" AnchorPane.rightAnchor="606.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -57,9 +68,12 @@
                </light>
             </Lighting>
          </effect>
+         <font>
+            <Font name="Garuda" size="14.0" />
+         </font>
       </JFXButton>
-      <JFXTextField focusColor="#70d0f6" labelFloat="true" layoutX="398.0" layoutY="164.0" promptText="ID" />
-      <JFXButton fx:id="btnAgregar" buttonType="RAISED" layoutX="63.0" layoutY="534.0" onAction="#btnAgregarAction" ripplerFill="#11ee45" style="-fx-background-color: #edf0f4;" text="+">
+      <JFXTextField fx:id="textFieldID" focusColor="#70d0f6" labelFloat="true" layoutX="474.0" layoutY="151.0" promptText="ID" AnchorPane.leftAnchor="478.0" AnchorPane.rightAnchor="606.0" />
+      <JFXButton fx:id="btnMas" buttonType="RAISED" layoutX="37.0" layoutY="536.0" onAction="#btnMasStockAction" ripplerFill="#11ee45" style="-fx-background-color: #edf0f4;" text="+" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="543.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -73,8 +87,11 @@
                </light>
             </Lighting>
          </effect>
+         <font>
+            <Font name="Garuda" size="14.0" />
+         </font>
       </JFXButton>
-      <JFXButton fx:id="btnBorrar" buttonType="RAISED" layoutX="110.0" layoutY="534.0" onAction="#btnBorrarAction" prefHeight="26.0" prefWidth="29.0" ripplerFill="#ed1212" style="-fx-background-color: #edf0f4;" text="-">
+      <JFXButton fx:id="btnMenos" buttonType="RAISED" layoutX="89.0" layoutY="536.0" onAction="#btnMenosAction" prefHeight="26.0" prefWidth="29.0" ripplerFill="#ed1212" style="-fx-background-color: #edf0f4;" text="-" AnchorPane.topAnchor="543.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -88,8 +105,11 @@
                </light>
             </Lighting>
          </effect>
+         <font>
+            <Font name="Garuda" size="14.0" />
+         </font>
       </JFXButton>
-      <JFXButton fx:id="btnModificar" buttonType="RAISED" layoutX="187.0" layoutY="534.0" onAction="#btnModificarAction" ripplerFill="#11ee45" style="-fx-background-color: #edf0f4;" text="Modificar Datos">
+      <JFXButton fx:id="btnModificar" buttonType="RAISED" layoutX="232.0" layoutY="534.0" onAction="#btnModificarAction" ripplerFill="#11ee45" style="-fx-background-color: #edf0f4;" text="Modificar Datos" AnchorPane.topAnchor="543.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -103,7 +123,79 @@
                </light>
             </Lighting>
          </effect>
+         <font>
+            <Font name="Garuda" size="14.0" />
+         </font>
       </JFXButton>
-      <JFXButton buttonType="RAISED" layoutX="114.0" layoutY="86.0" opacity="0.81" prefHeight="42.0" prefWidth="48.0" ripplerFill="#0afc47" text=" " textFill="#030303" />
+      <JFXButton buttonType="RAISED" layoutX="42.0" layoutY="86.0" opacity="0.81" prefHeight="42.0" prefWidth="48.0" ripplerFill="#0afc47" text=" " textFill="#030303" />
+      <Label layoutX="478.0" layoutY="96.0" text="Informacion a completar" underline="true" AnchorPane.leftAnchor="478.0" AnchorPane.rightAnchor="606.0" AnchorPane.topAnchor="96.0">
+         <font>
+            <Font name="Garuda Bold" size="17.0" />
+         </font></Label>
+      <JFXTreeTableView fx:id="jfxTable" layoutX="39.0" layoutY="128.0" prefHeight="409.0" prefWidth="314.0" stylesheets="@SeleccionPersonaCSS.css" AnchorPane.leftAnchor="39.0" />
+      <JFXButton fx:id="btnAgregarLibro" buttonType="RAISED" layoutX="523.0" layoutY="483.0" onAction="#btnAgregarAction" ripplerFill="#11ee45" style="-fx-background-color: #edf0f4;" text="Agregar Libro" AnchorPane.leftAnchor="478.0" AnchorPane.rightAnchor="606.0" AnchorPane.topAnchor="475.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <effect>
+            <Lighting diffuseConstant="1.36" specularConstant="0.38" specularExponent="10.0" surfaceScale="1.9">
+               <bumpInput>
+                  <Shadow />
+               </bumpInput>
+               <light>
+                  <Light.Distant />
+               </light>
+            </Lighting>
+         </effect>
+         <font>
+            <Font name="Garuda" size="14.0" />
+         </font>
+      </JFXButton>
+      <JFXButton fx:id="btnBorrar" buttonType="RAISED" layoutX="143.0" layoutY="534.0" onAction="#btnBorrarAction" prefHeight="26.0" prefWidth="29.0" ripplerFill="#ed1212" style="-fx-background-color: #edf0f4;" text="X" AnchorPane.topAnchor="543.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <effect>
+            <Lighting diffuseConstant="1.36" specularConstant="0.38" specularExponent="10.0" surfaceScale="1.9">
+               <bumpInput>
+                  <Shadow />
+               </bumpInput>
+               <light>
+                  <Light.Distant />
+               </light>
+            </Lighting>
+         </effect>
+         <font>
+            <Font name="Garuda" size="14.0" />
+         </font>
+      </JFXButton>
+      <JFXButton fx:id="btnBack" onAction="#btnBackAction" prefHeight="50.0" prefWidth="50.0" ripplerFill="#fffafa" text=" " textFill="#fcfcfc" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0">
+         <font>
+            <Font name="Garuda" size="19.0" />
+         </font>
+      </JFXButton>
+      <ImageView fitHeight="164.0" fitWidth="259.0" layoutX="1027.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+         <image>
+            <Image url="@img/Kumonsinfondo.png" />
+         </image>
+      </ImageView>
+      <JFXButton fx:id="btnVerificarPrestamos" buttonType="RAISED" layoutX="478.0" layoutY="546.0" onAction="#btnVerificarPrestamos" ripplerFill="#11ee45" style="-fx-background-color: #edf0f4;" text="Verificar Prestamos" AnchorPane.leftAnchor="478.0" AnchorPane.rightAnchor="606.0" AnchorPane.topAnchor="543.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <effect>
+            <Lighting diffuseConstant="1.36" specularConstant="0.38" specularExponent="10.0" surfaceScale="1.9">
+               <bumpInput>
+                  <Shadow />
+               </bumpInput>
+               <light>
+                  <Light.Distant />
+               </light>
+            </Lighting>
+         </effect>
+         <font>
+            <Font name="Garuda" size="14.0" />
+         </font>
+      </JFXButton>
    </children>
 </AnchorPane>

@@ -13,7 +13,7 @@ import java.sql.Date;
  */
 public class Persona {
     private String idPersona;
-    private String nombre;
+    private String nombrePersona;
     private String apellido;
     private Integer dni;
     private String telefono;
@@ -86,11 +86,11 @@ public class Persona {
     }
 
     public String getNombre() {
-        return nombre;
+        return nombrePersona;
     }
 
     public void setNombre(String nombre) {
-        this.nombre = nombre;
+        this.nombrePersona = nombre;
     }
 
     public String getApellido() {

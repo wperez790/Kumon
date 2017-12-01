@@ -59,52 +59,50 @@ public class MenuPrincipalController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         try {
             VBox box = FXMLLoader.load(getClass().getResource("Drawer.fxml"));
-       
-        jfxDrawer.setSidePane(box);
-        HamburgerBasicCloseTransition transition= new HamburgerBasicCloseTransition(jfxHamburger);
-        transition.setRate(-1);
-        jfxHamburger.addEventHandler(MouseEvent.MOUSE_CLICKED, (e)->{
-            transition.setRate(transition.getRate()*-1);
-            transition.play();
-            if(jfxDrawer.isShown())
-                jfxDrawer.close();
-            else
-                jfxDrawer.open();
-            
-        
-        });
-        
-         } 
-        catch (IOException ex) {
+
+            jfxDrawer.setSidePane(box);
+            HamburgerBasicCloseTransition transition = new HamburgerBasicCloseTransition(jfxHamburger);
+            transition.setRate(-1);
+            jfxHamburger.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
+                transition.setRate(transition.getRate() * -1);
+                transition.play();
+                if (jfxDrawer.isShown()) {
+                    jfxDrawer.close();
+                } else {
+                    jfxDrawer.open();
+                }
+
+            });
+
+        } catch (IOException ex) {
             Logger.getLogger(MenuPrincipalController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        
-    }    
-    
-    public void init(){
+    }
+
+    public void init() {
         try {
-            
+
             Parent root = FXMLLoader.load(getClass().getResource("/org/kumon/presentation/MenuPrincipal.fxml"));
             Contexto.splitPane.getItems().set(0, root);
         } catch (Exception e) {
             e.printStackTrace();
-        
+
         }
-        
+
     }
 
     @FXML
     private void btnABMAction(ActionEvent event) throws Exception {
         AnchorPane pane = FXMLLoader.load(getClass().getResource("/org/kumon/presentation/SeleccionABM1.fxml"));
         Contexto.splitPane.getItems().set(0, pane);
-        
+
     }
 
     @FXML
     private void btnAsistenciaAction(ActionEvent event) throws IOException {
         Contexto.abrirAsistencia();
-        
+
     }
 
     @FXML
@@ -112,11 +110,16 @@ public class MenuPrincipalController implements Initializable {
     }
 
     @FXML
-    private void btnPagosAction(ActionEvent event) {
+    private void btnPagosAction(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/org/kumon/presentation/Pagos.fxml"));
+        Contexto.splitPane.getItems().set(0, root);
     }
 
     @FXML
-    private void btnPrestamoAction(ActionEvent event) {
+    private void btnPrestamoAction(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/org/kumon/presentation/PrestamoLibros.fxml"));
+        Contexto.splitPane.getItems().set(0, root);
+
     }
 
     @FXML
@@ -125,8 +128,8 @@ public class MenuPrincipalController implements Initializable {
 
     @FXML
     private void btnDatosAction(ActionEvent event) throws IOException {
-            Parent root = FXMLLoader.load(getClass().getResource("/org/kumon/presentation/SeleccionPersona.fxml"));
-            Contexto.splitPane.getItems().set(0, root);
-        
+        Parent root = FXMLLoader.load(getClass().getResource("/org/kumon/presentation/SeleccionPersona.fxml"));
+        Contexto.splitPane.getItems().set(0, root);
+
     }
 }

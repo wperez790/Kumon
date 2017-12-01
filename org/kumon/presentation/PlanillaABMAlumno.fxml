@@ -9,6 +9,9 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.Light.Distant?>
+<?import javafx.scene.effect.Lighting?>
+<?import javafx.scene.effect.Shadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -16,7 +19,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane fx:id="planilla" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1024.0" prefWidth="800.0" style="-fx-background-image: url(&quot;file:/home/walt/NetBeansProjects/org.Kumon.main/src/org/kumon/presentation/img/backCeleste2.png&quot;); -fx-background-size: cover;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.kumon.presentation.PlanillaABMAlumnoController">
+<AnchorPane fx:id="planilla" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1024.0" prefWidth="800.0" style="-fx-background-image: url(&quot;file:src/org/kumon/presentation/img/backCeleste2.png&quot;); -fx-background-size: cover;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.kumon.presentation.PlanillaABMAlumnoController">
    <children>
       <GridPane prefHeight="1024.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <columnConstraints>
@@ -45,8 +48,28 @@
                </image></ImageView>
             <JFXDatePicker fx:id="datePickerFecha" defaultColor="#4059a9" promptText="Fecha de Nacimiento" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <JFXComboBox fx:id="comboBoxSexo" labelFloat="true" promptText="Sexo" visibleRowCount="2" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <JFXButton fx:id="btnGuardar" buttonType="RAISED" onAction="#btnGuardarAction" ripplerFill="#00ed39" text="Guardar" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-            <JFXButton fx:id="btnCancelar" buttonType="RAISED" onAction="#btnCancelarAction" ripplerFill="#ee0000" text="Cancelar" GridPane.rowIndex="7" />
+            <JFXButton fx:id="btnGuardar" buttonType="RAISED" onAction="#btnGuardarAction" ripplerFill="#00ed39" style="-fx-background-color: #edf0f4;" text="Guardar" GridPane.columnIndex="1" GridPane.rowIndex="7">
+               <effect>
+                  <Lighting diffuseConstant="1.36" specularConstant="0.37" specularExponent="10.0" surfaceScale="1.97">
+                     <bumpInput>
+                        <Shadow />
+                     </bumpInput>
+                     <light>
+                        <Light.Distant />
+                     </light>
+                  </Lighting>
+               </effect></JFXButton>
+            <JFXButton fx:id="btnCancelar" buttonType="RAISED" onAction="#btnCancelarAction" ripplerFill="#ee0000" style="-fx-background-color: #edf0f4;" text="Cancelar" GridPane.rowIndex="7">
+               <effect>
+                  <Lighting diffuseConstant="1.36" specularConstant="0.37" specularExponent="10.0" surfaceScale="1.97">
+                     <bumpInput>
+                        <Shadow />
+                     </bumpInput>
+                     <light>
+                        <Light.Distant />
+                     </light>
+                  </Lighting>
+               </effect></JFXButton>
             <Label text="Datos Personales" underline="true" />
             <JFXTextField fx:id="textFieldNombreImg" labelFloat="true" promptText="Nombre de la Imagen" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <JFXTextField fx:id="textFieldMail" labelFloat="true" promptText="e-mail" unFocusColor="BLACK" GridPane.rowIndex="5" />
@@ -69,6 +92,11 @@
                   <Insets bottom="50.0" top="20.0" />
                </GridPane.margin>
             </JFXTextArea>
+            <JFXComboBox fx:id="comboBoxAuxiliar" labelFloat="true" promptText="Auxiliar/Orientador" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+               <GridPane.margin>
+                  <Insets right="10.0" />
+               </GridPane.margin>
+            </JFXComboBox>
          </children>
       </GridPane>
    </children>

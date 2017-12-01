@@ -90,7 +90,7 @@ public class DatosConTextfieldController implements Initializable {
         textFieldMail.setText(persona.getEmail());
         textFieldTelefono.setText(persona.getTelefono());
         comboBoxSexo.getItems().addAll("Masculino", "Femenino");
-        comboBoxSexo.getSelectionModel().selectFirst();
+        comboBoxSexo.getSelectionModel().select(persona.getSexo());
         datePickerFecha.setValue(persona.getFechaNacimiento().toLocalDate());
         textFieldNombreImg.setText(persona.getNombreImg());
         Image img = new Image("/org/kumon/presentation/img/fotosPersonas/"+persona.getNombreImg());

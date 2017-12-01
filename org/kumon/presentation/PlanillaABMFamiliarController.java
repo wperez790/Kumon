@@ -27,10 +27,11 @@ import static javafx.scene.paint.Color.RED;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.controlsfx.control.Notifications;
+import org.kumon.business.FamiliarBO;
 import org.kumon.business.PersonaBO;
 import org.kumon.main.Contexto;
+import org.kumon.model.Familiar;
 import org.kumon.model.Persona;
-import org.kumon.persist.DaoPersonaImpl;
 
 /**
  * FXML Controller class
@@ -67,15 +68,20 @@ public class PlanillaABMFamiliarController implements Initializable {
     private JFXTextField textFieldMail;
     @FXML
     private JFXTextArea textAreaInfoAdicional;
+    @FXML
+    private JFXTextField textFieldRelacion;
 
     //auxiliares
     Persona persona = new Persona();
-    DaoPersonaImpl personaDB = new DaoPersonaImpl();
+    Familiar familiar = new Familiar();
     private Notifications notificacion;
     private Notifications error2;
     private static Stage primaryStage = new Stage();
-    PersonaBO personaBO = new PersonaBO();
+    PersonaBO personaBO = Contexto.construirPersonaBO();
+    FamiliarBO familiarBO = Contexto.construirFamiliarBO();
     //
+    @FXML
+    private JFXTextField textFieldDocumentoAlumno;
 
     /**
      * Initializes the controller class.
@@ -89,7 +95,7 @@ public class PlanillaABMFamiliarController implements Initializable {
     private void btnGuardarAction(ActionEvent event) throws Exception {
 
         //CODIGO PARA REGISTRAR FAMILIAR
-        boolean ok = false;
+        boolean ok = true;
 
         persona.setActivo(1);
         persona.setNombre(textFieldNombre.getText());
@@ -106,9 +112,24 @@ public class PlanillaABMFamiliarController implements Initializable {
             error2.hideAfter(Duration.seconds(3));
             error2.position(Pos.BOTTOM_RIGHT);
             error2.showError();
+            ok=false;
+        }
+           if(textFieldDocumento.getText().isEmpty() || textFieldDocumentoAlumno.getText().isEmpty()){
+            textFieldDocumento.setUnFocusColor(RED);   
+            textFieldDocumentoAlumno.setUnFocusColor(RED);   
+            error2 = Notifications.create();
+            error2.title("Error de Parametros");
+            error2.darkStyle();
+            error2.text("Documento Vacío");
+            error2.hideAfter(Duration.seconds(3));
+            error2.position(Pos.BOTTOM_RIGHT);
+            error2.showError();
+            ok=false;
         }
         /////////////////////////////////////////////
-
+        familiar.setIdAlumno(textFieldDocumentoAlumno.getText());
+        familiar.setRelacion(textFieldRelacion.getText());
+        familiar.setIdFamiliar(textFieldDocumento.getText());
         persona.setApellido(textFieldApellido.getText());
         persona.setIdPersona(textFieldDocumento.getText());
         persona.setDomicilio(textFieldDomicilio.getText());
@@ -129,18 +150,19 @@ public class PlanillaABMFamiliarController implements Initializable {
             error2.hideAfter(Duration.seconds(3));
             error2.position(Pos.BOTTOM_RIGHT);
             error2.showError();
+            ok=false;
 
         } else {
             persona.setEdad(personaBO.calcularEdad(datePickerFecha));
-            ok = true;
+            
         }
         ////////////////////////////////////////////////////////////////////
 
         //Si todo esta ok: REGISTRA
         if (ok == true) {
-
+            
             textFieldDocumento.setUnFocusColor(Color.GREEN);
-            personaDB.registrar(persona);
+            familiarBO.registrar(familiar, persona);
             Image img = new Image("/org/kumon/presentation/img/ok.png");
             notificacion = Notifications.create();
             notificacion.title("Resultado de la Operacion");

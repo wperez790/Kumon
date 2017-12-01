@@ -5,9 +5,17 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="160.0" style="-fx-background-color: #5eb4d6;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.kumon.presentation.DrawerController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="80.0" prefWidth="160.0" style="-fx-background-color: #5eb4d6;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.kumon.presentation.DrawerController">
    <children>
-      <JFXButton fx:id="btnCerrarSesion" buttonType="RAISED" onAction="#btnCerrarSesionAction" prefHeight="30.0" prefWidth="160.0" ripplerFill="BLACK" text="Cerrar Sesion">
+      <JFXButton fx:id="btnConfigurar" buttonType="RAISED" onAction="#btnCerrarSesionAction" prefHeight="30.0" prefWidth="160.0" ripplerFill="BLACK" style="-fx-border-color: #ffffff;" text="Cerrar Sesion">
+         <font>
+            <Font name="P22 Underground" size="20.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
+      <JFXButton fx:id="btnCerrarSesion21" buttonType="RAISED" onAction="#btnConfigurarAction" prefHeight="30.0" prefWidth="160.0" ripplerFill="BLACK" style="-fx-border-color: #ffffff;" text="Configurar">
          <font>
             <Font name="P22 Underground" size="20.0" />
          </font>

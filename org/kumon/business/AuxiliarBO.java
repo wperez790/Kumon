@@ -7,24 +7,30 @@ package org.kumon.business;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.kumon.main.Contexto;
 import org.kumon.model.Auxiliar;
+import org.kumon.persist.DaoAuxiliarImpl;
 
 /**
  *
  * @author Walter
  */
 public class AuxiliarBO {
-    List<Auxiliar> auxiliaresList = new ArrayList<Auxiliar>();
+
+    private DaoAuxiliarImpl auxiliarDB = Contexto.construirDaoAuxiliarImpl();
     
-    public Auxiliar getAuxiliarbyUser(String user){
-        for(Auxiliar a : auxiliaresList)
-        {
-            if(a.getUser().equals(user))
-            {
-                return a;
-            }
-        }
-        return null;
+    /*    List<Auxiliar> auxiliaresList = new ArrayList<Auxiliar>();
+    public Auxiliar getAuxiliarbyUser(String user) {
+    for (Auxiliar a : auxiliaresList) {
+    if (a.getUser().equals(user)) {
+    return a;
     }
-    
+    }
+    return null;
+    }*/
+    public List getAll() throws Exception {
+       return auxiliarDB.getAll();
+
+    }
+
 }

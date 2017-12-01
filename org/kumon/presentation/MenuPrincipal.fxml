@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="rootMenu" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-image: url(&quot;file:/home/walt/NetBeansProjects/org.Kumon.main/src/org/kumon/presentation/img/KumonFondo.png&quot;); -fx-background-size: 100% 100%;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.kumon.presentation.MenuPrincipalController">
+<AnchorPane id="AnchorPane" fx:id="rootMenu" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-image: url(&quot;file:src/org/kumon/presentation/img/KumonFondo.png&quot;); -fx-background-size: 100% 100%;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.kumon.presentation.MenuPrincipalController">
    <children>
       <BorderPane prefHeight="600.0" prefWidth="1024.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <left>
@@ -70,14 +70,6 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </JFXButton>
-                  <JFXButton fx:id="btnPagos" buttonType="RAISED" onAction="#btnPagosAction" prefHeight="31.0" prefWidth="180.0" ripplerFill="#00ff2f" style="-fx-background-color: #5ec8f2;" text="Pagos" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4">
-                     <font>
-                        <Font name="P22 Underground" size="16.0" />
-                     </font>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </JFXButton>
                   <Label text="Menu Principal" underline="true" GridPane.columnIndex="1" GridPane.halignment="CENTER">
                      <font>
                         <Font name="P22 Underground" size="24.0" />
@@ -89,14 +81,6 @@
                   <ImageView fitHeight="58.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
                      <image>
                         <Image url="@img/IconoCalendario.png" />
-                     </image>
-                     <GridPane.margin>
-                        <Insets right="10.0" />
-                     </GridPane.margin>
-                  </ImageView>
-                  <ImageView fitHeight="58.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="RIGHT" GridPane.rowIndex="4">
-                     <image>
-                        <Image url="@img/IconoPagos.png" />
                      </image>
                      <GridPane.margin>
                         <Insets right="10.0" />
@@ -120,22 +104,6 @@
               </rowConstraints>
                <children>
                   <JFXButton fx:id="btnPrestamo" buttonType="RAISED" onAction="#btnPrestamoAction" prefHeight="31.0" prefWidth="180.0" ripplerFill="#00ff2f" style="-fx-background-color: #5ec8f2;" text="Prestamo de Libros" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3">
-                     <font>
-                        <Font name="P22 Underground" size="16.0" />
-                     </font>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </JFXButton>
-                  <ImageView fitHeight="58.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
-                     <image>
-                        <Image url="@img/IconoMail.png" />
-                     </image>
-                     <GridPane.margin>
-                        <Insets right="10.0" />
-                     </GridPane.margin>
-                  </ImageView>
-                  <JFXButton fx:id="btnEnviarCorreo" buttonType="RAISED" onAction="#btnEnviarCorreoAction" prefHeight="31.0" prefWidth="180.0" ripplerFill="#00ff2f" style="-fx-background-color: #5ec8f2;" text="Envio de correos" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
                      <font>
                         <Font name="P22 Underground" size="16.0" />
                      </font>
@@ -179,6 +147,22 @@
                      <GridPane.margin>
                         <Insets />
                      </GridPane.margin></JFXDrawer>
+                  <JFXButton fx:id="btnPagos" buttonType="RAISED" onAction="#btnPagosAction" prefHeight="31.0" prefWidth="180.0" ripplerFill="#00ff2f" style="-fx-background-color: #5ec8f2;" text="Pagos" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+                     <font>
+                        <Font name="P22 Underground" size="16.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </JFXButton>
+                  <ImageView fitHeight="58.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
+                     <image>
+                        <Image url="@img/IconoPagos.png" />
+                     </image>
+                     <GridPane.margin>
+                        <Insets right="10.0" />
+                     </GridPane.margin>
+                  </ImageView>
                </children>
             </GridPane>
          </right>

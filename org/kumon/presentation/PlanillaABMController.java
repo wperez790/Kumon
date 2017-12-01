@@ -11,8 +11,6 @@ import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
-import java.time.LocalDate;
-import java.time.Period;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -32,7 +30,6 @@ import org.controlsfx.control.Notifications;
 import org.kumon.business.PersonaBO;
 import org.kumon.main.Contexto;
 import org.kumon.model.Persona;
-import org.kumon.persist.DaoPersonaImpl;
 
 /**
  * FXML Controller class
@@ -73,18 +70,15 @@ public class PlanillaABMController implements Initializable {
     private JFXTextField textFieldNombreImg;
     @FXML
     private JFXTextField textFieldMail;
-    
+
     //auxiliares
     Persona persona = new Persona();
-    DaoPersonaImpl personaDB = new DaoPersonaImpl();
     private Notifications notificacion;
     private Notifications error2;
     private static Stage primaryStage = new Stage();
-    PersonaBO personaBO = new PersonaBO();
+    PersonaBO personaBO = Contexto.construirPersonaBO();
     //
-    
-   
-    
+
     /*   public void btnCargarImagenAction(ActionEvent e) throws Exception{
     persona.setNombreImg(textFieldNombreImg.getText());
     Contexto.setPersona(persona);
@@ -94,25 +88,22 @@ public class PlanillaABMController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
-        comboBoxSexo.getItems().addAll("Masculino","Femenino");
-        
-  
-    }  
+
+        comboBoxSexo.getItems().addAll("Masculino", "Femenino");
+
+    }
 
     @FXML
     private void btnGuardarAction(ActionEvent event) throws Exception {
-        
-        boolean ok = false;
-        
-     
+
+        boolean ok = true;
+
         persona.setActivo(1);
         persona.setNombre(textFieldNombre.getText());
         //Si dni es INT////////////////////////////////
-        try{
-        persona.setDni(Integer.parseInt(textFieldDocumento.getText()));
-        }
-        catch(Exception e){
+        try {
+            persona.setDni(Integer.parseInt(textFieldDocumento.getText()));
+        } catch (Exception e) {
             e.printStackTrace();
             textFieldDocumento.setUnFocusColor(RED);
             error2 = Notifications.create();
@@ -122,8 +113,8 @@ public class PlanillaABMController implements Initializable {
             error2.hideAfter(Duration.seconds(3));
             error2.position(Pos.BOTTOM_RIGHT);
             error2.showError();
-            
-            
+            ok = false;
+
         }
         /////////////////////////////////////////////
         persona.setApellido(textFieldApellido.getText());
@@ -131,18 +122,16 @@ public class PlanillaABMController implements Initializable {
         persona.setDomicilio(textFieldDomicilio.getText());
         persona.setTelefono(textFieldTelefono.getText());
         persona.setEmail(textFieldMail.getText());
-        if(Contexto.tipoUser == 2)
-        persona.setTipoUser(2);
-        if(Contexto.tipoUser == 1)
-        persona.setTipoUser(1);
-        //Si repitio bien el PASSWORD
-        if(passwordField1.getText().equals(passwordField2.getText()))
-            
-        {
-            persona.setPass(passwordField1.getText());
-            ok=true;
+        if (Contexto.tipoUser == 2) {
+            persona.setTipoUser(2);
         }
-        else{
+        if (Contexto.tipoUser == 1) {
+            persona.setTipoUser(1);
+        }
+        //Si repitio bien el PASSWORD
+        if (passwordField1.getText().equals(passwordField2.getText())) {
+            persona.setPass(passwordField1.getText());
+        } else {
             notificacion = Notifications.create();
             notificacion.title("Error de Parametros");
             notificacion.darkStyle();
@@ -152,15 +141,27 @@ public class PlanillaABMController implements Initializable {
             notificacion.showError();
             passwordField1.setUnFocusColor(RED);
             passwordField2.setUnFocusColor(RED);
-            ok=false;
+            ok = false;
         }
         ///////////////////////////////////////////////////////////////
-        persona.setSexo(comboBoxSexo.getValue());
-        
+        if (!comboBoxSexo.getValue().isEmpty()) {
+            persona.setSexo(comboBoxSexo.getValue());
+        } else {
+            error2 = Notifications.create();
+            error2.title("Error de Parametros");
+            error2.darkStyle();
+            error2.text("Debe Seleccionar Sexo");
+            error2.hideAfter(Duration.seconds(3));
+            error2.position(Pos.BOTTOM_RIGHT);
+            error2.showError();
+            ok = false;
+
+        }
+
         //FECHAS Verificacion de Fecha no null y calculo de Edad.
         java.sql.Date date = java.sql.Date.valueOf(datePickerFecha.getValue());
         persona.setFechaNacimiento(date);
-        if(persona.getFechaNacimiento()==null){
+        if (persona.getFechaNacimiento() == null) {
             error2 = Notifications.create();
             error2.title("Error de Parametros");
             error2.darkStyle();
@@ -168,17 +169,16 @@ public class PlanillaABMController implements Initializable {
             error2.hideAfter(Duration.seconds(3));
             error2.position(Pos.BOTTOM_RIGHT);
             error2.showError();
-            
+            ok = false;
+
+        } else {
+            persona.setEdad(personaBO.calcularEdad(datePickerFecha));
         }
-        else
-        persona.setEdad(personaBO.calcularEdad(datePickerFecha));
         //
         //Comprobar que el usuario no exista
-        if(comprobarUsuario()){
+        if (comprobarUsuario()) {
             persona.setUser(textFieldUsuario.getText());
-        }
-        else    
-        {
+        } else {
             textFieldUsuario.setUnFocusColor(RED);
             notificacion = Notifications.create();
             notificacion.title("Error de Parametros");
@@ -187,19 +187,30 @@ public class PlanillaABMController implements Initializable {
             notificacion.hideAfter(Duration.seconds(3));
             notificacion.position(Pos.BOTTOM_RIGHT);
             notificacion.showError();
-            ok=false;
+            ok = false;
+        }
+
+        if (textFieldDocumento.getText().isEmpty()) {
+            textFieldDocumento.setUnFocusColor(RED);
+            error2 = Notifications.create();
+            error2.title("Error de Parametros");
+            error2.darkStyle();
+            error2.text("Documento Vacío");
+            error2.hideAfter(Duration.seconds(3));
+            error2.position(Pos.BOTTOM_RIGHT);
+            error2.showError();
+            ok = false;
         }
         /////////////////////////////////////////////////////////////////////
-        
+
         persona.setNombreImg(textFieldNombreImg.getText());
-        
-        
+
         //Si todo esta ok: REGISTRA
-        if(ok==true){
+        if (ok == true) {
             passwordField1.setUnFocusColor(Color.GREEN);
             passwordField2.setUnFocusColor(Color.GREEN);
             textFieldDocumento.setUnFocusColor(Color.GREEN);
-            personaDB.registrar(persona);
+            personaBO.registrar(persona);
             Image img = new Image("/org/kumon/presentation/img/ok.png");
             notificacion = Notifications.create();
             notificacion.title("Resultado de la Operacion");
@@ -210,30 +221,28 @@ public class PlanillaABMController implements Initializable {
             notificacion.darkStyle();
             primaryStage.close();
             notificacion.show();
-        
-        
+
         }
         //
-        
-        
-        
+
     }
+
     /*
     public Integer calcularEdad(){
     
     Period periodo = Period.between(datePickerFecha.getValue(), LocalDate.now());
     return periodo.getYears();
     }*/
-    public boolean comprobarUsuario() throws Exception{
-        boolean ok=personaDB.comprobarUser(textFieldUsuario.getText());
-      
+    public boolean comprobarUsuario() throws Exception {
+        boolean ok = personaBO.comprobarUser(textFieldUsuario.getText());
+
         return ok;
-        
+
     }
-    
-    public void init(){
+
+    public void init() {
         try {
-            
+
             Parent root = FXMLLoader.load(getClass().getResource("/org/kumon/presentation/PlanillaABM.fxml"));
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);
@@ -241,14 +250,14 @@ public class PlanillaABMController implements Initializable {
             primaryStage.show();
         } catch (Exception e) {
             e.printStackTrace();
-        
+
         }
     }
 
     @FXML
     private void btnCancelarAction(ActionEvent event) {
-        
+
         primaryStage.close();
     }
-    
+
 }

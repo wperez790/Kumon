@@ -60,6 +60,8 @@ public class SeleccionABM1Controller implements Initializable {
 
     @FXML
     private void btnAltaAction(ActionEvent event) throws IOException {
+        Contexto.setBaja(false);
+        Contexto.setModificar(false);
         AnchorPane pane = FXMLLoader.load(getClass().getResource("/org/kumon/presentation/SeleccionABM2.fxml"));
         Contexto.splitPane.getItems().set(0, pane);
     }
@@ -81,7 +83,8 @@ public class SeleccionABM1Controller implements Initializable {
 
     @FXML
     private void btnBackAction(ActionEvent event) throws IOException {
-        
+        Contexto.setBaja(false);
+        Contexto.setModificar(false);
         AnchorPane pane = FXMLLoader.load(getClass().getResource("/org/kumon/presentation/MenuPrincipal.fxml"));
         Contexto.splitPane.getItems().set(0, pane);
     }

@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" style="-fx-background-image: url(&quot;file:/home/walt/NetBeansProjects/org.Kumon.main/src/org/kumon/presentation/img/backCeleste.jpg&quot;); -fx-background-size: 100% 100%;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.kumon.presentation.AsistenciaController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" style="-fx-background-image: url(&quot;file:src/org/kumon/presentation/img/backCeleste.jpg&quot;); -fx-background-size: 100% 100%;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.kumon.presentation.AsistenciaController">
    <children>
       <JFXTextField fx:id="textFieldId" focusColor="#70d0f6" layoutX="132.0" layoutY="186.0" prefHeight="16.0" prefWidth="337.0" promptText="Coloque su ID en el lector o escriba su DNI" style="-fx-border-color: #ffffff; -fx-text-fill: #ffffff;" unFocusColor="#fffafa">
          <font>

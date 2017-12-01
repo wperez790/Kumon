@@ -27,11 +27,7 @@ public class OrgKumonMain extends Application {
         
         Contexto.abrirLogin();
         
-        /*Parent root = FXMLLoader.load(getClass().getResource("/org/kumon/presentation/login.fxml"));
-        Scene scene = new Scene(root);
-        primaryStage.setScene(scene);
-        primaryStage.setTitle("Log in");
-        primaryStage.show();*/
+        
     }
 
 }

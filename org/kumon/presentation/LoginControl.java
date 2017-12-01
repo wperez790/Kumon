@@ -62,7 +62,6 @@ public class LoginControl implements Initializable {
 
     }
     //AUX
-    private DaoPersonaImpl personaDB = Contexto.construirDaoPersonaImpl();
     private Notifications error;
     private PersonaBO personaBO;
     String userEncriptado = "";
@@ -141,7 +140,7 @@ public class LoginControl implements Initializable {
 
         //Setea el nombre que saldra en el mensaje de bienvenida
         try {
-            Contexto.setPersona(personaDB.obtenerPersonaByUser(user.getText()));
+            Contexto.setPersona(personaBO.obtenerPersonaByUser(user.getText()));
             Contexto.setUser(Contexto.persona);
         } catch (Exception ex) {
             Logger.getLogger(LoginControl.class.getName()).log(Level.SEVERE, null, ex);
@@ -149,7 +148,7 @@ public class LoginControl implements Initializable {
         //
         if (personaBO.comprobarUsuario(user.getText(), pass.getText())) {
 
-            if (personaDB.obtenerPersonaByUser(user.getText()).getSexo().equalsIgnoreCase("M")) {
+            if (personaBO.obtenerPersonaByUser(user.getText()).getSexo().equalsIgnoreCase("Masculino")) {
 
                 cargarMensajeBienvenidaMasculino();
 

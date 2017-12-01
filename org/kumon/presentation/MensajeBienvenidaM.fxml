@@ -5,39 +5,55 @@
 <?import javafx.scene.effect.Lighting?>
 <?import javafx.scene.effect.Shadow?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" minHeight="600.0" minWidth="800.0" style="-fx-background-image: url(&quot;file:/home/walt/NetBeansProjects/org.Kumon.main/src/org/kumon/presentation/img/KumonFondoBienvenida.png&quot;); -fx-background-size: 100% 100%;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.kumon.presentation.MensajeBienvenidaMController">
+<AnchorPane id="AnchorPane" minHeight="600.0" minWidth="800.0" style="-fx-background-image: url(&quot;file:src/org/kumon/presentation/img/KumonFondoBienvenida.png&quot;); -fx-background-size: 100% 100%;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.kumon.presentation.MensajeBienvenidaMController">
    <children>
-      <Label fx:id="labelBienvenido" layoutX="58.0" layoutY="106.0" text="Bienvenido" textFill="WHITE" underline="true">
-         <font>
-            <Font name="P22 Underground" size="58.0" />
-         </font>
-         <effect>
-            <Lighting diffuseConstant="1.02" specularConstant="1.28" specularExponent="3.33" surfaceScale="5.92">
-               <bumpInput>
-                  <Shadow height="17.299999999999997" radius="8.3475" width="18.09" />
-               </bumpInput>
-               <light>
-                  <Light.Distant />
-               </light>
-            </Lighting>
-         </effect>
-      </Label>
-      <Label fx:id="labelNombre" layoutX="506.0" layoutY="106.0" textFill="#fffffffa">
-         <font>
-            <Font name="P22 Underground" size="58.0" />
-         </font>
-         <effect>
-            <Lighting diffuseConstant="1.02" specularConstant="1.28" specularExponent="3.33" surfaceScale="5.92">
-               <bumpInput>
-                  <Shadow height="17.7" radius="8.432500000000001" width="18.03" />
-               </bumpInput>
-               <light>
-                  <Light.Distant />
-               </light>
-            </Lighting>
-         </effect>
-      </Label>
+      <GridPane prefHeight="600.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label fx:id="labelNombre" textFill="#fffffffa" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+               <font>
+                  <Font name="P22 Underground" size="58.0" />
+               </font>
+               <effect>
+                  <Lighting diffuseConstant="1.02" specularConstant="1.28" specularExponent="3.33" surfaceScale="5.92">
+                     <bumpInput>
+                        <Shadow height="17.7" radius="8.432500000000001" width="18.03" />
+                     </bumpInput>
+                     <light>
+                        <Light.Distant />
+                     </light>
+                  </Lighting>
+               </effect>
+            </Label>
+            <Label fx:id="labelBienvenido" text="Bienvenido" textFill="WHITE" underline="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+               <font>
+                  <Font name="P22 Underground" size="58.0" />
+               </font>
+               <effect>
+                  <Lighting diffuseConstant="1.02" specularConstant="1.28" specularExponent="3.33" surfaceScale="5.92">
+                     <bumpInput>
+                        <Shadow height="17.299999999999997" radius="8.3475" width="18.09" />
+                     </bumpInput>
+                     <light>
+                        <Light.Distant />
+                     </light>
+                  </Lighting>
+               </effect>
+            </Label>
+         </children>
+      </GridPane>
    </children>
 </AnchorPane>

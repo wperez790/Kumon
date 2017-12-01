@@ -5,26 +5,15 @@
  */
 package org.kumon.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  *
  * @author Walter
  */
-public class Familiar extends Persona{
-    
-    private List<Alumno> alumnosList = new ArrayList<Alumno>();
-    
+public class Familiar extends Persona {
+
     private String idFamiliar;
-
-    public List<Alumno> getHijosList() {
-        return alumnosList;
-    }
-
-    public void setHijosList(List<Alumno> hijosList) {
-        this.alumnosList = hijosList;
-    }
+    private String idAlumno;
+    private String relacion;
 
     public String getIdFamiliar() {
         return idFamiliar;
@@ -33,16 +22,21 @@ public class Familiar extends Persona{
     public void setIdFamiliar(String idFamiliar) {
         this.idFamiliar = idFamiliar;
     }
-    
-    
 
-    public Familiar(List<Alumno> hijosList) {
-        this.alumnosList = hijosList;
+    public String getIdAlumno() {
+        return idAlumno;
     }
 
-    public Familiar() {
+    public void setIdAlumno(String idAlumno) {
+        this.idAlumno = idAlumno;
     }
 
+    public String getRelacion() {
+        return relacion;
+    }
 
-   
+    public void setRelacion(String relacion) {
+        this.relacion = relacion;
+    }
+
 }

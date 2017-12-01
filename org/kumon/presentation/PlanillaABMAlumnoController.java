@@ -13,6 +13,7 @@ import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -30,12 +31,14 @@ import static javafx.scene.paint.Color.RED;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.controlsfx.control.Notifications;
+import org.kumon.business.AlumnoBO;
+import org.kumon.business.AuxiliarBO;
 import org.kumon.business.PersonaBO;
 import org.kumon.main.Contexto;
 import org.kumon.model.Alumno;
 import org.kumon.model.Asignatura;
+import org.kumon.model.Auxiliar;
 import org.kumon.model.Persona;
-import org.kumon.persist.DaoPersonaImpl;
 
 /**
  * FXML Controller class
@@ -80,64 +83,91 @@ public class PlanillaABMAlumnoController implements Initializable {
     private JFXCheckBox checkBoxIngles;
     @FXML
     private JFXTextArea textAreaInfoAdicional;
+    @FXML
+    private JFXComboBox<String> comboBoxAuxiliar;
 
     //AUXILIARES
     private static Stage primaryStage = new Stage();
     private Notifications notificacion;
     private Notifications error2;
-    Persona persona = new Persona();
+    Persona persona ;
     Alumno alumno;
-    DaoPersonaImpl personaDB = new DaoPersonaImpl();
-    PersonaBO personaBO = new PersonaBO();
+    PersonaBO personaBO ;
+    AlumnoBO alumnoBO ;
+    AuxiliarBO auxiliarBO ;
     List<Asignatura> listaAsignaturas;
     Asignatura asignatura;
-    //
+    List lista ;
+
+    public PlanillaABMAlumnoController() throws Exception {
+        persona= new Persona();
+        personaBO = Contexto.construirPersonaBO();
+        alumnoBO = Contexto.construirAlumnoBO();
+        auxiliarBO = Contexto.construirAuxiliarBO();
+        lista= auxiliarBO.getAll();
+        
+    }
+    
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
         comboBoxSexo.getItems().addAll("Masculino", "Femenino");
+        for (int i = 0; i < lista.size(); i++) {
+            Auxiliar aux = (Auxiliar) lista.get(i);
+            comboBoxAuxiliar.getItems().addAll(aux.getNombre() + " " + aux.getApellido());
+        }
     }
 
     @FXML
     private void btnGuardarAction(ActionEvent event) throws Exception {
-
-        boolean ok = cargarDatos(persona);
+        listaAsignaturas = new ArrayList();
+        boolean ok = cargarDatos(alumno);
         //SETEO ALUMNO//
-        if(checkBoxIngles.isSelected()){
-            asignatura= new Asignatura();
-            asignatura.setIdAsignatura("3");
+        if (checkBoxIngles.isSelected()) {
+            asignatura = new Asignatura();
+            asignatura.setIdAsignatura(3);
             asignatura.setNivel("0");
             asignatura.setNombre("Ingles");
             listaAsignaturas.add(asignatura);
         }
-        if(checkBoxLengua.isSelected()){
-            asignatura= new Asignatura();
-            asignatura.setIdAsignatura("2");
+        if (checkBoxLengua.isSelected()) {
+            asignatura = new Asignatura();
+            asignatura.setIdAsignatura(2);
             asignatura.setNivel("0");
             asignatura.setNombre("Lengua");
             listaAsignaturas.add(asignatura);
         }
-        if(checkBoxMat.isSelected()){
-            asignatura= new Asignatura();
-            asignatura.setIdAsignatura("1");
+        if (checkBoxMat.isSelected()) {
+            asignatura = new Asignatura();
+            asignatura.setIdAsignatura(1);
             asignatura.setNivel("0");
             asignatura.setNombre("Matematica");
             listaAsignaturas.add(asignatura);
         }
-        alumno.setIdAuxiliar(idAuxiliar);           //comboBox con todas las auxiliares
+        alumno.setIdAlumno(persona.getIdPersona());
+        for (int i = 0; i < lista.size(); i++) {
+            Auxiliar aux = (Auxiliar)lista.get(i);
+            if (comboBoxAuxiliar.getSelectionModel().getSelectedItem().equalsIgnoreCase((aux.getNombre()+" "+aux.getApellido()))) {
+                alumno.setIdAuxiliar(aux.getIdAuxiliar());
+                alumno.setIdOrientadora(aux.getIdAdmin());
+                
+            }
+        }
+        /* alumno.setIdAuxiliar(idAuxiliar);           //comboBox con todas las auxiliares
         alumno.setIdOrientadora(idOrientadora);      //por defecto seleccionar la orientadora segun la academia o sacar
         alumno.setListaAsignaturas(listaAsignaturas);
         alumno.setListaFamiliares(listaFamiliares);  //agregar campo que busque en seleccion persona y agregues un familiar antes cargado
-        ok = cargarDatos(alumno);
+        ok = cargarDatos(alumno);*/
 
-        
         //Si todo esta ok: REGISTRA
         if (ok == true) {
             textFieldDocumento.setUnFocusColor(Color.GREEN);
-            personaDB.registrar(persona);
+
+            alumnoBO.registrar(alumno);
             Image img = new Image("/org/kumon/presentation/img/ok.png");
             notificacion = Notifications.create();
             notificacion.title("Resultado de la Operacion");
@@ -153,13 +183,13 @@ public class PlanillaABMAlumnoController implements Initializable {
         //
     }
 
-    private boolean cargarDatos( Persona persona ) {
-        boolean ok = false;
-        persona.setActivo(1);
-        persona.setNombre(textFieldNombre.getText());
+    private boolean cargarDatos(Alumno alumno) {
+        boolean ok = true;
+        alumno.setActivo(1);
+        alumno.setNombre(textFieldNombre.getText());
         //Si dni es INT////////////////////////////////
         try {
-            persona.setDni(Integer.parseInt(textFieldDocumento.getText()));
+            alumno.setDni(Integer.parseInt(textFieldDocumento.getText()));
         } catch (Exception e) {
             e.printStackTrace();
             textFieldDocumento.setUnFocusColor(RED);
@@ -170,23 +200,35 @@ public class PlanillaABMAlumnoController implements Initializable {
             error2.hideAfter(Duration.seconds(3));
             error2.position(Pos.BOTTOM_RIGHT);
             error2.showError();
-
+            ok = false;
+        }
+        if (textFieldDocumento.getText().isEmpty()) {
+            textFieldDocumento.setUnFocusColor(RED);
+            error2 = Notifications.create();
+            error2.title("Error de Parametros");
+            error2.darkStyle();
+            error2.text("Documento Vacío");
+            error2.hideAfter(Duration.seconds(3));
+            error2.position(Pos.BOTTOM_RIGHT);
+            error2.showError();
+            ok = false;
         }
         /////////////////////////////////////////////
-        persona.setInfo(textAreaInfoAdicional.getText());
-        persona.setNombreImg(textFieldNombreImg.getText());
-        persona.setApellido(textFieldApellido.getText());
-        persona.setIdPersona(textFieldDocumento.getText());
-        persona.setDomicilio(textFieldDomicilio.getText());
-        persona.setTelefono(textFieldTelefono.getText());
-        persona.setEmail(textFieldMail.getText());
-        persona.setTipoUser(Contexto.tipoUser);
+        alumno.setIdPersona(textFieldDocumento.getText());
+        alumno.setInfo(textAreaInfoAdicional.getText());
+        alumno.setNombreImg(textFieldNombreImg.getText());
+        alumno.setApellido(textFieldApellido.getText());
+        alumno.setIdPersona(textFieldDocumento.getText());
+        alumno.setDomicilio(textFieldDomicilio.getText());
+        alumno.setTelefono(textFieldTelefono.getText());
+        alumno.setEmail(textFieldMail.getText());
+        alumno.setTipoUser(Contexto.tipoUser);
         ///////////////////////////////////////////////////////////////
-        persona.setSexo(comboBoxSexo.getValue());
+        alumno.setSexo(comboBoxSexo.getValue());
         //FECHAS Verificacion de Fecha no null y calculo de Edad.
         java.sql.Date date = java.sql.Date.valueOf(datePickerFecha.getValue());
-        persona.setFechaNacimiento(date);
-        if (persona.getFechaNacimiento() == null) {
+        alumno.setFechaNacimiento(date);
+        if (alumno.getFechaNacimiento() == null) {
             error2 = Notifications.create();
             error2.title("Error de Parametros");
             error2.darkStyle();
@@ -194,10 +236,11 @@ public class PlanillaABMAlumnoController implements Initializable {
             error2.hideAfter(Duration.seconds(3));
             error2.position(Pos.BOTTOM_RIGHT);
             error2.showError();
+            ok = false;
 
         } else {
-            persona.setEdad(personaBO.calcularEdad(datePickerFecha));
-            ok = true;
+            alumno.setEdad(personaBO.calcularEdad(datePickerFecha));
+
         }
         return ok;
     }

@@ -36,8 +36,10 @@ public class MensajeBienvenidaMController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
-        labelNombre.setText((String)Contexto.getPersona().getNombre());
+        String nombre = Contexto.getPersona().getNombre();
+        String[] nombreCortado;
+        nombreCortado = nombre.split("\\s+");
+        labelNombre.setText(nombreCortado[0]);
     }    
     
     public void init(){

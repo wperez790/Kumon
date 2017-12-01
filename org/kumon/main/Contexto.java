@@ -7,11 +7,29 @@ package org.kumon.main;
 
 import javafx.scene.control.SplitPane;
 import javafx.stage.Stage;
+import org.kumon.business.AlumnoBO;
+import org.kumon.business.AuxiliarBO;
+import org.kumon.business.DeudaBO;
+import org.kumon.business.FamiliarBO;
+import org.kumon.business.LibroBO;
+import org.kumon.business.PagosBO;
 import org.kumon.business.PersonaBO;
+import org.kumon.business.PrestamoBO;
+import org.kumon.business.SistemaBO;
+import org.kumon.model.Libro;
 import org.kumon.model.Persona;
+import org.kumon.persist.DaoAlumnoImpl;
+import org.kumon.persist.DaoAuxiliarImpl;
+import org.kumon.persist.DaoDeudaImpl;
+import org.kumon.persist.DaoFamiliarImpl;
+import org.kumon.persist.DaoLibroImpl;
+import org.kumon.persist.DaoPagosImpl;
 import org.kumon.persist.DaoPersonaImpl;
+import org.kumon.persist.DaoPrestamoImpl;
+import org.kumon.persist.DaoSistemaImpl;
 import org.kumon.presentation.AsistenciaController;
 import org.kumon.presentation.ComprobarAdminController;
+import org.kumon.presentation.ConfiguracionController;
 import org.kumon.presentation.ContenedorPrincipalController;
 import org.kumon.presentation.DatosConTextfieldController;
 import org.kumon.presentation.DatosController;
@@ -20,14 +38,15 @@ import org.kumon.presentation.LoginControl;
 import org.kumon.presentation.MensajeBienvenidaFController;
 import org.kumon.presentation.MensajeBienvenidaMController;
 import org.kumon.presentation.MenuPrincipalController;
+import org.kumon.presentation.ModificarLibroController;
 import org.kumon.presentation.PlanillaABMAlumnoController;
 import org.kumon.presentation.PlanillaABMController;
 import org.kumon.presentation.PlanillaABMFamiliarController;
 import org.kumon.presentation.SeleccionABM1Controller;
 import org.kumon.presentation.SeleccionABM2Controller;
+import org.kumon.presentation.VerLibroController;
 
 /*import static sun.security.jgss.GSSUtil.login;*/
-
 /**
  *
  * @author Walter
@@ -35,6 +54,14 @@ import org.kumon.presentation.SeleccionABM2Controller;
 public class Contexto {
 
     private static DaoPersonaImpl personaDB;
+    private static DaoFamiliarImpl familiarDB;
+    private static DaoLibroImpl libroDB;
+    private static DaoPrestamoImpl prestamoDB;
+    private static DaoDeudaImpl deudaDB;
+    private static DaoPagosImpl pagosDB;
+    private static DaoAlumnoImpl alumnosDB;
+    private static DaoAuxiliarImpl auxiliarDB;
+    private static DaoSistemaImpl sistemaDB;
     static private Contexto cx;
     public static Persona persona;
     public static Persona user;
@@ -43,6 +70,11 @@ public class Contexto {
     public static boolean modificar;
     public static boolean baja;
     public static Stage primaryStage;
+    public static Libro libro;
+    public static boolean prestamosNoDevueltos = true;
+    public static Integer tipoDeuda = 0;
+    public static Double precioPorMateria;
+    public static boolean SeteoPago = false;
 
     private Contexto() {
         try {
@@ -54,8 +86,6 @@ public class Contexto {
 
     }
 
-
-     
     public static Contexto getInstance() {
         if (cx == null) {
             cx = new Contexto();
@@ -72,6 +102,38 @@ public class Contexto {
         return new PersonaBO();
     }
 
+    public static PrestamoBO construirPrestamoBO() {
+        return new PrestamoBO();
+    }
+
+    public static LibroBO construirLibroBO() {
+        return new LibroBO();
+    }
+
+    public static DeudaBO construirDeudaBO() {
+        return new DeudaBO();
+    }
+
+    public static PagosBO construirPagosBO() {
+        return new PagosBO();
+    }
+
+    public static AlumnoBO construirAlumnoBO() {
+        return new AlumnoBO();
+    }
+
+    public static FamiliarBO construirFamiliarBO() {
+        return new FamiliarBO();
+    }
+
+    public static AuxiliarBO construirAuxiliarBO() {
+        return new AuxiliarBO();
+    }
+
+    public static SistemaBO construirSistemaBO() {
+        return new SistemaBO();
+    }
+
     /**
      * Metodo para contruir la clase DAO de las Personas
      *
@@ -83,6 +145,106 @@ public class Contexto {
         }
         return personaDB;
 
+    }
+
+    /**
+     * Metodo para contruir la clase DAO de los Prestamos
+     *
+     * @return Devuelve el objeto prestamosDB
+     */
+    public static DaoPrestamoImpl construirDaoPrestamoImpl() {
+        if (prestamoDB == null) {
+            prestamoDB = new DaoPrestamoImpl();
+        }
+        return prestamoDB;
+    }
+
+    /**
+     * Metodo para contruir la clase DAO de las Deudas
+     *
+     * @return Devuelve el objeto deudaDB
+     */
+    public static DaoDeudaImpl construirDaoDeudaImpl() {
+        if (deudaDB == null) {
+            deudaDB = new DaoDeudaImpl();
+        }
+        return deudaDB;
+    }
+
+    /**
+     * Metodo para contruir la clase DAO de los Libros
+     *
+     * @return Devuelve el objeto libroDB
+     */
+    public static DaoLibroImpl construirDaoLibroImpl() {
+        if (libroDB == null) {
+            libroDB = new DaoLibroImpl();
+        }
+        return libroDB;
+    }
+
+    /**
+     * Metodo para contruir la clase DAO de los Pagos
+     *
+     * @return Devuelve el objeto pagosDB
+     */
+    public static DaoPagosImpl construirDaoPagosImpl() {
+        if (pagosDB == null) {
+            pagosDB = new DaoPagosImpl();
+        }
+        return pagosDB;
+    }
+
+    /**
+     * Metodo para contruir la clase DAO de los Alumnos
+     *
+     * @return Devuelve el objeto alumnosDB
+     */
+    public static DaoAlumnoImpl construirDaoAlumnoImpl() {
+        if (alumnosDB == null) {
+            alumnosDB = new DaoAlumnoImpl();
+        }
+        return alumnosDB;
+    }
+
+    /**/
+    /**
+     * Metodo para contruir la clase DAO de los Familiar
+     *
+     * @return Devuelve el objeto familiarDB
+     */
+    public static DaoFamiliarImpl construirDaoFamiliarImpl() {
+        if (familiarDB == null) {
+            familiarDB = new DaoFamiliarImpl();
+        }
+        return familiarDB;
+    }
+
+    /**/
+    /**
+     * Metodo para contruir la clase DAO de los Auxiliares
+     *
+     * @return Devuelve el objeto auxiliarDB
+     */
+    public static DaoAuxiliarImpl construirDaoAuxiliarImpl() {
+        if (auxiliarDB == null) {
+            auxiliarDB = new DaoAuxiliarImpl();
+        }
+        return auxiliarDB;
+    }
+
+    /**/
+ /**/
+    /**
+     * Metodo para contruir la clase DAO de Sistema
+     *
+     * @return Devuelve el objeto sistemaDB
+     */
+    public static DaoSistemaImpl construirDaoSistemaImpl() {
+        if (sistemaDB == null) {
+            sistemaDB = new DaoSistemaImpl();
+        }
+        return sistemaDB;
     }
 
     //Llamado a la funcion para abrir la ventana de login
@@ -120,6 +282,21 @@ public class Contexto {
     public static void abrirSeleccionABM2() {
         SeleccionABM2Controller seleccionTipoPersona = new SeleccionABM2Controller();
         seleccionTipoPersona.init();
+    }
+
+    public static void abrirVerLibro() {
+        VerLibroController verLibro = new VerLibroController();
+        verLibro.init();
+    }
+
+    public static void abrirModificarLibro() {
+        ModificarLibroController modificarLibro = new ModificarLibroController();
+        modificarLibro.init();
+    }
+
+    public static void abrirConfiguracion() {
+        ConfiguracionController configuracion = new ConfiguracionController();
+        configuracion.init();
     }
 
     public static Persona getPersona() {
@@ -174,7 +351,7 @@ public class Contexto {
         asistencia.init();
     }
 
-    public static void abrirPlanillaABMAlumno() {
+    public static void abrirPlanillaABMAlumno() throws Exception {
         PlanillaABMAlumnoController planilla = new PlanillaABMAlumnoController();
         planilla.init();
     }

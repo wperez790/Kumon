@@ -14,10 +14,7 @@ import org.kumon.model.Auxiliar;
  */
 public interface IAuxiliar {
     
-    public void registrar(Auxiliar auxiliar) throws Exception;
-    public void modificar(Auxiliar auxiliar) throws Exception;
-    public void eliminar(Auxiliar auxiliar) throws Exception;
-    public List<Auxiliar> listar() throws Exception;
+    public List getAll() throws Exception;
     
     
       

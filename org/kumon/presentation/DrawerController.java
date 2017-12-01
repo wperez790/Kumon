@@ -24,7 +24,9 @@ import org.kumon.main.Contexto;
 public class DrawerController implements Initializable {
 
     @FXML
-    private JFXButton btnCerrarSesion;
+    private JFXButton btnConfigurar;
+    @FXML
+    private JFXButton btnCerrarSesion21;
 
     /**
      * Initializes the controller class.
@@ -36,10 +38,14 @@ public class DrawerController implements Initializable {
 
     @FXML
     private void btnCerrarSesionAction(ActionEvent event) throws IOException, Exception {
-        /*      Parent root = FXMLLoader.load(getClass().getResource("/org/kumon/presentation/login.fxml"));
-        Contexto.splitPane.getItems().set(0, root);*/
+      
         ContenedorPrincipalController contenedor = new ContenedorPrincipalController();
         contenedor.close();
+    }
+
+    @FXML
+    private void btnConfigurarAction(ActionEvent event) {
+        Contexto.abrirConfiguracion();
     }
     
 }

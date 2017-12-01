@@ -27,7 +27,7 @@ public class DaoPersonaImpl extends Conexion implements IPersona {
         this.conectar();
         try {
             if (Contexto.tipoUser < 3) {
-                PreparedStatement st = this.conexion.prepareStatement("INSERT INTO Personas(idPersona,nombre,apellido,dni,telefono,fechaNacimiento,domicilio,user,pass,sexo,activo,edad,tipoUser,email)"
+                PreparedStatement st = this.conexion.prepareStatement("INSERT INTO Personas(idPersona,nombrePersona,apellido,dni,telefono,fechaNacimiento,domicilio,user,pass,sexo,activo,edad,tipoUser,email)"
                         + " Values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
                 st.setString(1, persona.getIdPersona());
                 st.setString(2, persona.getNombre());
@@ -52,7 +52,7 @@ public class DaoPersonaImpl extends Conexion implements IPersona {
                     st.executeUpdate();
                 }
             } else {
-                PreparedStatement st = this.conexion.prepareStatement("INSERT INTO Personas(idPersona,nombre,apellido,dni,telefono,fechaNacimiento,domicilio,sexo,activo,edad,tipoUser,info,email)"
+                PreparedStatement st = this.conexion.prepareStatement("INSERT INTO Personas(idPersona,nombrePersona,apellido,dni,telefono,fechaNacimiento,domicilio,sexo,activo,edad,tipoUser,info,email)"
                         + " Values(?,?,?,?,?,?,?,?,?,?,?,?,?)");
                 st.setString(1, persona.getIdPersona());
                 st.setString(2, persona.getNombre());
@@ -89,7 +89,7 @@ public class DaoPersonaImpl extends Conexion implements IPersona {
         this.conectar();
         try {
 
-            PreparedStatement st = this.conexion.prepareStatement("UPDATE Personas SET nombre = ?, apellido = ?, dni = ?, telefono = ?,"
+            PreparedStatement st = this.conexion.prepareStatement("UPDATE Personas SET nombrePersona = ?, apellido = ?, dni = ?, telefono = ?,"
                     + "fechaNacimiento = ?, domicilio = ?, sexo = ?, activo = ?, nombreImg=?, edad = ?, email = ?, info = ?"
                     + " WHERE idPersona = '" + persona.getIdPersona() + "';");
             st.setString(1, persona.getNombre());
@@ -136,13 +136,13 @@ public class DaoPersonaImpl extends Conexion implements IPersona {
         try {
             this.conectar();
             Statement st = conexion.createStatement();
-            ResultSet rs = st.executeQuery("SELECT idPersona, nombre, apellido, dni, telefono, fechaNacimiento, domicilio, user, pass, sexo, tipoUser, nombreImg"
+            ResultSet rs = st.executeQuery("SELECT idPersona, nombrePersona, apellido, dni, telefono, fechaNacimiento, domicilio, user, pass, sexo, tipoUser, nombreImg"
                     + " FROM Personas where user = '" + user + "' and activo = " + 1 + ";");
 
             while (rs.next()) {
                 aux = new Persona();
                 aux.setIdPersona(rs.getString("idPersona"));
-                aux.setNombre(rs.getString("nombre"));
+                aux.setNombre(rs.getString("nombrePersona"));
                 aux.setApellido(rs.getString("apellido"));
                 aux.setDni(rs.getInt("dni"));
                 aux.setTelefono(rs.getString("telefono"));
@@ -154,7 +154,7 @@ public class DaoPersonaImpl extends Conexion implements IPersona {
                 aux.setTipoUser(rs.getInt("tipoUser"));
                 aux.setNombreImg(rs.getString("nombreImg"));
             }
-            this.cerrar();
+          
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -236,13 +236,13 @@ public class DaoPersonaImpl extends Conexion implements IPersona {
         try {
             this.conectar();
             Statement st = conexion.createStatement();
-            ResultSet rs = st.executeQuery("SELECT idPersona, nombre, apellido, dni, telefono, fechaNacimiento, domicilio, user, pass, sexo, tipoUser, nombreImg, activo, edad , email, info"
+            ResultSet rs = st.executeQuery("SELECT idPersona, nombrePersona, apellido, dni, telefono, fechaNacimiento, domicilio, user, pass, sexo, tipoUser, nombreImg, activo, edad , email, info"
                     + " FROM Personas where idPersona = '" + id + "' ;");
 
             while (rs.next()) {
                 aux = new Persona();
                 aux.setIdPersona(rs.getString("idPersona"));
-                aux.setNombre(rs.getString("nombre"));
+                aux.setNombre(rs.getString("nombrePersona"));
                 aux.setApellido(rs.getString("apellido"));
                 aux.setDni(rs.getInt("dni"));
                 aux.setTelefono(rs.getString("telefono"));
@@ -280,11 +280,11 @@ public class DaoPersonaImpl extends Conexion implements IPersona {
         try {
             this.conectar();
             Statement st = conexion.createStatement();
-            ResultSet rs = st.executeQuery("SELECT dni, nombre, apellido"
-                    + " FROM Personas order by nombre, apellido;");
+            ResultSet rs = st.executeQuery("SELECT dni, nombrePersona, apellido"
+                    + " FROM Personas order by nombrePersona, apellido;");
             /* Recorre el Result set y setea el mapa con idPersona como key y nombre - apellido como value*/
             while (rs.next()) {
-                aux.put(rs.getInt("dni"), rs.getString("nombre") + " " + rs.getString("apellido"));
+                aux.put(rs.getInt("dni"), rs.getString("nombrePersona") + " " + rs.getString("apellido"));
 
             }
             /**/

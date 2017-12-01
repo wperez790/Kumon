@@ -16,6 +16,7 @@ public class Alumno extends Persona{
    
     private List<Asignatura> listaAsignaturas;
     private String idAuxiliar;
+    private String idAlumno;
     private String idOrientadora;
     private List<Familiar> listaFamiliares ;
 
@@ -57,6 +58,14 @@ public class Alumno extends Persona{
 
     public void setListaAsignaturas(List<Asignatura> listaAsignaturas) {
         this.listaAsignaturas = listaAsignaturas;
+    }
+
+    public String getIdAlumno() {
+        return idAlumno;
+    }
+
+    public void setIdAlumno(String idAlumno) {
+        this.idAlumno = idAlumno;
     }
     
     

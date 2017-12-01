@@ -5,6 +5,11 @@
  */
 package org.kumon.business;
 
+import org.kumon.main.Contexto;
+import org.kumon.model.Familiar;
+import org.kumon.model.Persona;
+import org.kumon.persist.DaoFamiliarImpl;
+
 
 
 /**
@@ -12,5 +17,13 @@ package org.kumon.business;
  * @author Walter
  */
 public class FamiliarBO{
+    
+    private DaoFamiliarImpl familiarDB = Contexto.construirDaoFamiliarImpl();
+    private PersonaBO personaBO = Contexto.construirPersonaBO();
+
+    public void registrar(Familiar familiar, Persona persona) throws Exception {
+        familiarDB.registrar(familiar);
+        personaBO.registrar(persona);
+    }
     
 }

@@ -61,7 +61,11 @@ public class ComprobarAdminController implements Initializable {
         user.setOnKeyPressed(e -> {
             if ((int) e.getCharacter().charAt(0) == 13) {
                 try {
-                    comprobar();
+                    if (comprobar()) {
+                        primaryStage.close();
+                        Contexto.abrirPlanillaABM();
+                    }
+
                 } catch (Exception exc) {
                     exc.printStackTrace();
                 }
@@ -71,7 +75,10 @@ public class ComprobarAdminController implements Initializable {
 
             if ((int) e.getCharacter().charAt(0) == 13) {
                 try {
-                    comprobar();
+                    if (comprobar()) {
+                        primaryStage.close();
+                        Contexto.abrirPlanillaABM();
+                    }
                 } catch (Exception exc) {
                     exc.printStackTrace();
                 }
@@ -97,28 +104,25 @@ public class ComprobarAdminController implements Initializable {
     @FXML
     private void btnComprobarAdminAction(ActionEvent event) throws Exception {
         if (comprobar()) {
-             primaryStage.close();
-             /*Parent pane = FXMLLoader.load(getClass().getResource("/org/kumon/presentation/PlanillaABM.fxml"));*/
-             /*Contexto.splitPane.getItems().set(0, pane);*/
-             Contexto.abrirPlanillaABM();
-        }
-        else{
+            primaryStage.close();
+            Contexto.abrirPlanillaABM();
+        } else {
             throw new Exception("Error Admin Incorrecto");
         }
     }
 
     private boolean comprobar() throws Exception {
-        //Setea el nombre que saldra en el mensaje de bienvenida
+        //Comprueba si es un Usuario tipo Admin
         try {
-            Contexto.setPersona(personaDB.obtenerPersonaByUser(user.getText()));
+            Contexto.setPersona(personaBO.obtenerPersonaByUser(user.getText()));
         } catch (Exception ex) {
             Logger.getLogger(LoginControl.class.getName()).log(Level.SEVERE, null, ex);
         }
         //
         if (personaBO.comprobarUsuario(user.getText(), pass.getText())) {
 
-            if (personaDB.obtenerPersonaByUser(user.getText()).getTipoUser() == 1) {
-                Contexto.tipoUser=1;
+            if (personaBO.obtenerPersonaByUser(user.getText()).getTipoUser() == 1) {
+                Contexto.tipoUser = 1; //SETEADO DE TIPO USER
                 return true;
             } else {
                 error = Notifications.create();
@@ -130,18 +134,17 @@ public class ComprobarAdminController implements Initializable {
                 error.showError();
                 return false;
             }
+        } else {
+            error = Notifications.create();
+            error.title("Comprobacion Administrador");
+            error.darkStyle();
+            error.text("Error en la Comprobacion de los Datos");
+            error.hideAfter(Duration.seconds(3));
+            error.position(Pos.BOTTOM_RIGHT);
+            error.showError();
+            return false;
         }
-        else{
-                error = Notifications.create();
-                error.title("Comprobacion Administrador");
-                error.darkStyle();
-                error.text("Error en la Comprobacion de los Datos");
-                error.hideAfter(Duration.seconds(3));
-                error.position(Pos.BOTTOM_RIGHT);
-                error.showError();
-                return false;
-        }
-        
+
     }
 
 }

@@ -53,14 +53,22 @@ public class DatosController implements Initializable {
   
 
     //AUXILIARES
-    PersonaBO personaBO = new PersonaBO();
-     private static Stage primaryStage = new Stage();
+    PersonaBO personaBO;
+     private static Stage primaryStage ;
     @FXML
     private Label labelInfoAdicional;
     @FXML
     private JFXButton btnBack;
     @FXML
     private Label labelEstadoCuenta;
+
+    public DatosController() {
+        personaBO= Contexto.construirPersonaBO();
+        primaryStage  = new Stage();
+    }
+    
+    
+    
     //
     /**
      * Initializes the controller class.

@@ -33,4 +33,8 @@ public class AuxiliarBO {
 
     }
 
+    public void agregarAuxiliar(String idPersona) throws Exception {
+        auxiliarDB.agregarAuxiliar(idPersona);
+    }
+
 }

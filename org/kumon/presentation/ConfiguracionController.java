@@ -39,12 +39,12 @@ public class ConfiguracionController implements Initializable {
     private JFXButton btnAceptar;
     @FXML
     private JFXButton btnCancelar;
-    private static Stage primaryStage ;
+    private static Stage primaryStage;
     private SistemaBO sistemaBO;
     Notifications error;
 
     public ConfiguracionController() {
-        primaryStage =  new Stage();
+        primaryStage = new Stage();
         sistemaBO = Contexto.construirSistemaBO();
     }
 
@@ -61,11 +61,21 @@ public class ConfiguracionController implements Initializable {
             Logger.getLogger(ConfiguracionController.class.getName()).log(Level.SEVERE, null, ex);
         }
         textFieldPrecio.setText(precio.toString());
+        textFieldPrecio.setOnKeyPressed(e -> {
+            if ((int) e.getCharacter().charAt(0) == 13) {
+                try {
+                    aceptarAccion();
+
+                } catch (Exception exc) {
+                    exc.printStackTrace();
+                }
+            }
+        });
     }
 
     public void init() {
         try {
-           
+
             Parent root = FXMLLoader.load(getClass().getResource("/org/kumon/presentation/Configuracion.fxml"));
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);
@@ -79,6 +89,11 @@ public class ConfiguracionController implements Initializable {
 
     @FXML
     private void btnAceptarAction(ActionEvent event) throws Exception {
+        aceptarAccion();
+
+    }
+
+    private void aceptarAccion() throws Exception {
         boolean ok = true;
         try {
             sistemaBO.modificarPrecioPorMateria(Double.parseDouble(textFieldPrecio.getText()));
@@ -95,13 +110,11 @@ public class ConfiguracionController implements Initializable {
             error.hideAfter(Duration.seconds(3));
             error.position(Pos.BOTTOM_RIGHT);
             error.showError();
-        }
-        else{
+        } else {
             textFieldPrecio.setUnFocusColor(GREEN);
             Contexto.precioPorMateria = sistemaBO.obtenerPrecioPorMateria();
             primaryStage.close();
         }
-
     }
 
     @FXML

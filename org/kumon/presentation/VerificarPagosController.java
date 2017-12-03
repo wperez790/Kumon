@@ -74,7 +74,7 @@ public class VerificarPagosController implements Initializable {
             return param.getValue().getValue().nombrePersona;
         });
         /**/
- /*Seteo de la columna idAlumno*/
+ /*Seteo de la columna idAlumno/DNI*/
         JFXTreeTableColumn<VerificarPagosController.Payment, String> idAlumno = new JFXTreeTableColumn<>("DNI");
         idAlumno.setPrefWidth(213);
         idAlumno.setCellValueFactory((param) -> {

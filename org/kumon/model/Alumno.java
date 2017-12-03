@@ -24,6 +24,10 @@ public class Alumno extends Persona{
         this.listaAsignaturas = listaAsignaturas;
         this.listaFamiliares = listaFamiliares;
     }
+
+    public Alumno() {
+        
+    }
  
     public List<Familiar> getListaFamiliares() {
         return listaFamiliares;

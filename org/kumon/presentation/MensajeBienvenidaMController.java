@@ -15,7 +15,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import org.kumon.main.Contexto;
-import org.kumon.model.Persona;
 
 /**
  * FXML Controller class

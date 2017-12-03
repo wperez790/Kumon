@@ -14,7 +14,6 @@ import com.jfoenix.controls.RecursiveTreeItem;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Date;
 import java.util.Calendar;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -67,10 +66,6 @@ public class PrestamoLibrosController implements Initializable {
     private JFXButton btnModificar;
     @FXML
     private JFXTreeTableView<Book> jfxTable;
-//AUX
-    private LibroBO libroBO = Contexto.construirLibroBO();
-    private PrestamoBO prestamoBO = Contexto.construirPrestamoBO();
-//
     @FXML
     private JFXTextField textFieldBuscar;
     @FXML
@@ -88,6 +83,15 @@ public class PrestamoLibrosController implements Initializable {
     private JFXTextField textFieldID;
     @FXML
     private JFXButton btnVerificarPrestamos;
+    //AUX
+    private LibroBO libroBO;
+    private PrestamoBO prestamoBO;
+    //
+
+    public PrestamoLibrosController() {
+        libroBO = Contexto.construirLibroBO();
+        prestamoBO = Contexto.construirPrestamoBO();
+    }
 
     /**
      * Initializes the controller class.
@@ -168,10 +172,14 @@ public class PrestamoLibrosController implements Initializable {
         notificacion.hideAfter(Duration.seconds(3));
         notificacion.position(Pos.CENTER);
         notificacion.darkStyle();
-        Parent pane = FXMLLoader.load(getClass().getResource("/org/kumon/presentation/PrestamoLibros.fxml"));
-        Contexto.splitPane.getItems().set(0, pane);
+        recargar();
         notificacion.show();
 
+    }
+
+    private void recargar() throws IOException {
+        Parent pane = FXMLLoader.load(getClass().getResource("/org/kumon/presentation/PrestamoLibros.fxml"));
+        Contexto.splitPane.getItems().set(0, pane);
     }
 
     @FXML
@@ -198,8 +206,7 @@ public class PrestamoLibrosController implements Initializable {
         if (alertBox.getResult() == ButtonType.OK) {
             Contexto.libro = libroBO.getLibroByID(Integer.parseInt(book.id.getValue()));
             libroBO.borrarLibro(Contexto.libro.getIdLibro());
-            Parent pane = FXMLLoader.load(getClass().getResource("/org/kumon/presentation/PrestamoLibros.fxml"));
-            Contexto.splitPane.getItems().set(0, pane);
+            recargar();
         } else {
             alertBox.close();
         }
@@ -218,8 +225,7 @@ public class PrestamoLibrosController implements Initializable {
         Book book = jfxTable.getSelectionModel().getSelectedItem().getValue();
         Contexto.libro = libroBO.getLibroByID(Integer.parseInt(book.id.getValue()));
         libroBO.modificarStockLibro(Contexto.libro.getStock() + 1, Contexto.libro.getIdLibro());
-        Parent pane = FXMLLoader.load(getClass().getResource("/org/kumon/presentation/PrestamoLibros.fxml"));
-        Contexto.splitPane.getItems().set(0, pane);
+        recargar();
     }
 
     @FXML
@@ -228,8 +234,7 @@ public class PrestamoLibrosController implements Initializable {
         Contexto.libro = libroBO.getLibroByID(Integer.parseInt(book.id.getValue()));
         int cantidad = Contexto.libro.getStock() - 1;
         libroBO.modificarStockLibro(cantidad, Contexto.libro.getIdLibro());
-        Parent pane = FXMLLoader.load(getClass().getResource("/org/kumon/presentation/PrestamoLibros.fxml"));
-        Contexto.splitPane.getItems().set(0, pane);
+        recargar();
     }
 
     @FXML

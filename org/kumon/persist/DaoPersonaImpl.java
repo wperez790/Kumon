@@ -27,8 +27,8 @@ public class DaoPersonaImpl extends Conexion implements IPersona {
         this.conectar();
         try {
             if (Contexto.tipoUser < 3) {
-                PreparedStatement st = this.conexion.prepareStatement("INSERT INTO Personas(idPersona,nombrePersona,apellido,dni,telefono,fechaNacimiento,domicilio,user,pass,sexo,activo,edad,tipoUser,email)"
-                        + " Values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+                PreparedStatement st = this.conexion.prepareStatement("INSERT INTO Personas(idPersona,nombrePersona,apellido,dni,telefono,fechaNacimiento,domicilio,user,pass,sexo,activo,edad,tipoUser,email,nombreImg)"
+                        + " Values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
                 st.setString(1, persona.getIdPersona());
                 st.setString(2, persona.getNombre());
                 st.setString(3, persona.getApellido());
@@ -43,17 +43,12 @@ public class DaoPersonaImpl extends Conexion implements IPersona {
                 st.setInt(12, persona.getEdad());
                 st.setInt(13, persona.getTipoUser());
                 st.setString(14, persona.getEmail());
+                st.setString(15, persona.getNombreImg());
                 st.executeUpdate();
-                if (!persona.getNombreImg().isEmpty()) {
-                    st = this.conexion.prepareStatement("INSERT INTO Personas(idPersona, nombreImg)"
-                            + " Values(?,?)");
-                    st.setString(1, persona.getIdPersona());
-                    st.setString(2, persona.getNombreImg());
-                    st.executeUpdate();
-                }
+
             } else {
-                PreparedStatement st = this.conexion.prepareStatement("INSERT INTO Personas(idPersona,nombrePersona,apellido,dni,telefono,fechaNacimiento,domicilio,sexo,activo,edad,tipoUser,info,email)"
-                        + " Values(?,?,?,?,?,?,?,?,?,?,?,?,?)");
+                PreparedStatement st = this.conexion.prepareStatement("INSERT INTO Personas(idPersona,nombrePersona,apellido,dni,telefono,fechaNacimiento,domicilio,sexo,activo,edad,tipoUser,info,email,nombreImg)"
+                        + " Values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
                 st.setString(1, persona.getIdPersona());
                 st.setString(2, persona.getNombre());
                 st.setString(3, persona.getApellido());
@@ -67,15 +62,9 @@ public class DaoPersonaImpl extends Conexion implements IPersona {
                 st.setInt(11, persona.getTipoUser());
                 st.setString(12, persona.getInfo());
                 st.setString(13, persona.getEmail());
+                st.setString(14, persona.getNombreImg());
                 st.executeUpdate();
-                if (!persona.getNombreImg().isEmpty()) {
-                    st = this.conexion.prepareStatement("INSERT INTO Personas(idPersona, nombreImg)"
-                            + " Values(?,?)");
-                    st.setString(1, persona.getIdPersona());
-                    st.setString(2, persona.getNombreImg());
-                    st.executeUpdate();
-                }
-                
+
             }
 
         } catch (SQLException e) {
@@ -154,7 +143,6 @@ public class DaoPersonaImpl extends Conexion implements IPersona {
                 aux.setTipoUser(rs.getInt("tipoUser"));
                 aux.setNombreImg(rs.getString("nombreImg"));
             }
-          
 
         } catch (Exception e) {
             e.printStackTrace();

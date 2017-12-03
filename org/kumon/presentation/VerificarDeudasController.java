@@ -34,9 +34,9 @@ import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.TreeItem;
 import org.kumon.business.DeudaBO;
+import org.kumon.business.PagosBO;
 import org.kumon.main.Contexto;
 import org.kumon.model.Deuda;
-import org.kumon.model.Prestamo;
 
 /**
  * FXML Controller class
@@ -55,24 +55,30 @@ public class VerificarDeudasController implements Initializable {
     private JFXComboBox<String> comboBoxFiltro;
     @FXML
     private JFXTreeTableView<Debt> tableDeudas;
-    //AUX
-    DeudaBO deudaBO = Contexto.construirDeudaBO();
     @FXML
     private JFXButton btnPagar;
     @FXML
     private Label deudasLabel;
+    //AUX
+    DeudaBO deudaBO;
+    PagosBO pagosBO;
 
     //
+    public VerificarDeudasController() {
+        deudaBO = Contexto.construirDeudaBO();
+        pagosBO = Contexto.construirPagosBO();
+    }
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
-           if(Contexto.SeteoPago){
-               deudasLabel.setText("Elija la Deuda a Pagar");
-               btnAnular.setVisible(false);
-              
+
+        if (Contexto.SeteoPago) {
+            deudasLabel.setText("Elija la Deuda a Pagar");
+            btnAnular.setVisible(false);
+
         }
         /*Seteo comboBox*/
         ObservableList<String> filtros
@@ -108,28 +114,28 @@ public class VerificarDeudasController implements Initializable {
         });
         /**/
 
- /*Seteo de la columna idDeuda*/
+ /*Seteo de la columna Nombre*/
         JFXTreeTableColumn<VerificarDeudasController.Debt, String> nombrePersona = new JFXTreeTableColumn<>("Nombre");
         nombrePersona.setPrefWidth(182);
         nombrePersona.setCellValueFactory((param) -> {
             return param.getValue().getValue().nombrePersona;
         });
         /**/
- /*Seteo de la columna idDeuda*/
+ /*Seteo de la columna MontoTotal*/
         JFXTreeTableColumn<VerificarDeudasController.Debt, String> montoT = new JFXTreeTableColumn<>("Monto Total");
         montoT.setPrefWidth(182);
         montoT.setCellValueFactory((param) -> {
             return param.getValue().getValue().montoTotal;
         });
         /**/
- /*Seteo de la columna idDeuda*/
+ /*Seteo de la columna MontoAdeudado*/
         JFXTreeTableColumn<VerificarDeudasController.Debt, String> montoA = new JFXTreeTableColumn<>("Monto Adeudado");
         montoA.setPrefWidth(182);
         montoA.setCellValueFactory((param) -> {
             return param.getValue().getValue().montoAdeudado;
         });
         /**/
- /*Seteo de la columna idDeuda*/
+ /*Seteo de la columna Vencimiento*/
         JFXTreeTableColumn<VerificarDeudasController.Debt, String> vencimiento = new JFXTreeTableColumn<>("Vencimiento");
         vencimiento.setPrefWidth(182);
         vencimiento.setCellValueFactory((param) -> {
@@ -213,6 +219,11 @@ public class VerificarDeudasController implements Initializable {
 
     @FXML
     private void btnPagarAction(ActionEvent event) {
+        Debt debt = tableDeudas.getSelectionModel().getSelectedItem().getValue();
+        Contexto.idDeuda = debt.idDeuda.getValue();
+        Contexto.monto = Double.parseDouble(debt.montoAdeudado.getValue());
+        Contexto.abrirInputPago();
+        
     }
 
     private static class Debt extends RecursiveTreeObject<Debt> {

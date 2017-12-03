@@ -9,12 +9,10 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDatePicker;
-import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import java.io.IOException;
 import java.net.URL;
-import java.time.LocalDate;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -66,17 +64,24 @@ public class DatosConTextfieldController implements Initializable {
     private JFXTextField textFieldNombreImg;
     @FXML
     private JFXTextField textFieldMail;
-    //AUXILIARES
-    Persona persona1 = new Persona();
-    private static Stage primaryStage = new Stage();
-    private Notifications notificacion;
-    private Notifications error2;
-    DaoPersonaImpl personaDB = new DaoPersonaImpl();
-    PersonaBO personaBO = new PersonaBO();
     @FXML
     private JFXTextArea textAreaInfoAdicional;
     @FXML
     private JFXCheckBox checkBoxCuentaActiva;
+
+    //AUXILIARES
+    Persona persona1;
+    private static Stage primaryStage;
+    private Notifications notificacion;
+    private Notifications error2;
+    PersonaBO personaBO;
+
+    public DatosConTextfieldController() {
+        personaBO = Contexto.construirPersonaBO();
+        primaryStage = new Stage();
+        persona1 = new Persona();
+    }
+
     /**
      * Initializes the controller class.
      */
@@ -93,27 +98,27 @@ public class DatosConTextfieldController implements Initializable {
         comboBoxSexo.getSelectionModel().select(persona.getSexo());
         datePickerFecha.setValue(persona.getFechaNacimiento().toLocalDate());
         textFieldNombreImg.setText(persona.getNombreImg());
-        Image img = new Image("/org/kumon/presentation/img/fotosPersonas/"+persona.getNombreImg());
+        Image img = new Image("/org/kumon/presentation/img/fotosPersonas/" + persona.getNombreImg());
         imagenPersona.setImage(img);
         textAreaInfoAdicional.setText(persona.getInfo());
         boolean estado = personaBO.getBooleanEstadoCuenta(persona.getActivo());
         checkBoxCuentaActiva.setSelected(estado);
-    }    
+    }
 
     @FXML
     private void btnGuardarAction(ActionEvent event) throws Exception {
-        
-         boolean ok = false;
-        if(checkBoxCuentaActiva.isSelected())
+
+        boolean ok = true;
+        if (checkBoxCuentaActiva.isSelected()) {
             persona1.setActivo(1);
-        else
+        } else {
             persona1.setActivo(0);
+        }
         persona1.setNombre(textFieldNombre.getText());
         //Si dni es INT////////////////////////////////
-        try{
-        persona1.setDni(Integer.parseInt(textFieldDocumento.getText()));
-        }
-        catch(Exception e){
+        try {
+            persona1.setDni(Integer.parseInt(textFieldDocumento.getText()));
+        } catch (Exception e) {
             e.printStackTrace();
             textFieldDocumento.setUnFocusColor(RED);
             error2 = Notifications.create();
@@ -123,8 +128,8 @@ public class DatosConTextfieldController implements Initializable {
             error2.hideAfter(Duration.seconds(3));
             error2.position(Pos.BOTTOM_RIGHT);
             error2.showError();
-            
-            
+            ok = false;
+
         }
         /////////////////////////////////////////////
         persona1.setInfo(textAreaInfoAdicional.getText());
@@ -134,17 +139,13 @@ public class DatosConTextfieldController implements Initializable {
         persona1.setDomicilio(textFieldDomicilio.getText());
         persona1.setTelefono(textFieldTelefono.getText());
         persona1.setEmail(textFieldMail.getText());
-        if(Contexto.tipoUser == 2)
-        persona1.setTipoUser(2);
-        if(Contexto.tipoUser == 1)
-        persona1.setTipoUser(1);
-        ///////////////////////////////////////////////////////////////
+        persona1.setTipoUser(Contexto.tipoUser);
         persona1.setSexo(comboBoxSexo.getValue());
-        
+        ///////////////////////////////////////////////////////////////
         //FECHAS Verificacion de Fecha no null y calculo de Edad.
         java.sql.Date date = java.sql.Date.valueOf(datePickerFecha.getValue());
         persona1.setFechaNacimiento(date);
-        if(persona1.getFechaNacimiento()==null){
+        if (persona1.getFechaNacimiento() == null) {
             error2 = Notifications.create();
             error2.title("Error de Parametros");
             error2.darkStyle();
@@ -152,16 +153,15 @@ public class DatosConTextfieldController implements Initializable {
             error2.hideAfter(Duration.seconds(3));
             error2.position(Pos.BOTTOM_RIGHT);
             error2.showError();
-            
-        }
-        else
+            ok = false;
+        } else {
             persona1.setEdad(personaBO.calcularEdad(datePickerFecha));
-        
-         //Si todo esta ok: REGISTRA
-         ok= true;//Dejo este OK para agregar funcionalidades mas adelante.
-        if(ok==true){
+        }
+
+        //Si todo esta ok: REGISTRA
+        if (ok) {
             textFieldDocumento.setUnFocusColor(Color.GREEN);
-            personaDB.modificar(persona1);
+            personaBO.modificar(persona1);
             Image img = new Image("/org/kumon/presentation/img/ok.png");
             notificacion = Notifications.create();
             notificacion.title("Resultado de la Operacion");
@@ -173,8 +173,7 @@ public class DatosConTextfieldController implements Initializable {
             Parent pane = FXMLLoader.load(getClass().getResource("/org/kumon/presentation/SeleccionPersona.fxml"));
             Contexto.splitPane.getItems().set(0, pane);
             notificacion.show();
-        
-        
+
         }
         //
     }
@@ -184,10 +183,11 @@ public class DatosConTextfieldController implements Initializable {
         Parent pane = FXMLLoader.load(getClass().getResource("/org/kumon/presentation/SeleccionPersona.fxml"));
         Contexto.splitPane.getItems().set(0, pane);
     }
-    public void init(){
-        
+
+    public void init() {
+
         try {
-            
+
             Parent root = FXMLLoader.load(getClass().getResource("/org/kumon/presentation/DatosConTextField.fxml"));
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);
@@ -195,7 +195,7 @@ public class DatosConTextfieldController implements Initializable {
             primaryStage.show();
         } catch (Exception e) {
             e.printStackTrace();
-        
+
         }
     }
 }

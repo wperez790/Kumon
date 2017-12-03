@@ -32,8 +32,8 @@ import org.kumon.main.Contexto;
 public class DeseaEliminarController implements Initializable {
 //AUXILIARES
 
-    PersonaBO personaBO = new PersonaBO();
-    private static Stage primaryStage = new Stage();
+    PersonaBO personaBO;
+    private static Stage primaryStage;
     private Notifications notificacion;
     private Notifications ok;
     @FXML
@@ -44,6 +44,11 @@ public class DeseaEliminarController implements Initializable {
     private Label labelNombre;
     @FXML
     private Label labelDni;
+
+    public DeseaEliminarController() {
+        personaBO = Contexto.construirPersonaBO();
+        primaryStage = new Stage();
+    }
 
     /**
      * Initializes the controller class.
@@ -89,6 +94,6 @@ public class DeseaEliminarController implements Initializable {
         Contexto.splitPane.getItems().set(0, pane);
         primaryStage.close();
         notificacion.show();
-        
+
     }
 }

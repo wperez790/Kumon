@@ -42,7 +42,7 @@
             <JFXTextField fx:id="textFieldDocumento" labelFloat="true" promptText="Documento" GridPane.rowIndex="3" />
             <JFXTextField fx:id="textFieldDomicilio" labelFloat="true" promptText="Domicilio" GridPane.rowIndex="4" />
             <JFXTextField fx:id="textFieldTelefono" labelFloat="true" promptText="Teléfono" GridPane.rowIndex="6" />
-            <ImageView fx:id="imagenPersona" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
+            <ImageView fx:id="imagenPersona" fitHeight="131.0" fitWidth="134.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
                <image>
                   <Image url="@img/fotosPersonas/default.png" />
                </image></ImageView>

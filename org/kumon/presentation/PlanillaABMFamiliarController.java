@@ -70,18 +70,25 @@ public class PlanillaABMFamiliarController implements Initializable {
     private JFXTextArea textAreaInfoAdicional;
     @FXML
     private JFXTextField textFieldRelacion;
-
-    //auxiliares
-    Persona persona = new Persona();
-    Familiar familiar = new Familiar();
-    private Notifications notificacion;
-    private Notifications error2;
-    private static Stage primaryStage = new Stage();
-    PersonaBO personaBO = Contexto.construirPersonaBO();
-    FamiliarBO familiarBO = Contexto.construirFamiliarBO();
-    //
     @FXML
     private JFXTextField textFieldDocumentoAlumno;
+    //auxiliares
+    Persona persona;
+    Familiar familiar;
+    private Notifications notificacion;
+    private Notifications error2;
+    private static Stage primaryStage;
+    PersonaBO personaBO;
+    FamiliarBO familiarBO;
+    //
+
+    public PlanillaABMFamiliarController() {
+        persona = new Persona();
+        familiar = new Familiar();
+        primaryStage = new Stage();
+        personaBO = Contexto.construirPersonaBO();
+        familiarBO = Contexto.construirFamiliarBO();
+    }
 
     /**
      * Initializes the controller class.
@@ -112,11 +119,11 @@ public class PlanillaABMFamiliarController implements Initializable {
             error2.hideAfter(Duration.seconds(3));
             error2.position(Pos.BOTTOM_RIGHT);
             error2.showError();
-            ok=false;
+            ok = false;
         }
-           if(textFieldDocumento.getText().isEmpty() || textFieldDocumentoAlumno.getText().isEmpty()){
-            textFieldDocumento.setUnFocusColor(RED);   
-            textFieldDocumentoAlumno.setUnFocusColor(RED);   
+        if (textFieldDocumento.getText().isEmpty() || textFieldDocumentoAlumno.getText().isEmpty()) {
+            textFieldDocumento.setUnFocusColor(RED);
+            textFieldDocumentoAlumno.setUnFocusColor(RED);
             error2 = Notifications.create();
             error2.title("Error de Parametros");
             error2.darkStyle();
@@ -124,7 +131,7 @@ public class PlanillaABMFamiliarController implements Initializable {
             error2.hideAfter(Duration.seconds(3));
             error2.position(Pos.BOTTOM_RIGHT);
             error2.showError();
-            ok=false;
+            ok = false;
         }
         /////////////////////////////////////////////
         familiar.setIdAlumno(textFieldDocumentoAlumno.getText());
@@ -150,17 +157,17 @@ public class PlanillaABMFamiliarController implements Initializable {
             error2.hideAfter(Duration.seconds(3));
             error2.position(Pos.BOTTOM_RIGHT);
             error2.showError();
-            ok=false;
+            ok = false;
 
         } else {
             persona.setEdad(personaBO.calcularEdad(datePickerFecha));
-            
+
         }
         ////////////////////////////////////////////////////////////////////
 
         //Si todo esta ok: REGISTRA
         if (ok == true) {
-            
+
             textFieldDocumento.setUnFocusColor(Color.GREEN);
             familiarBO.registrar(familiar, persona);
             Image img = new Image("/org/kumon/presentation/img/ok.png");

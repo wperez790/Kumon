@@ -27,6 +27,8 @@ import static javafx.scene.paint.Color.RED;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.controlsfx.control.Notifications;
+import org.kumon.business.AdministradorBO;
+import org.kumon.business.AuxiliarBO;
 import org.kumon.business.PersonaBO;
 import org.kumon.main.Contexto;
 import org.kumon.model.Persona;
@@ -72,11 +74,21 @@ public class PlanillaABMController implements Initializable {
     private JFXTextField textFieldMail;
 
     //auxiliares
-    Persona persona = new Persona();
+    Persona persona;
     private Notifications notificacion;
     private Notifications error2;
-    private static Stage primaryStage = new Stage();
-    PersonaBO personaBO = Contexto.construirPersonaBO();
+    private static Stage primaryStage;
+    private PersonaBO personaBO;
+    private AuxiliarBO auxiliarBO;
+    private AdministradorBO adminsBO;
+
+    public PlanillaABMController() {
+        persona = new Persona();
+        primaryStage = new Stage();
+        personaBO = Contexto.construirPersonaBO();
+        auxiliarBO = Contexto.construirAuxiliarBO();
+    }
+
     //
 
     /*   public void btnCargarImagenAction(ActionEvent e) throws Exception{
@@ -122,12 +134,9 @@ public class PlanillaABMController implements Initializable {
         persona.setDomicilio(textFieldDomicilio.getText());
         persona.setTelefono(textFieldTelefono.getText());
         persona.setEmail(textFieldMail.getText());
-        if (Contexto.tipoUser == 2) {
-            persona.setTipoUser(2);
-        }
-        if (Contexto.tipoUser == 1) {
-            persona.setTipoUser(1);
-        }
+        persona.setNombreImg(textFieldNombreImg.getText());
+        persona.setTipoUser(Contexto.tipoUser);
+
         //Si repitio bien el PASSWORD
         if (passwordField1.getText().equals(passwordField2.getText())) {
             persona.setPass(passwordField1.getText());
@@ -203,14 +212,18 @@ public class PlanillaABMController implements Initializable {
         }
         /////////////////////////////////////////////////////////////////////
 
-        persona.setNombreImg(textFieldNombreImg.getText());
-
         //Si todo esta ok: REGISTRA
         if (ok == true) {
             passwordField1.setUnFocusColor(Color.GREEN);
             passwordField2.setUnFocusColor(Color.GREEN);
             textFieldDocumento.setUnFocusColor(Color.GREEN);
             personaBO.registrar(persona);
+            if (Contexto.tipoUser == 2) {
+                auxiliarBO.agregarAuxiliar(persona.getIdPersona());
+            }
+            if (Contexto.tipoUser == 1) {
+                adminsBO.agregarAdmin(persona.getIdPersona());
+            }
             Image img = new Image("/org/kumon/presentation/img/ok.png");
             notificacion = Notifications.create();
             notificacion.title("Resultado de la Operacion");
@@ -227,16 +240,9 @@ public class PlanillaABMController implements Initializable {
 
     }
 
-    /*
-    public Integer calcularEdad(){
-    
-    Period periodo = Period.between(datePickerFecha.getValue(), LocalDate.now());
-    return periodo.getYears();
-    }*/
-    public boolean comprobarUsuario() throws Exception {
-        boolean ok = personaBO.comprobarUser(textFieldUsuario.getText());
 
-        return ok;
+    public boolean comprobarUsuario() throws Exception {
+        return  personaBO.comprobarUser(textFieldUsuario.getText()); 
 
     }
 

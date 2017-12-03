@@ -5,6 +5,7 @@
  */
 package org.kumon.persist;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -25,14 +26,13 @@ public class DaoAuxiliarImpl extends Conexion implements IAuxiliar{
         try {
             this.conectar();
             Statement st = conexion.createStatement();
-            ResultSet rs = st.executeQuery("SELECT nombrePersona, apellido, idAuxiliar, idAdmin"
-                    + "FROM Auxiliares a inner join Administradores ad inner join Personas p "
-                    + "WHERE p.idPersona = a.idAuxiliar AND p.idPersona = ad.idAdmin;");
-            /* Recorre el Result set y setea el prestamo con los datos y los agrega a la lista de retorno*/
+            ResultSet rs = st.executeQuery("SELECT nombrePersona, apellido, idAuxiliar"
+                    + " FROM Auxiliares inner join Personas "
+                    + " WHERE idPersona = idAuxiliar;");
+            /* Recorre el Result set, setea los Auxiliares con los datos y los agrega a la lista de retorno*/
             while (rs.next()) {
                 auxiliar = new Auxiliar();
                 auxiliar.setIdAuxiliar(rs.getString("idAuxiliar"));
-                auxiliar.setIdAdmin(rs.getString("idAdmin"));
                 auxiliar.setNombre(rs.getString("nombrePersona"));
                 auxiliar.setApellido(rs.getString("apellido"));
                 lista.add(auxiliar);
@@ -45,6 +45,21 @@ public class DaoAuxiliarImpl extends Conexion implements IAuxiliar{
 
         return lista;
 
+    }
+
+    public void agregarAuxiliar(String idPersona) throws Exception {
+         this.conectar();
+        try {
+            PreparedStatement st = this.conexion.prepareStatement("INSERT INTO Auxiliares(idAuxiliar)"
+                    + " Values(?)");
+            st.setString(1, idPersona);
+            
+            st.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        this.cerrar();
     }
 
 }

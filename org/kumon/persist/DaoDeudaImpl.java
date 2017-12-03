@@ -26,7 +26,7 @@ public class DaoDeudaImpl extends Conexion implements IDeudas{
        this.conectar();
         try {
             PreparedStatement st = this.conexion.prepareStatement("INSERT INTO Deudas(idAsignatura,idAlumno,vencimiento,monto,montoAdeudado)"
-                    + " Values(?,?,?,?)");
+                    + " Values(?,?,?,?,?)");
             st.setInt(1, deuda.getIdAsignatura());
             st.setString(2, deuda.getIdAlumno());
             st.setDate(3, deuda.getVencimiento());
@@ -154,6 +154,21 @@ public class DaoDeudaImpl extends Conexion implements IDeudas{
         try {
                 PreparedStatement st = this.conexion.prepareStatement("UPDATE Deudas SET montoAdeudado = montoAdeudado - ? WHERE idDeuda ="+pagos.getIdDeuda()+";");
                 st.setDouble(1, pagos.getMonto());
+                st.executeUpdate();
+    
+           
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        this.cerrar();
+    }
+
+    public void restaurarMontoAdeudado(Pago pago) throws Exception {
+        this.conectar();
+        try {
+                PreparedStatement st = this.conexion.prepareStatement("UPDATE Deudas SET montoAdeudado = montoAdeudado + ? WHERE idDeuda ="+pago.getIdDeuda()+";");
+                st.setDouble(1, pago.getMonto());
                 st.executeUpdate();
     
            

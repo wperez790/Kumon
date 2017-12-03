@@ -44,8 +44,8 @@ public class DaoPagosImpl extends Conexion implements IPagos {
          this.conectar();
         try {
 
-            PreparedStatement st = this.conexion.prepareStatement("DELETE FROM Deudas"
-                    + " WHERE idDeuda = " + idPago +";");
+            PreparedStatement st = this.conexion.prepareStatement("DELETE FROM Pagos"
+                    + " WHERE idPago = " + idPago +";");
             st.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -60,9 +60,9 @@ public class DaoPagosImpl extends Conexion implements IPagos {
         try {
             this.conectar();
             Statement st = conexion.createStatement();
-            ResultSet rs = st.executeQuery("SELECT idPago, nombrePersona, fecha, monto, pa.idDeuda, d.idAlumno FROM Pagos pa "
+            ResultSet rs = st.executeQuery("SELECT idPago, nombrePersona, fecha, pa.monto, pa.idDeuda, d.idAlumno FROM Pagos pa "
                     + "INNER JOIN Deudas d INNER JOIN Alumnos a INNER JOIN Personas p "
-                    + "WHERE pa.idDeuda = d.idDeuda AND d.idAlumno = a.idAlumno AND a.idAlumno = p.idAlumno order by fecha;");
+                    + "WHERE pa.idDeuda = d.idDeuda AND d.idAlumno = a.idAlumno AND a.idAlumno = idPersona order by fecha;");
             /* Recorre el Result set y setea el pago con los datos y los agrega a la lista de retorno*/
             while (rs.next()) {
                 pago = new Pago();
@@ -81,6 +81,32 @@ public class DaoPagosImpl extends Conexion implements IPagos {
         this.cerrar();
 
         return lista;
+    }
+
+    public Pago obtenerPagoById(Integer idPago) throws Exception {
+       Pago pago = null;
+        try {
+            this.conectar();
+            Statement st = conexion.createStatement();
+            ResultSet rs = st.executeQuery("SELECT idPago, monto, fecha, idDeuda "
+                    + " FROM Pagos "
+                    + " WHERE  idPago = "+ idPago+";");
+                   /* Recorre el Result set y setea el pago con los datos y los agrega a la lista de retorno*/
+            while (rs.next()) {
+                pago = new Pago();
+                pago.setIdPago(rs.getInt("idPago"));
+                pago.setFecha(rs.getDate("fecha"));
+                pago.setIdDeuda(rs.getInt("idDeuda"));
+                pago.setMonto(rs.getDouble("monto"));
+             
+            }
+            /**/
+        } catch (Exception e) {
+            throw new Exception("Metodo: obtenerTodos() error");
+        }
+        this.cerrar();
+        return pago;
+    
     }
 
 }

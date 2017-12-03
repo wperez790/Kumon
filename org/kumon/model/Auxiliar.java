@@ -15,11 +15,10 @@ import java.util.List;
  */
 public class Auxiliar extends Persona {
 
-    List<Alumno> alumnosList = new ArrayList<Alumno>();
+    List<Alumno> alumnosList;
     private String idAuxiliar;
-    private String nombre;
-    private String apellido;
-    private String idAdmin;
+
+ 
 
     public String getIdAuxiliar() {
         return idAuxiliar;
@@ -35,30 +34,6 @@ public class Auxiliar extends Persona {
 
     public void setAlumnosList(List<Alumno> alumnosList) {
         this.alumnosList = alumnosList;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getApellido() {
-        return apellido;
-    }
-
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
-    }
-
-    public String getIdAdmin() {
-        return idAdmin;
-    }
-
-    public void setIdAdmin(String idAdmin) {
-        this.idAdmin = idAdmin;
     }
 
 }

@@ -5,6 +5,7 @@
  */
 package org.kumon.persist.interfaces;
 
+import java.util.List;
 import org.kumon.model.Asistencia;
 
 /**
@@ -13,4 +14,5 @@ import org.kumon.model.Asistencia;
  */
 public interface IAsistencia {
     public void registrar(Asistencia asistencia) throws Exception;
+    public List obtenerTodas() throws Exception;
 }

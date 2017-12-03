@@ -34,7 +34,6 @@ import javafx.scene.control.TreeItem;
 import org.kumon.business.PersonaBO;
 import org.kumon.main.Contexto;
 import org.kumon.model.Persona;
-import org.kumon.persist.DaoPersonaImpl;
 
 /**
  * FXML Controller class
@@ -53,12 +52,18 @@ public class SeleccionPersonaController implements Initializable {
     private JFXButton btnCancelar;
     @FXML
     private JFXTreeTableView<Person> tablePersonas;
-
-     //AUX
-    private final PersonaBO personaBO = new PersonaBO();
-
     @FXML
     private JFXButton btnBack;
+
+    //AUX
+    private final PersonaBO personaBO;
+    //
+    
+    public SeleccionPersonaController() {
+        personaBO = Contexto.construirPersonaBO();
+    }
+    
+    
     /**
      * Initializes the controller class.
      */

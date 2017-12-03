@@ -25,7 +25,9 @@ public class PagosBO {
         }
         
         public void anularPago(Integer idPago) throws Exception {
+            deudaBO.restaurarMontoAdeudado(idPago);
             pagosDB.anularPago(idPago);
+            
         }
         public List obtenerTodos() throws Exception{
            return pagosDB.obtenerTodos();

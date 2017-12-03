@@ -7,7 +7,9 @@ package org.kumon.main;
 
 import javafx.scene.control.SplitPane;
 import javafx.stage.Stage;
+import org.kumon.business.AdministradorBO;
 import org.kumon.business.AlumnoBO;
+import org.kumon.business.AsistenciaBO;
 import org.kumon.business.AuxiliarBO;
 import org.kumon.business.DeudaBO;
 import org.kumon.business.FamiliarBO;
@@ -18,7 +20,9 @@ import org.kumon.business.PrestamoBO;
 import org.kumon.business.SistemaBO;
 import org.kumon.model.Libro;
 import org.kumon.model.Persona;
+import org.kumon.persist.DaoAdministradorImpl;
 import org.kumon.persist.DaoAlumnoImpl;
+import org.kumon.persist.DaoAsistenciaImpl;
 import org.kumon.persist.DaoAuxiliarImpl;
 import org.kumon.persist.DaoDeudaImpl;
 import org.kumon.persist.DaoFamiliarImpl;
@@ -34,6 +38,7 @@ import org.kumon.presentation.ContenedorPrincipalController;
 import org.kumon.presentation.DatosConTextfieldController;
 import org.kumon.presentation.DatosController;
 import org.kumon.presentation.DeseaEliminarController;
+import org.kumon.presentation.InputPagoController;
 import org.kumon.presentation.LoginControl;
 import org.kumon.presentation.MensajeBienvenidaFController;
 import org.kumon.presentation.MensajeBienvenidaMController;
@@ -62,6 +67,8 @@ public class Contexto {
     private static DaoAlumnoImpl alumnosDB;
     private static DaoAuxiliarImpl auxiliarDB;
     private static DaoSistemaImpl sistemaDB;
+    private static DaoAdministradorImpl administradorDB;
+    private static DaoAsistenciaImpl asistenciaDB;
     static private Contexto cx;
     public static Persona persona;
     public static Persona user;
@@ -75,6 +82,8 @@ public class Contexto {
     public static Integer tipoDeuda = 0;
     public static Double precioPorMateria;
     public static boolean SeteoPago = false;
+    public static String idDeuda;
+    public static Double monto;
 
     private Contexto() {
         try {
@@ -132,6 +141,14 @@ public class Contexto {
 
     public static SistemaBO construirSistemaBO() {
         return new SistemaBO();
+    }
+
+    public static AdministradorBO construirAdminBO() {
+        return new AdministradorBO();
+    }
+
+    public static AsistenciaBO construirAsistenciaBO() {
+        return new AsistenciaBO();
     }
 
     /**
@@ -247,6 +264,33 @@ public class Contexto {
         return sistemaDB;
     }
 
+    /**
+     * Metodo para contruir la clase DAO de los Administradores
+     *
+     * @return Devuelve el objeto adminsDB
+     */
+    public static DaoAdministradorImpl construirDaoAdministradorImpl() {
+        if (administradorDB == null) {
+            administradorDB = new DaoAdministradorImpl();
+        }
+        return administradorDB;
+    }
+
+    /**/
+    /**
+     * Metodo para contruir la clase DAO de las Asistencias
+     *
+     * @return Devuelve el objeto asistenciaDB
+     */
+    public static DaoAsistenciaImpl construirDaoAsistenciaImpl() {
+        if (asistenciaDB == null) {
+            asistenciaDB = new DaoAsistenciaImpl();
+        }
+        return asistenciaDB;
+    }
+
+    /**/
+
     //Llamado a la funcion para abrir la ventana de login
     public static void abrirLogin() throws Exception {
         LoginControl login = new LoginControl();
@@ -297,6 +341,11 @@ public class Contexto {
     public static void abrirConfiguracion() {
         ConfiguracionController configuracion = new ConfiguracionController();
         configuracion.init();
+    }
+
+    public static void abrirInputPago() {
+        InputPagoController input = new InputPagoController();
+        input.init();
     }
 
     public static Persona getPersona() {

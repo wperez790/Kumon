@@ -62,9 +62,9 @@
                   <Insets top="10.0" />
                </GridPane.margin>
             </JFXButton>
-            <JFXTreeTableView fx:id="tablePagos" stylesheets="@SeleccionPersonaCSS.css" GridPane.rowIndex="1">
+            <JFXTreeTableView fx:id="tablePagos" opacity="0.8" stylesheets="@SeleccionPersonaCSS.css" GridPane.rowIndex="1">
                <GridPane.margin>
-                  <Insets />
+                  <Insets left="2.0" right="2.0" />
                </GridPane.margin></JFXTreeTableView>
             <JFXButton fx:id="btnBack" buttonType="RAISED" onAction="#btnBackAction" prefHeight="52.0" prefWidth="52.0" ripplerFill="BLACK" text=" " GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
                <cursor>

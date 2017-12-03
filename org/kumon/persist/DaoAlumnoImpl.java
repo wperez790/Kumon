@@ -20,23 +20,19 @@ import org.kumon.persist.interfaces.IAlumno;
 public class DaoAlumnoImpl extends Conexion implements IAlumno {
 
     @Override
-    public void registrar(Alumno alumno, RelacionFamiliarAlumno relacionFA) throws Exception {
-        
-        try{
-           this.conectar();
-           //TABLA ALUMNOS
-           PreparedStatement st=this.conexion.prepareStatement("INSERT INTO Alumnos(idPersona, idAuxiliar, idOrientadora) Values(?,?,?)");
-           st.setString(1, alumno.getIdPersona());
-           st.setString(2, alumno.getIdAuxiliar());
-           st.setString(3, alumno.getIdOrientadora());
-           //TABLA PERSONAS
-        }
-        
-        catch(Exception e)
-        {
+    public void registrar(Alumno alumno) throws Exception {
+
+        try {
+            this.conectar();
+            //TABLA ALUMNOS
+            PreparedStatement st = this.conexion.prepareStatement("INSERT INTO Alumnos(idAlumno,idAuxiliar, idOrientador) Values(?,?,?)");
+            st.setString(1, alumno.getIdPersona());
+            st.setString(2, alumno.getIdAuxiliar());    //Si tiene Auxiliar carga auxiliar como encargada del alumno sino es porq tiene orientadora a cargo.
+            st.setString(3, alumno.getIdOrientadora());
+            st.executeUpdate();
+        } catch (Exception e) {
             e.printStackTrace();
-        }
-        finally{
+        } finally {
             this.cerrar();
         }
     }
@@ -56,9 +52,4 @@ public class DaoAlumnoImpl extends Conexion implements IAlumno {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public void registrar(Alumno alumno) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    }
-
- 
+}

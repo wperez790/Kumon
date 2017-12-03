@@ -10,6 +10,7 @@ import org.kumon.main.Contexto;
 import org.kumon.model.Deuda;
 import org.kumon.model.Pago;
 import org.kumon.persist.DaoDeudaImpl;
+import org.kumon.persist.DaoPagosImpl;
 
 /**
  *
@@ -17,6 +18,7 @@ import org.kumon.persist.DaoDeudaImpl;
  */
 public class DeudaBO {
   private DaoDeudaImpl deudaDB = Contexto.construirDaoDeudaImpl();   
+  private DaoPagosImpl pagosDB = Contexto.construirDaoPagosImpl();   
   
   
     public void registrarDeuda(Deuda deuda) throws Exception{
@@ -36,5 +38,10 @@ public class DeudaBO {
     }
     void modificarMontoAdeudado(Pago pagos) throws Exception {
         deudaDB.modificarMontoAdeudado(pagos);
+    }
+
+    void restaurarMontoAdeudado(Integer idPago) throws Exception {
+        Pago pago = pagosDB.obtenerPagoById(idPago);
+        deudaDB.restaurarMontoAdeudado(pago);
     }
 }

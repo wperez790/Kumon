@@ -42,7 +42,7 @@ public class PagosController implements Initializable {
 
     @FXML
     private void btnRegistrarAction(ActionEvent event) throws IOException {
-        Contexto.SeteoPago = true;
+        Contexto.SeteoPago = true; //Variable que controla despues que va a inicializarse en el fxml/Si es true inicializa para Pagar
         Parent root = FXMLLoader.load(getClass().getResource("/org/kumon/presentation/VerificarDeudas.fxml"));
         Contexto.splitPane.getItems().set(0, root);
     }
@@ -55,7 +55,7 @@ public class PagosController implements Initializable {
 
     @FXML
     private void btnVerDeudasAction(ActionEvent event) throws IOException {
-        Contexto.SeteoPago=false;
+        Contexto.SeteoPago=false;  //Variable que controla despues que va a inicializarse en el fxml/Si es true inicializa para Vizualizar Deudas
         Parent root = FXMLLoader.load(getClass().getResource("/org/kumon/presentation/VerificarDeudas.fxml"));
         Contexto.splitPane.getItems().set(0, root);
     }

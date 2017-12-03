@@ -6,7 +6,11 @@
 <?import com.jfoenix.controls.JFXDatePicker?>
 <?import com.jfoenix.controls.JFXTextArea?>
 <?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.Light.Distant?>
+<?import javafx.scene.effect.Lighting?>
+<?import javafx.scene.effect.Shadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -37,15 +41,44 @@
             <JFXTextField fx:id="textFieldDocumento" labelFloat="true" promptText="Documento" GridPane.rowIndex="3" />
             <JFXTextField fx:id="textFieldDomicilio" labelFloat="true" promptText="Domicilio" GridPane.rowIndex="4" />
             <JFXTextField fx:id="textFieldTelefono" labelFloat="true" promptText="Teléfono" GridPane.rowIndex="6" />
-            <ImageView fx:id="imagenPersona" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
+            <ImageView fx:id="imagenPersona" fitHeight="144.0" fitWidth="158.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.valignment="TOP">
                <image>
                   <Image url="@img/fotosPersonas/default.png" />
                </image>
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
             </ImageView>
             <JFXDatePicker fx:id="datePickerFecha" defaultColor="#4059a9" promptText="Fecha de Nacimiento" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <JFXComboBox fx:id="comboBoxSexo" labelFloat="true" promptText="Sexo" visibleRowCount="2" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <JFXButton fx:id="btnGuardar" buttonType="RAISED" onAction="#btnGuardarAction" ripplerFill="#00ed39" text="Guardar" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-            <JFXButton fx:id="btnCancelar" buttonType="RAISED" onAction="#btnCancelarAction" ripplerFill="#ee0000" text="Cancelar" GridPane.rowIndex="7" />
+            <JFXButton fx:id="btnGuardar" buttonType="RAISED" onAction="#btnGuardarAction" ripplerFill="#00ed39" style="-fx-background-color: #edf0f4;" text="Guardar" GridPane.columnIndex="1" GridPane.rowIndex="7">
+               <effect>
+                  <Lighting diffuseConstant="1.36" specularConstant="0.37" specularExponent="10.0" surfaceScale="1.98">
+                     <bumpInput>
+                        <Shadow />
+                     </bumpInput>
+                     <light>
+                        <Light.Distant />
+                     </light>
+                  </Lighting>
+               </effect>
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin></JFXButton>
+            <JFXButton fx:id="btnCancelar" buttonType="RAISED" onAction="#btnCancelarAction" ripplerFill="#ee0000" style="-fx-background-color: #edf0f4;" text="Cancelar" GridPane.rowIndex="7">
+               <effect>
+                  <Lighting diffuseConstant="1.36" specularConstant="0.37" specularExponent="10.0" surfaceScale="1.98">
+                     <bumpInput>
+                        <Shadow />
+                     </bumpInput>
+                     <light>
+                        <Light.Distant />
+                     </light>
+                  </Lighting>
+               </effect>
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin></JFXButton>
             <Label text="Datos Personales" underline="true" />
             <JFXTextField fx:id="textFieldNombreImg" labelFloat="true" promptText="Nombre de la Imagen" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <JFXTextField fx:id="textFieldMail" labelFloat="true" promptText="e-mail" unFocusColor="BLACK" GridPane.rowIndex="5" />

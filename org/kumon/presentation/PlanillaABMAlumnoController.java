@@ -31,10 +31,12 @@ import static javafx.scene.paint.Color.RED;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.controlsfx.control.Notifications;
+import org.kumon.business.AdministradorBO;
 import org.kumon.business.AlumnoBO;
 import org.kumon.business.AuxiliarBO;
 import org.kumon.business.PersonaBO;
 import org.kumon.main.Contexto;
+import org.kumon.model.Administrador;
 import org.kumon.model.Alumno;
 import org.kumon.model.Asignatura;
 import org.kumon.model.Auxiliar;
@@ -90,24 +92,28 @@ public class PlanillaABMAlumnoController implements Initializable {
     private static Stage primaryStage = new Stage();
     private Notifications notificacion;
     private Notifications error2;
-    Persona persona ;
+    Persona persona;
     Alumno alumno;
-    PersonaBO personaBO ;
-    AlumnoBO alumnoBO ;
-    AuxiliarBO auxiliarBO ;
+    PersonaBO personaBO;
+    AlumnoBO alumnoBO;
+    AuxiliarBO auxiliarBO;
+    AdministradorBO adminBO;
     List<Asignatura> listaAsignaturas;
     Asignatura asignatura;
-    List lista ;
+    List lista;
+    List lista2;
 
     public PlanillaABMAlumnoController() throws Exception {
-        persona= new Persona();
+        persona = new Persona();
+        alumno = new Alumno();
         personaBO = Contexto.construirPersonaBO();
         alumnoBO = Contexto.construirAlumnoBO();
         auxiliarBO = Contexto.construirAuxiliarBO();
-        lista= auxiliarBO.getAll();
-        
+        adminBO = Contexto.construirAdminBO();
+        lista = auxiliarBO.getAll();
+        lista2 = adminBO.getAll();
+
     }
-    
 
     /**
      * Initializes the controller class.
@@ -120,12 +126,16 @@ public class PlanillaABMAlumnoController implements Initializable {
             Auxiliar aux = (Auxiliar) lista.get(i);
             comboBoxAuxiliar.getItems().addAll(aux.getNombre() + " " + aux.getApellido());
         }
+        for (int i = 0; i < lista2.size(); i++) {
+            Administrador aux = (Administrador) lista2.get(i);
+            comboBoxAuxiliar.getItems().addAll(aux.getNombre() + " " + aux.getApellido());
+        }
     }
 
     @FXML
     private void btnGuardarAction(ActionEvent event) throws Exception {
         listaAsignaturas = new ArrayList();
-        boolean ok = cargarDatos(alumno);
+        boolean ok = cargarDatos();
         //SETEO ALUMNO//
         if (checkBoxIngles.isSelected()) {
             asignatura = new Asignatura();
@@ -148,21 +158,23 @@ public class PlanillaABMAlumnoController implements Initializable {
             asignatura.setNombre("Matematica");
             listaAsignaturas.add(asignatura);
         }
-        alumno.setIdAlumno(persona.getIdPersona());
+        alumno.setListaAsignaturas(listaAsignaturas);
+/*Verificar cual Auxiliar  u Orientadora se eligio para su tutoria*/
         for (int i = 0; i < lista.size(); i++) {
-            Auxiliar aux = (Auxiliar)lista.get(i);
-            if (comboBoxAuxiliar.getSelectionModel().getSelectedItem().equalsIgnoreCase((aux.getNombre()+" "+aux.getApellido()))) {
+            Auxiliar aux = (Auxiliar) lista.get(i);
+            if (comboBoxAuxiliar.getSelectionModel().getSelectedItem().equalsIgnoreCase((aux.getNombre() + " " + aux.getApellido()))) {
                 alumno.setIdAuxiliar(aux.getIdAuxiliar());
+
+            }
+        }        
+        for (int i = 0; i < lista2.size(); i++) {
+            Administrador aux = (Administrador) lista2.get(i);
+            if (comboBoxAuxiliar.getSelectionModel().getSelectedItem().equalsIgnoreCase((aux.getNombre() + " " + aux.getApellido()))) {
                 alumno.setIdOrientadora(aux.getIdAdmin());
-                
+
             }
         }
-        /* alumno.setIdAuxiliar(idAuxiliar);           //comboBox con todas las auxiliares
-        alumno.setIdOrientadora(idOrientadora);      //por defecto seleccionar la orientadora segun la academia o sacar
-        alumno.setListaAsignaturas(listaAsignaturas);
-        alumno.setListaFamiliares(listaFamiliares);  //agregar campo que busque en seleccion persona y agregues un familiar antes cargado
-        ok = cargarDatos(alumno);*/
-
+/**/
         //Si todo esta ok: REGISTRA
         if (ok == true) {
             textFieldDocumento.setUnFocusColor(Color.GREEN);
@@ -183,7 +195,7 @@ public class PlanillaABMAlumnoController implements Initializable {
         //
     }
 
-    private boolean cargarDatos(Alumno alumno) {
+    private boolean cargarDatos() {
         boolean ok = true;
         alumno.setActivo(1);
         alumno.setNombre(textFieldNombre.getText());
@@ -214,11 +226,11 @@ public class PlanillaABMAlumnoController implements Initializable {
             ok = false;
         }
         /////////////////////////////////////////////
+        alumno.setIdAlumno(textFieldDocumento.getText());
         alumno.setIdPersona(textFieldDocumento.getText());
         alumno.setInfo(textAreaInfoAdicional.getText());
         alumno.setNombreImg(textFieldNombreImg.getText());
         alumno.setApellido(textFieldApellido.getText());
-        alumno.setIdPersona(textFieldDocumento.getText());
         alumno.setDomicilio(textFieldDomicilio.getText());
         alumno.setTelefono(textFieldTelefono.getText());
         alumno.setEmail(textFieldMail.getText());
@@ -228,7 +240,7 @@ public class PlanillaABMAlumnoController implements Initializable {
         //FECHAS Verificacion de Fecha no null y calculo de Edad.
         java.sql.Date date = java.sql.Date.valueOf(datePickerFecha.getValue());
         alumno.setFechaNacimiento(date);
-        if (alumno.getFechaNacimiento() == null) {
+        if (alumno.getFechaNacimiento() == null || datePickerFecha.getValue()== null) {
             error2 = Notifications.create();
             error2.title("Error de Parametros");
             error2.darkStyle();
@@ -247,9 +259,7 @@ public class PlanillaABMAlumnoController implements Initializable {
 
     @FXML
     private void btnCargarFamiliarAction(ActionEvent event) throws IOException {
-
         Contexto.abrirPlanillaABMfamiliar();
-
     }
 
     @FXML

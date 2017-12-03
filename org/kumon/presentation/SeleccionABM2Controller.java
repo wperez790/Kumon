@@ -55,22 +55,18 @@ public class SeleccionABM2Controller implements Initializable {
 
     @FXML
     private void btnAlumnoAction(ActionEvent event) throws IOException, Exception {
-        /*     Parent pane = FXMLLoader.load(getClass().getResource("/org/kumon/presentation/PlanillaABMAlumno.fxml"));
-        Contexto.splitPane.getItems().set(0, pane);*/
+        Contexto.tipoUser=3;
         Contexto.abrirPlanillaABMAlumno();
     }
 
     @FXML
     private void btnFamiliarAction(ActionEvent event) throws IOException {
-        /* Parent pane = FXMLLoader.load(getClass().getResource("/org/kumon/presentation/PlanillaABMFamiliar.fxml"));
-        Contexto.splitPane.getItems().set(0, pane);*/
+        Contexto.tipoUser=3;
         Contexto.abrirPlanillaABMfamiliar();
     }
 
     @FXML
     private void btnAuxiliarAction(ActionEvent event) throws IOException, Exception {
-        /* Parent pane = FXMLLoader.load(getClass().getResource("/org/kumon/presentation/PlanillaABM.fxml"));
-        Contexto.splitPane.getItems().set(0, pane);*/
         Contexto.tipoUser=2;
         Contexto.abrirPlanillaABM();
     }

@@ -101,6 +101,8 @@ public class LoginControl implements Initializable {
             String p = EscribirLeerArchivo.leer(false);
             if (u != null) {
                 user.setText(Bitshifter.desencriptar(u));
+            }
+            if(p!=null){
                 pass.setText(Bitshifter.desencriptar(p));//Cualquier valor diferente de false retorna el user
             }
 
@@ -133,9 +135,15 @@ public class LoginControl implements Initializable {
             passEncriptado = Bitshifter.encriptar(pass.getText());
             EscribirLeerArchivo.escribir(passEncriptado, false);
         }
+        else{
+            EscribirLeerArchivo.escribir("", false);
+        }
         if (checkBoxGuardarUsuario.isSelected()) {
             userEncriptado = Bitshifter.encriptar(user.getText());
             EscribirLeerArchivo.escribir(userEncriptado, true);
+        }
+        else{
+            EscribirLeerArchivo.escribir("", true);
         }
 
         //Setea el nombre que saldra en el mensaje de bienvenida

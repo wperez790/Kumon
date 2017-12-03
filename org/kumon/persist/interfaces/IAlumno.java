@@ -15,7 +15,7 @@ import org.kumon.model.RelacionFamiliarAlumno;
  */
 public interface IAlumno {
     
-     public void registrar(Alumno alumno, RelacionFamiliarAlumno relacionFA) throws Exception;
+     public void registrar(Alumno alumno) throws Exception;
     public void modificar(Alumno alumno) throws Exception;
     public void eliminar(Alumno alumno) throws Exception;
     public List<Alumno> listar() throws Exception;

@@ -48,9 +48,15 @@ public class ModificarLibroController implements Initializable {
     @FXML
     private JFXButton btnCancelar;
     //AUX
-    LibroBO libroBO = new LibroBO();
-    Stage primaryStage = new Stage();
+    LibroBO libroBO;
+    Stage primaryStage;
     Notifications notificacion;
+
+    public ModificarLibroController() {
+        libroBO = Contexto.construirLibroBO();
+        primaryStage = new Stage();
+    }
+
     /**
      * Initializes the controller class.
      */
@@ -94,8 +100,8 @@ public class ModificarLibroController implements Initializable {
     }
 
     public void init() {
-       
-     try {
+
+        try {
 
             Parent root = FXMLLoader.load(getClass().getResource("/org/kumon/presentation/ModificarLibro.fxml"));
             Contexto.splitPane.getItems().set(0, root);

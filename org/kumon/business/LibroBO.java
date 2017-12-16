@@ -35,8 +35,15 @@ public class LibroBO {
         else throw new Exception("Cantidad menor a 0");
     }
     
-    public void nuevoLibro(Libro libro) throws Exception {
-        libroDB.nuevoLibro(libro);
+    public boolean nuevoLibro(Libro libro) throws Exception {
+        boolean ok = true;
+        try {
+            libroDB.nuevoLibro(libro);
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            ok= false;
+        }
+        return ok;
     }
 
     public void borrarLibro(int idLibro) throws Exception {

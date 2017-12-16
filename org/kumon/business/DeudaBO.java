@@ -21,8 +21,8 @@ public class DeudaBO {
   private DaoPagosImpl pagosDB = Contexto.construirDaoPagosImpl();   
   
   
-    public void registrarDeuda(Deuda deuda) throws Exception{
-        deudaDB.registrarDeuda(deuda);
+    public boolean registrarDeuda(Deuda deuda) throws Exception{
+        return(deudaDB.registrarDeuda(deuda));
     }
     public void anularDeuda(Integer idDeuda) throws Exception{
         deudaDB.anularDeuda(idDeuda);

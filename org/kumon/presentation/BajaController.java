@@ -6,9 +6,6 @@
 package org.kumon.presentation;
 
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXComboBox;
-import com.jfoenix.controls.JFXListView;
-import com.jfoenix.controls.JFXTextField;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -47,12 +44,21 @@ public class BajaController implements Initializable {
     private Label labelNombre;
     @FXML
     private Label labelDni;
-
-    //AUXILIARES
-    PersonaBO personaBO = new PersonaBO();
-    private Notifications notificacion;
     @FXML
     private Label labelEstado;
+    @FXML
+    private JFXButton btnVacaciones;
+    
+    //AUXILIARES
+    PersonaBO personaBO;
+    private Notifications notificacion;
+    //
+
+    public BajaController() {
+        personaBO = Contexto.construirPersonaBO();
+    }
+    
+    
 
     /**
      * Initializes the controller class.
@@ -76,9 +82,13 @@ public class BajaController implements Initializable {
         notificacion.hideAfter(Duration.seconds(3));
         notificacion.position(Pos.CENTER);
         notificacion.darkStyle();
+        recargar();
+        notificacion.show();
+    }
+
+    private void recargar() throws IOException {
         Parent pane = FXMLLoader.load(getClass().getResource("/org/kumon/presentation/SeleccionPersona.fxml"));
         Contexto.splitPane.getItems().set(0, pane);
-        notificacion.show();
     }
 
     @FXML
@@ -92,6 +102,11 @@ public class BajaController implements Initializable {
 
         Parent pane = FXMLLoader.load(getClass().getResource("/org/kumon/presentation/SeleccionABM1.fxml"));
         Contexto.splitPane.getItems().set(0, pane);
+    }
+
+    @FXML
+    private void btnVacacionesAction(ActionEvent event) {
+        Contexto.abrirVacaciones();
     }
 
 }

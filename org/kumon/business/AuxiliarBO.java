@@ -5,6 +5,7 @@
  */
 package org.kumon.business;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import org.kumon.main.Contexto;
@@ -36,5 +37,15 @@ public class AuxiliarBO {
     public void agregarAuxiliar(String idPersona) throws Exception {
         auxiliarDB.agregarAuxiliar(idPersona);
     }
+
+    public boolean setVacaciones(Date date, String id) throws Exception {
+        return auxiliarDB.setVacaciones(date, id);
+    }
+
+    public List getPersonalVacaciones() throws Exception {
+        return auxiliarDB.getPersonalVacaciones();
+    }
+
+
 
 }

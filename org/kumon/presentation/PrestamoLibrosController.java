@@ -163,18 +163,28 @@ public class PrestamoLibrosController implements Initializable {
         prestamo.setIdLibro(Integer.parseInt(book.id.getValue()));
         prestamo.setFechaDesde(sqlDate);
         prestamo.setFechaHasta(date);
-        prestamoBO.registrarPrestamo(prestamo);
-        Image img = new Image("/org/kumon/presentation/img/ok.png");
+        if (prestamoBO.registrarPrestamo(prestamo)) {
+            Image img = new Image("/org/kumon/presentation/img/ok.png");
+            String mensaje = "Registrado con Exito";
+            notificar(img, mensaje);
+        } else {
+            Image img = new Image("/org/kumon/presentation/img/error.png");
+            String mensaje = "Error en el Registro";
+            notificar(img, mensaje);
+        }
+
+    }
+
+    private void notificar(Image img, String mensaje) throws IOException {
         notificacion = Notifications.create();
         notificacion.title("Resultado de la Operacion");
-        notificacion.text("Registrado con Exito");
+        notificacion.text(mensaje);
         notificacion.graphic(new ImageView(img));
         notificacion.hideAfter(Duration.seconds(3));
         notificacion.position(Pos.CENTER);
         notificacion.darkStyle();
         recargar();
         notificacion.show();
-
     }
 
     private void recargar() throws IOException {
@@ -198,7 +208,7 @@ public class PrestamoLibrosController implements Initializable {
     @FXML
     private void btnBorrarAction(ActionEvent event) throws Exception {
         Book book = jfxTable.getSelectionModel().getSelectedItem().getValue();
-        Alert alertBox = new Alert(Alert.AlertType.CONFIRMATION, "Confirmar Eliminar", ButtonType.OK, ButtonType.CANCEL);
+        Alert alertBox = new Alert(Alert.AlertType.CONFIRMATION, "Confirmar Eliminación", ButtonType.OK, ButtonType.CANCEL);
         alertBox.setContentText("Esta seguro que desea eliminar este libro?");
         alertBox.initModality(Modality.APPLICATION_MODAL);
         alertBox.initOwner(Contexto.primaryStage);

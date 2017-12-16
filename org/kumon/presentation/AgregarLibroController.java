@@ -17,10 +17,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
-import javafx.scene.control.TextFormatter;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.controlsfx.control.Notifications;
 import org.kumon.business.LibroBO;
@@ -50,7 +48,11 @@ public class AgregarLibroController implements Initializable {
     private JFXButton btnCancelar;
     //Aux
     Notifications notificacion;
-    LibroBO libroBO = new LibroBO();
+    LibroBO libroBO;
+
+    public AgregarLibroController() {
+        libroBO = Contexto.construirLibroBO();
+    }
 
     /**
      * Initializes the controller class.
@@ -68,11 +70,24 @@ public class AgregarLibroController implements Initializable {
         libro.setNombre(textFieldNombre.getText());
         libro.setStock(Integer.parseInt(textFieldStock.getText()));
         libro.setEditorial(textFieldEditorial.getText());
-        libroBO.nuevoLibro(libro);
-        Image img = new Image("/org/kumon/presentation/img/ok.png");
+
+        if (libroBO.nuevoLibro(libro)) {
+
+            Image img = new Image("/org/kumon/presentation/img/ok.png");
+            String mensaje = "Registrado con Exito";
+            notificar(img, mensaje);
+        } else {
+
+            Image img = new Image("/org/kumon/presentation/img/ok.png");
+            String mensaje = "Error en el Registro";
+            notificar(img, mensaje);
+        }
+    }
+
+    private void notificar(Image img, String mensaje) throws IOException {
         notificacion = Notifications.create();
         notificacion.title("Resultado de la Operacion");
-        notificacion.text("Registrado con Exito");
+        notificacion.text(mensaje);
         notificacion.graphic(new ImageView(img));
         notificacion.hideAfter(Duration.seconds(3));
         notificacion.position(Pos.CENTER);
@@ -80,7 +95,6 @@ public class AgregarLibroController implements Initializable {
         Parent pane = FXMLLoader.load(getClass().getResource("/org/kumon/presentation/PrestamoLibros.fxml"));
         Contexto.splitPane.getItems().set(0, pane);
         notificacion.show();
-
     }
 
     public void init() {

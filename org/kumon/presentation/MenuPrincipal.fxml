@@ -62,14 +62,6 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </JFXButton>
-                  <JFXButton fx:id="btnCalendario" buttonType="RAISED" onAction="#btnCalendarioAction" prefHeight="31.0" prefWidth="180.0" ripplerFill="#00ff2f" style="-fx-background-color: #5ec8f2;" text="Calendario" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3">
-                     <font>
-                        <Font name="P22 Underground" size="16.0" />
-                     </font>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </JFXButton>
                   <Label text="Menu Principal" underline="true" GridPane.columnIndex="1" GridPane.halignment="CENTER">
                      <font>
                         <Font name="P22 Underground" size="24.0" />
@@ -78,9 +70,17 @@
                         <Insets />
                      </GridPane.margin>
                   </Label>
+                  <JFXButton fx:id="btnPrestamo" buttonType="RAISED" onAction="#btnPrestamoAction" prefHeight="31.0" prefWidth="180.0" ripplerFill="#00ff2f" style="-fx-background-color: #5ec8f2;" text="Prestamo de Libros" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+                     <font>
+                        <Font name="P22 Underground" size="16.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </JFXButton>
                   <ImageView fitHeight="58.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
                      <image>
-                        <Image url="@img/IconoCalendario.png" />
+                        <Image url="@img/IconoLibros.png" />
                      </image>
                      <GridPane.margin>
                         <Insets right="10.0" />
@@ -103,14 +103,6 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <JFXButton fx:id="btnPrestamo" buttonType="RAISED" onAction="#btnPrestamoAction" prefHeight="31.0" prefWidth="180.0" ripplerFill="#00ff2f" style="-fx-background-color: #5ec8f2;" text="Prestamo de Libros" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3">
-                     <font>
-                        <Font name="P22 Underground" size="16.0" />
-                     </font>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </JFXButton>
                   <JFXButton fx:id="btnDatos" buttonType="RAISED" onAction="#btnDatosAction" prefHeight="31.0" prefWidth="180.0" ripplerFill="#00ff2f" style="-fx-background-color: #5ec8f2;" text="Datos Personales" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                      <font>
                         <Font name="P22 Underground" size="16.0" />
@@ -122,14 +114,6 @@
                   <ImageView fitHeight="58.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
                      <image>
                         <Image url="@img/IconoDatos.png" />
-                     </image>
-                     <GridPane.margin>
-                        <Insets right="10.0" />
-                     </GridPane.margin>
-                  </ImageView>
-                  <ImageView fitHeight="58.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
-                     <image>
-                        <Image url="@img/IconoLibros.png" />
                      </image>
                      <GridPane.margin>
                         <Insets right="10.0" />
@@ -158,6 +142,22 @@
                   <ImageView fitHeight="58.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
                      <image>
                         <Image url="@img/IconoPagos.png" />
+                     </image>
+                     <GridPane.margin>
+                        <Insets right="10.0" />
+                     </GridPane.margin>
+                  </ImageView>
+                  <JFXButton fx:id="btnPlanificador" buttonType="RAISED" onAction="#btnPlanificadorAction" prefHeight="31.0" prefWidth="180.0" ripplerFill="#00ff2f" style="-fx-background-color: #5ec8f2;" text="Planificador" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+                     <font>
+                        <Font name="P22 Underground" size="16.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </JFXButton>
+                  <ImageView fitHeight="58.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
+                     <image>
+                        <Image url="@img/IconoCalendario.png" />
                      </image>
                      <GridPane.margin>
                         <Insets right="10.0" />

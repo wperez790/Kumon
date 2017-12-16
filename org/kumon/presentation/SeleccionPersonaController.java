@@ -71,7 +71,7 @@ public class SeleccionPersonaController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         /*Seteo de la columna Nombre y Apellido*/
         JFXTreeTableColumn<Person,String> nombre = new JFXTreeTableColumn<>("Nombre y Apellido");
-        nombre.setPrefWidth(300);
+        nombre.setPrefWidth(410);
         nombre.setCellValueFactory((param) -> {
             return param.getValue().getValue().nombre;
         });

@@ -102,17 +102,6 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </JFXButton>
-            <JFXButton id="btnRecuperarUsuario" fx:id="btnRecuperarUsuario" buttonType="RAISED" ripplerFill="#1eff05" style="-fx-background-color: #70d0f6;" text="Recuperar Usuario/Contraseña" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4">
-               <font>
-                  <Font name="P22 Underground" size="12.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-               <GridPane.margin>
-                  <Insets />
-               </GridPane.margin>
-            </JFXButton>
             <JFXCheckBox id="checkBoxGuardarContraseña" fx:id="checkBoxGuardarContraseña" checkedColor="#70d0f6" text="Guardar Contraseña" textFill="WHITE" unCheckedColor="#908f8f" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.rowIndex="2">
                <font>
                   <Font name="P22 Underground" size="12.0" />

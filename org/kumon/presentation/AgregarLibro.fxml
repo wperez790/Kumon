@@ -54,26 +54,26 @@
             </Label>
             <JFXTextField fx:id="textFieldNombre" focusColor="#70d0f6">
                <font>
-                  <Font name="Garuda" size="15.0" />
+                  <Font name="Garuda" size="18.0" />
                </font></JFXTextField>
             <JFXTextField fx:id="textFieldAutor" focusColor="#70d0f6" GridPane.columnIndex="1">
                <font>
-                  <Font name="Garuda" size="15.0" />
+                  <Font name="Garuda" size="18.0" />
                </font></JFXTextField>
             <JFXTextField fx:id="textFieldEditorial" focusColor="#70d0f6" GridPane.rowIndex="1">
                <font>
-                  <Font name="Garuda" size="15.0" />
+                  <Font name="Garuda" size="18.0" />
                </font></JFXTextField>
             <JFXTextField fx:id="textFieldStock" focusColor="#70d0f6" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <font>
-                  <Font name="Garuda" size="15.0" />
+                  <Font name="Garuda" size="18.0" />
                </font></JFXTextField>
             <JFXTextArea fx:id="textAreaDescripcion" focusColor="#70d0f6" prefHeight="161.0" prefWidth="512.0" style="-fx-border-color: BLACK;" GridPane.rowIndex="2">
                <GridPane.margin>
                   <Insets top="30.0" />
                </GridPane.margin>
                <font>
-                  <Font name="Garuda" size="15.0" />
+                  <Font name="Garuda" size="18.0" />
                </font>
             </JFXTextArea>
             <JFXButton fx:id="btnAgregar" buttonType="RAISED" onAction="#btnAgregarAction" ripplerFill="#91ff94" style="-fx-background-color: #d1d1d1;" text="Agregar" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">

@@ -164,4 +164,33 @@ public class DaoPrestamoImpl extends Conexion implements IPrestamo {
 
     }
 
+    public List obtenerPrestamosVencidos() throws Exception{
+        List lista = new ArrayList();
+        Prestamo prestamo;
+        try {
+            this.conectar();
+            Statement st = conexion.createStatement();
+            ResultSet rs = st.executeQuery("SELECT pr.idLibro, pr.idPersona, fechaInicial, fechaFinal, devuelto, nombreLibro, nombrePersona"
+                    + " FROM Prestamos pr inner join Libros l inner join Personas p  WHERE CURDATE() > fechaFinal and devuelto = 0 and pr.idLibro = l.idLibro and p.idPersona = pr.idPersona "
+                    + "order by fechaFinal;");
+            /* Recorre el Result set y setea el prestamo con los datos y los agrega a la lista de retorno*/
+            while (rs.next()) {
+                prestamo = new Prestamo();
+                prestamo.setIdLibro(rs.getInt("idLibro"));
+                prestamo.setIdPersona(rs.getString("idPersona"));
+                prestamo.setFechaDesde(rs.getDate("fechaInicial"));
+                prestamo.setFechaHasta(rs.getDate("fechaFinal"));
+                prestamo.setDevuelto(rs.getInt("devuelto"));
+                prestamo.setNombreLibro(rs.getString("nombreLibro"));
+                prestamo.setNombrePersona(rs.getString("nombrePersona"));
+                lista.add(prestamo);
+            }
+            /**/
+        } catch (Exception e) {
+            throw new Exception("Metodo: obtenerTodosNoDevueltos() error");
+        }
+        this.cerrar();
+        return lista;
+    }
+
 }

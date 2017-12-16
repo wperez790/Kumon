@@ -19,12 +19,12 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.controlsfx.control.Notifications;
 import org.kumon.business.PersonaBO;
 import org.kumon.main.Contexto;
-import org.kumon.persist.DaoPersonaImpl;
 
 /**
  * FXML Controller class
@@ -41,7 +41,6 @@ public class ComprobarAdminController implements Initializable {
     private JFXTextField user;
 
     //Auxiliares
-    private DaoPersonaImpl personaDB = Contexto.construirDaoPersonaImpl();
     private Notifications error;
     private PersonaBO personaBO;
     static private Stage primaryStage;
@@ -63,7 +62,17 @@ public class ComprobarAdminController implements Initializable {
                 try {
                     if (comprobar()) {
                         primaryStage.close();
-                        Contexto.abrirPlanillaABM();
+                        if (Contexto.pagos) {
+                            Parent root = FXMLLoader.load(getClass().getResource("/org/kumon/presentation/Pagos.fxml"));
+                            Contexto.splitPane.getItems().set(0, root);
+
+                        } else if (Contexto.baja) {
+                            AnchorPane pane = FXMLLoader.load(getClass().getResource("/org/kumon/presentation/SeleccionPersona.fxml"));
+                            Contexto.splitPane.getItems().set(0, pane);
+                        } else {
+                            primaryStage.close();
+                            Contexto.abrirPlanillaABM();
+                        }
                     }
 
                 } catch (Exception exc) {
@@ -77,7 +86,16 @@ public class ComprobarAdminController implements Initializable {
                 try {
                     if (comprobar()) {
                         primaryStage.close();
-                        Contexto.abrirPlanillaABM();
+                        if (Contexto.pagos) {
+                            Parent root = FXMLLoader.load(getClass().getResource("/org/kumon/presentation/Pagos.fxml"));
+                            Contexto.splitPane.getItems().set(0, root);
+                        } else if (Contexto.baja) {
+                            AnchorPane pane = FXMLLoader.load(getClass().getResource("/org/kumon/presentation/SeleccionPersona.fxml"));
+                            Contexto.splitPane.getItems().set(0, pane);
+                        } else {
+                            primaryStage.close();
+                            Contexto.abrirPlanillaABM();
+                        }
                     }
                 } catch (Exception exc) {
                     exc.printStackTrace();
@@ -105,7 +123,15 @@ public class ComprobarAdminController implements Initializable {
     private void btnComprobarAdminAction(ActionEvent event) throws Exception {
         if (comprobar()) {
             primaryStage.close();
-            Contexto.abrirPlanillaABM();
+            if (Contexto.pagos) {
+                Parent root = FXMLLoader.load(getClass().getResource("/org/kumon/presentation/Pagos.fxml"));
+                Contexto.splitPane.getItems().set(0, root);
+            } else if (Contexto.baja) {
+                AnchorPane pane = FXMLLoader.load(getClass().getResource("/org/kumon/presentation/SeleccionPersona.fxml"));
+                Contexto.splitPane.getItems().set(0, pane);
+            } else {
+                Contexto.abrirPlanillaABM();
+            }
         } else {
             throw new Exception("Error Admin Incorrecto");
         }

@@ -69,7 +69,10 @@
                         <Light.Distant />
                      </light>
                   </Lighting>
-               </effect></JFXButton>
+               </effect>
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin></JFXButton>
             <Label text="Datos Personales" underline="true" />
             <JFXTextField fx:id="textFieldNombreImg" labelFloat="true" promptText="Nombre de la Imagen" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <JFXTextField fx:id="textFieldMail" labelFloat="true" promptText="e-mail" unFocusColor="BLACK" GridPane.rowIndex="5" />

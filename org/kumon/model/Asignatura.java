@@ -13,6 +13,7 @@ public class Asignatura {
     private String nombre;
     private String nivel;
     private Integer idAsignatura;
+    private String idAlumno;
 
     public String getNombre() {
         return nombre;
@@ -36,6 +37,14 @@ public class Asignatura {
 
     public void setIdAsignatura(Integer idAsignatura) {
         this.idAsignatura = idAsignatura;
+    }
+
+    public String getIdAlumno() {
+        return idAlumno;
+    }
+
+    public void setIdAlumno(String idAlumno) {
+        this.idAlumno = idAlumno;
     }
     
     

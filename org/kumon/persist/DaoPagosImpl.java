@@ -29,23 +29,23 @@ public class DaoPagosImpl extends Conexion implements IPagos {
             st.setDouble(1, pagos.getMonto());
             st.setDate(2, pagos.getFecha());
             st.setDouble(3, pagos.getIdDeuda());
-            
+
             st.executeUpdate();
 
         } catch (Exception e) {
             e.printStackTrace();
         }
         this.cerrar();
-  
+
     }
 
     @Override
     public void anularPago(Integer idPago) throws Exception {
-         this.conectar();
+        this.conectar();
         try {
 
             PreparedStatement st = this.conexion.prepareStatement("DELETE FROM Pagos"
-                    + " WHERE idPago = " + idPago +";");
+                    + " WHERE idPago = " + idPago + ";");
             st.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -55,7 +55,7 @@ public class DaoPagosImpl extends Conexion implements IPagos {
 
     @Override
     public List obtenerTodos() throws Exception {
-         List lista = new ArrayList();
+        List lista = new ArrayList();
         Pago pago;
         try {
             this.conectar();
@@ -84,21 +84,21 @@ public class DaoPagosImpl extends Conexion implements IPagos {
     }
 
     public Pago obtenerPagoById(Integer idPago) throws Exception {
-       Pago pago = null;
+        Pago pago = null;
         try {
             this.conectar();
             Statement st = conexion.createStatement();
             ResultSet rs = st.executeQuery("SELECT idPago, monto, fecha, idDeuda "
                     + " FROM Pagos "
-                    + " WHERE  idPago = "+ idPago+";");
-                   /* Recorre el Result set y setea el pago con los datos y los agrega a la lista de retorno*/
+                    + " WHERE  idPago = " + idPago + ";");
+            /* Recorre el Result set y setea el pago con los datos y los agrega a la lista de retorno*/
             while (rs.next()) {
                 pago = new Pago();
                 pago.setIdPago(rs.getInt("idPago"));
                 pago.setFecha(rs.getDate("fecha"));
                 pago.setIdDeuda(rs.getInt("idDeuda"));
                 pago.setMonto(rs.getDouble("monto"));
-             
+
             }
             /**/
         } catch (Exception e) {
@@ -106,7 +106,22 @@ public class DaoPagosImpl extends Conexion implements IPagos {
         }
         this.cerrar();
         return pago;
-    
+
+    }
+
+    public void anularPagoByIdDeuda(String idDeuda) throws Exception {
+        
+      
+        this.conectar();
+        try {
+
+            PreparedStatement st = this.conexion.prepareStatement("DELETE FROM Pagos"
+                    + " WHERE idDeuda = " + idDeuda + ";");
+            st.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        this.cerrar();
     }
 
 }

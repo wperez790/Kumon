@@ -6,6 +6,7 @@
 package org.kumon.presentation;
 
 import com.jfoenix.controls.JFXButton;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -30,12 +31,7 @@ import org.kumon.main.Contexto;
  * @author walt
  */
 public class DeseaEliminarController implements Initializable {
-//AUXILIARES
 
-    PersonaBO personaBO;
-    private static Stage primaryStage;
-    private Notifications notificacion;
-    private Notifications ok;
     @FXML
     private JFXButton cancelarButton;
     @FXML
@@ -44,6 +40,12 @@ public class DeseaEliminarController implements Initializable {
     private Label labelNombre;
     @FXML
     private Label labelDni;
+
+    //AUXILIARES
+    PersonaBO personaBO;
+    private static Stage primaryStage;
+    private Notifications notificacion;
+    private Notifications ok;
 
     public DeseaEliminarController() {
         personaBO = Contexto.construirPersonaBO();
@@ -81,11 +83,22 @@ public class DeseaEliminarController implements Initializable {
 
     @FXML
     private void eliminarButtonAction(ActionEvent event) throws Exception {
-        personaBO.eliminar(Contexto.getPersona().getDni());
-        Image img = new Image("/org/kumon/presentation/img/ok.png");
+        if (personaBO.eliminar(Contexto.getPersona().getDni())); else {
+            Image img = new Image("/org/kumon/presentation/img/ok.png");
+            String mensaje = "Registrado con Exito";
+            notificar(img, mensaje);
+        }
+        {
+            Image img = new Image("/org/kumon/presentation/img/error.png");
+            String mensaje = "Error en el Registro";
+            notificar(img,mensaje);
+        }
+    }
+
+    private void notificar(Image img, String mensaje) throws IOException {
         notificacion = Notifications.create();
         notificacion.title("Resultado de la Operacion");
-        notificacion.text("Registrado con Exito");
+        notificacion.text(mensaje);
         notificacion.graphic(new ImageView(img));
         notificacion.hideAfter(Duration.seconds(3));
         notificacion.position(Pos.CENTER);
@@ -94,6 +107,5 @@ public class DeseaEliminarController implements Initializable {
         Contexto.splitPane.getItems().set(0, pane);
         primaryStage.close();
         notificacion.show();
-
     }
 }

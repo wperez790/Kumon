@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
@@ -29,16 +31,11 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <ImageView fx:id="imagenPersona" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
-               <image>
-                  <Image url="@img/fotosPersonas/default.png" />
-               </image>
-            </ImageView>
             <Label text="Datos Personales" underline="true">
                <font>
                   <Font size="22.0" />
                </font></Label>
-            <Label text="Nombre" underline="true" GridPane.rowIndex="1" GridPane.valignment="TOP" />
+            <Label text="Nombre" underline="true" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP" />
             <Label fx:id="labelNombre" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                <font>
                   <Font name="P22 Underground" size="20.0" />
@@ -47,44 +44,44 @@
                <font>
                   <Font name="P22 Underground" size="20.0" />
                </font></Label>
-            <Label text="Apellido" underline="true" GridPane.rowIndex="2" GridPane.valignment="TOP" />
-            <Label text="Documento" underline="true" GridPane.rowIndex="3" GridPane.valignment="TOP" />
+            <Label text="Apellido" underline="true" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP" />
+            <Label text="Documento" underline="true" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="TOP" />
             <Label fx:id="labelDocumento" GridPane.halignment="CENTER" GridPane.rowIndex="3">
                <font>
                   <Font name="P22 Underground" size="20.0" />
                </font></Label>
-            <Label text="Domicilio" underline="true" GridPane.rowIndex="4" GridPane.valignment="TOP" />
+            <Label text="Domicilio" underline="true" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="TOP" />
             <Label fx:id="labelDomicilio" GridPane.halignment="CENTER" GridPane.rowIndex="4">
                <font>
                   <Font name="P22 Underground" size="20.0" />
                </font></Label>
-            <Label text="e-mail" underline="true" GridPane.rowIndex="5" GridPane.valignment="TOP" />
+            <Label text="e-mail" underline="true" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="TOP" />
             <Label fx:id="labelEmail" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER">
                <font>
                   <Font name="P22 Underground" size="20.0" />
                </font></Label>
-            <Label text="Teléfono" underline="true" GridPane.rowIndex="6" GridPane.valignment="TOP" />
+            <Label text="Teléfono" underline="true" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="TOP" />
             <Label fx:id="labelTelefono" GridPane.halignment="CENTER" GridPane.rowIndex="6">
                <font>
                   <Font name="P22 Underground" size="20.0" />
                </font></Label>
             <Label text="Sexo" underline="true" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.valignment="TOP" />
-            <Label fx:id="labelSexo" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+            <Label fx:id="labelSexo" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="2">
                <font>
                   <Font name="P22 Underground" size="20.0" />
                </font></Label>
             <Label text="Fecha de Nacimiento" underline="true" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.valignment="TOP" />
-            <Label fx:id="labelNacimiento" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+            <Label fx:id="labelNacimiento" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="3">
                <font>
                   <Font name="P22 Underground" size="20.0" />
                </font></Label>
-            <Label text="Nombre de Usuario" underline="true" GridPane.columnIndex="1" GridPane.rowIndex="4" GridPane.valignment="TOP" />
-            <Label fx:id="labelUsuario" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4">
+            <Label text="Edad" underline="true" GridPane.columnIndex="1" GridPane.rowIndex="4" GridPane.valignment="TOP" />
+            <Label fx:id="labelEdad" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="4">
                <font>
                   <Font name="P22 Underground" size="20.0" />
                </font></Label>
             <Label text="Informacion Adicional" underline="true" GridPane.columnIndex="1" GridPane.rowIndex="5" GridPane.valignment="TOP" />
-            <Label fx:id="labelInfoAdicional" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5">
+            <Label fx:id="labelInfoAdicional" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="5">
                <font>
                   <Font name="P22 Underground" size="20.0" />
                </font></Label>
@@ -99,12 +96,44 @@
                </cursor>
             </JFXButton>
             <Label text="Estado de la Cuenta" GridPane.columnIndex="1" GridPane.rowIndex="6" GridPane.valignment="TOP" />
-            <Label fx:id="labelEstadoCuenta" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="6">
+            <Label fx:id="labelEstadoCuenta" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="6">
                <font>
                   <Font name="P22 Underground" size="20.0" />
                </font>
             </Label>
+            <Label fx:id="lbMatematica" text="Matematica" underline="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP">
+               <GridPane.margin>
+                  <Insets top="10.0" />
+               </GridPane.margin>
+            </Label>
+            <JFXTextField fx:id="tFNivelMatematica" editable="false" prefHeight="24.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="TOP">
+               <GridPane.margin>
+                  <Insets left="400.0" right="10.0" />
+               </GridPane.margin>
+            </JFXTextField>
+            <Label fx:id="lbLengua" text="Lengua" underline="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+            <JFXTextField fx:id="tFNivelLengua" editable="false" prefHeight="24.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets left="400.0" right="10.0" />
+               </GridPane.margin>
+            </JFXTextField>
+            <Label fx:id="lbIngles" text="Ingles" underline="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BOTTOM" />
+            <JFXTextField fx:id="tFNivelIngles" editable="false" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+               <GridPane.margin>
+                  <Insets left="400.0" right="10.0" />
+               </GridPane.margin>
+            </JFXTextField>
+            <Label fx:id="lbNivel" text="Nivel" underline="true" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+               <GridPane.margin>
+                  <Insets right="150.0" />
+               </GridPane.margin>
+            </Label>
          </children>
       </GridPane>
+      <ImageView fx:id="imagenPersona" fitHeight="167.0" fitWidth="166.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="500.0" AnchorPane.topAnchor="5.0">
+         <image>
+            <Image url="@img/fotosPersonas/default.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

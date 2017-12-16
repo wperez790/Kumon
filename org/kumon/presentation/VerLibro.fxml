@@ -22,7 +22,7 @@
          <children>
             <Label fx:id="labelNombre" style="-fx-border-color: BLACK; -fx-background-color: #d1d1d1;" text="Label">
                <font>
-                  <Font name="Garuda" size="13.0" />
+                  <Font name="Garuda" size="18.0" />
                </font>
             </Label>
             <Label text="Nombre del Libro" underline="true" GridPane.valignment="TOP">
@@ -32,7 +32,7 @@
             </Label>
             <Label fx:id="labelAutor" style="-fx-border-color: BLACK; -fx-background-color: #d1d1d1;" text="Label" GridPane.columnIndex="1" GridPane.halignment="CENTER">
                <font>
-                  <Font name="Garuda" size="13.0" />
+                  <Font name="Garuda" size="18.0" />
                </font>
             </Label>
             <Label text="Autor" underline="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="TOP">
@@ -47,12 +47,12 @@
             </Label>
             <Label fx:id="labelEditorial" style="-fx-border-color: BLACK; -fx-background-color: #d1d1d1;" text="Label" GridPane.rowIndex="1">
                <font>
-                  <Font name="Garuda" size="13.0" />
+                  <Font name="Garuda" size="18.0" />
                </font>
             </Label>
             <Label fx:id="labelStock" style="-fx-border-color: BLACK; -fx-background-color: #d1d1d1;" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <font>
-                  <Font name="Garuda" size="13.0" />
+                  <Font name="Garuda" size="18.0" />
                </font>
             </Label>
             <Label text="Stock" underline="true" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="TOP">
@@ -67,7 +67,7 @@
             </Label>
             <Label fx:id="labelID" style="-fx-border-color: BLACK; -fx-background-color: #d1d1d1;" text="Label" GridPane.halignment="RIGHT">
                <font>
-                  <Font name="Garuda" size="13.0" />
+                  <Font name="Garuda" size="18.0" />
                </font>
             </Label>
             <Label text="Descripcion:" underline="true" GridPane.rowIndex="2" GridPane.valignment="TOP">
@@ -75,7 +75,10 @@
                   <Font name="Garuda Bold" size="18.0" />
                </font>
             </Label>
-            <Label fx:id="labelDescripcion" style="-fx-border-color: BLACK; -fx-background-color: #d1d1d1;" text="Label" GridPane.rowIndex="2" />
+            <Label fx:id="labelDescripcion" style="-fx-border-color: BLACK; -fx-background-color: #d1d1d1;" text="Label" GridPane.rowIndex="2">
+               <font>
+                  <Font name="Garuda" size="18.0" />
+               </font></Label>
          </children>
       </GridPane>
    </children>

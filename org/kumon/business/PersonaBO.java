@@ -8,9 +8,15 @@ package org.kumon.business;
 import com.jfoenix.controls.JFXDatePicker;
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.Calendar;
+import java.util.List;
 import java.util.Map;
 import org.kumon.main.Contexto;
 import org.kumon.model.Persona;
+import org.kumon.persist.DaoAlumnoImpl;
+import org.kumon.persist.DaoAsistenciaImpl;
+import org.kumon.persist.DaoDeudaImpl;
+import org.kumon.persist.DaoPagosImpl;
 import org.kumon.persist.DaoPersonaImpl;
 
 /**
@@ -20,6 +26,10 @@ import org.kumon.persist.DaoPersonaImpl;
 public class PersonaBO {
 
     private DaoPersonaImpl personaDB = Contexto.construirDaoPersonaImpl();
+    private DaoDeudaImpl deudasDB = Contexto.construirDaoDeudaImpl();
+    private DaoAlumnoImpl alumnosDB = Contexto.construirDaoAlumnoImpl();
+    private DaoPagosImpl pagosDB = Contexto.construirDaoPagosImpl();
+    private DaoAsistenciaImpl asistenciaDB = Contexto.construirDaoAsistenciaImpl();
 
     public PersonaBO() {
 
@@ -79,8 +89,8 @@ public class PersonaBO {
         return retorno;
     }
 
-    public void registrar(Persona persona) throws Exception {
-        personaDB.registrar(persona);
+    public boolean registrar(Persona persona) throws Exception {
+        return (personaDB.registrar(persona));
     }
 
     public void modificar(Persona persona) throws Exception {
@@ -88,7 +98,20 @@ public class PersonaBO {
     }
 
     public void eliminar(Persona persona) throws Exception {
+        List lista = deudasDB.getIdDeudaByIdPersona(persona.getIdPersona());
+        for (int i = 0; i < lista.size(); i++) {
+            pagosDB.anularPagoByIdDeuda(lista.get(i).toString());
+        }
+        deudasDB.anularDeudaByIdPersona(persona.getIdPersona());
+        asistenciaDB.eliminarById(persona.getIdPersona());
+        alumnosDB.eliminar(persona.getIdPersona());
         personaDB.eliminar(persona);
+
+    }
+
+    public List buscarByDate() throws Exception {
+        Calendar cal = Calendar.getInstance();
+        return personaDB.buscarByDate(cal);
     }
 
     public Persona obtenerPersonaByUser(String user) throws Exception {
@@ -96,6 +119,7 @@ public class PersonaBO {
     }
 
     public void setInactivoById(Integer dni) throws Exception {
+        deudasDB.anularDeudaByIdPersona(dni.toString());
         personaDB.setInactivo(personaDB.buscarById(dni));
     }
 
@@ -103,8 +127,22 @@ public class PersonaBO {
         personaDB.setActivo(personaDB.buscarById(dni));
     }
 
-    public void eliminar(Integer dni) throws Exception {
-        personaDB.eliminar(personaDB.buscarById(dni));
+    public boolean eliminar(Integer dni) throws Exception {
+        boolean ok = true;
+        try {
+            List lista = deudasDB.getIdDeudaByIdPersona(dni.toString());
+            for (int i = 0; i < lista.size(); i++) {
+                pagosDB.anularPagoByIdDeuda(lista.get(i).toString());
+            }
+            deudasDB.anularDeudaByIdPersona(dni.toString());
+            asistenciaDB.eliminarById(dni.toString());
+            alumnosDB.eliminar(dni.toString());
+            personaDB.eliminar(personaDB.buscarById(dni));
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            ok= false;
+        }
+return ok;
     }
 
     public Map<Integer, String> obtenerTodos() throws Exception {
@@ -112,7 +150,12 @@ public class PersonaBO {
     }
 
     public Persona buscarById(Integer id) throws Exception {
-        return personaDB.buscarById(id);
+        final Persona buscarById = personaDB.buscarById(id);
+        if (buscarById != null) {
+            return buscarById;
+        } else {
+            return new Persona();
+        }
     }
 
     public boolean comprobarUser(String text) throws Exception {

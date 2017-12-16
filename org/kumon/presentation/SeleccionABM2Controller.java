@@ -73,6 +73,7 @@ public class SeleccionABM2Controller implements Initializable {
 
     @FXML
     private void btnAdministradorAction(ActionEvent event) {
+        Contexto.pagos=false;
         Contexto.abrirComprobarAdmin();
         //SETEADO DE tipoUser dentro de comprobar() en ComprobarAdminController
     }

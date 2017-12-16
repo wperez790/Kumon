@@ -61,6 +61,7 @@ public class ConfiguracionController implements Initializable {
             Logger.getLogger(ConfiguracionController.class.getName()).log(Level.SEVERE, null, ex);
         }
         textFieldPrecio.setText(precio.toString());
+        
         textFieldPrecio.setOnKeyPressed(e -> {
             if ((int) e.getCharacter().charAt(0) == 13) {
                 try {

@@ -19,11 +19,16 @@ public class PrestamoBO {
 
     private DaoPrestamoImpl prestamoDB = Contexto.construirDaoPrestamoImpl();
 
-    public void registrarPrestamo(Prestamo prestamo) throws Exception {
-        prestamoDB.registrarPrestamo(prestamo);
+    public boolean registrarPrestamo(Prestamo prestamo) throws Exception {
         int cantidad = Contexto.libro.getStock() - 1;
-        LibroBO libroBO = Contexto.construirLibroBO();
-        libroBO.modificarStockLibro(cantidad, prestamo.getIdLibro());
+        if (cantidad >= 0) {
+            LibroBO libroBO = Contexto.construirLibroBO();
+            libroBO.modificarStockLibro(cantidad, prestamo.getIdLibro());
+            prestamoDB.registrarPrestamo(prestamo);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public void anularPrestamo(String idLibro, String idPersona, String fechaDesde) throws Exception {
@@ -40,6 +45,10 @@ public class PrestamoBO {
 
     public List obtenerTodos() throws Exception {
         return prestamoDB.obtenerTodos();
+    }
+
+    public List obtenerPrestamosVencidos() throws Exception {
+        return prestamoDB.obtenerPrestamosVencidos();
     }
 
 }

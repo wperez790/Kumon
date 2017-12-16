@@ -7,6 +7,7 @@ package org.kumon.persist;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -62,5 +63,18 @@ public class DaoAsistenciaImpl extends Conexion implements IAsistencia{
         this.cerrar();
 
         return lista;
+    }
+
+    public void eliminarById(String idPersona) throws Exception {
+        this.conectar();
+        try {
+
+            PreparedStatement st = this.conexion.prepareStatement("DELETE FROM Asistencia"
+                    + " WHERE idPersona = " + idPersona +" ;");
+            st.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        this.cerrar();
     }
 }

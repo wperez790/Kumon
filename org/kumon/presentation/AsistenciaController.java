@@ -9,10 +9,14 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -26,9 +30,11 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.controlsfx.control.Notifications;
 import org.kumon.business.AsistenciaBO;
+import org.kumon.business.AuxiliarBO;
 import org.kumon.business.PersonaBO;
 import org.kumon.main.Contexto;
 import org.kumon.model.Asistencia;
+import org.kumon.model.Auxiliar;
 import org.kumon.model.Persona;
 
 /**
@@ -47,11 +53,13 @@ public class AsistenciaController implements Initializable {
      * Initializes the controller class.
      */
     //AUXILIARES
-    Asistencia asistencia;
     Notifications notificacion;
-    AsistenciaBO asistenciaBO;
-    PersonaBO personaBO;
-    Persona persona;
+    private final AsistenciaBO asistenciaBO;
+    private final PersonaBO personaBO;
+    private final AuxiliarBO auxiliarBO;
+    private final Asistencia asistencia;
+    private Persona persona;
+    private List lista;
     ///////////////////////////////////
     @FXML
     private JFXButton btnVer;
@@ -59,13 +67,20 @@ public class AsistenciaController implements Initializable {
     public AsistenciaController() {
         asistenciaBO = Contexto.construirAsistenciaBO();
         personaBO = Contexto.construirPersonaBO();
+        auxiliarBO = Contexto.construirAuxiliarBO();
         asistencia = new Asistencia();
         persona = new Persona();
+        lista = new ArrayList();
+
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
+        try {
+            presenteEmpleadosVacaciones();
+        } catch (Exception ex) {
+            Logger.getLogger(AsistenciaController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         textFieldId.setOnKeyTyped(e -> {
             if ((int) e.getCharacter().charAt(0) == 13) {
                 try {
@@ -75,6 +90,19 @@ public class AsistenciaController implements Initializable {
                 }
             }
         });
+    }
+
+    private void presenteEmpleadosVacaciones() throws Exception {
+        Date date = new Date();
+        Calendar cal = new GregorianCalendar();
+        lista = auxiliarBO.getPersonalVacaciones();
+        for (int i = 0; i < lista.size(); i++) {
+            Auxiliar aux = (Auxiliar) lista.get(i);
+            asistencia.setIdPersona(aux.getIdAuxiliar());
+            asistencia.setFecha(new java.sql.Date(date.getTime()));
+            asistencia.setHoraEntrada(asistenciaBO.getHoraExacta(cal));
+            asistenciaBO.registrar(asistencia);
+        }
     }
 
     @FXML
@@ -96,23 +124,39 @@ public class AsistenciaController implements Initializable {
         }
     }
 
+    /*Funcion encargada de guardar en la base de datos el presente de un alumno*/
     private void presente() throws Exception {
-        /*Funcion encargada de guardar en la base de datos el presente de un alumno*/
+
         Date date = new Date();
         Calendar cal = new GregorianCalendar();
-        //Inicializo el objeto asistencia auxiliar.
+        //Seteo el objeto asistencia auxiliar.
         asistencia.setIdPersona(textFieldId.getText());
-        persona = personaBO.buscarById(Integer.parseInt(asistencia.getIdPersona()));
+        try {
+            persona = personaBO.buscarById(Integer.parseInt(asistencia.getIdPersona()));
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
         asistencia.setFecha(new java.sql.Date(date.getTime()));
         asistencia.setHoraEntrada(asistenciaBO.getHoraExacta(cal));
         ////////////////
         //Registro en la Base de datos
-        asistenciaBO.registrar(asistencia);
-        ///////////////
-        Image img = new Image("/org/kumon/presentation/img/ok.png");
+        if (persona.getIdPersona() != null) {
+            asistenciaBO.registrar(asistencia);
+            ///////////////
+            Image img = new Image("/org/kumon/presentation/img/ok.png");
+            String mensaje = "Registrado Presente: " + persona.getNombre() + " " + persona.getApellido();
+            notificar(img, mensaje);
+        } else {
+            Image img = new Image("/org/kumon/presentation/img/error.png");
+            String mensaje = "No se encontro la Persona";
+            notificar(img, mensaje);
+        }
+    }
+
+    private void notificar(Image img, String mensaje) {
         notificacion = Notifications.create();
         notificacion.title("Resultado de la Operacion");
-        notificacion.text("Registrado Presente: "+persona.getNombre()+" "+persona.getApellido());
+        notificacion.text(mensaje);
         notificacion.graphic(new ImageView(img));
         notificacion.hideAfter(Duration.seconds(3));
         notificacion.position(Pos.CENTER);

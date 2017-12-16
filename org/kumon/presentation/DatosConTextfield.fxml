@@ -85,6 +85,37 @@
             <JFXTextArea fx:id="textAreaInfoAdicional" GridPane.columnIndex="1" GridPane.rowIndex="5" />
             <Label text="Informacion Adicional" underline="true" GridPane.columnIndex="1" GridPane.rowIndex="4" GridPane.valignment="BOTTOM" />
             <JFXCheckBox fx:id="checkBoxCuentaActiva" text="Cuenta Activa" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <Label fx:id="lbMatematica" text="Matematica" underline="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP">
+               <GridPane.margin>
+                  <Insets top="10.0" />
+               </GridPane.margin>
+            </Label>
+            <Label fx:id="lbLengua" text="Lengua" underline="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BOTTOM" />
+            <JFXTextField fx:id="tFNivelLengua" prefHeight="24.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+               <GridPane.margin>
+                  <Insets left="400.0" right="10.0" />
+               </GridPane.margin>
+            </JFXTextField>
+            <JFXTextField fx:id="tFNivelMatematica" prefHeight="24.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.valignment="TOP">
+               <GridPane.margin>
+                  <Insets left="400.0" right="10.0" />
+               </GridPane.margin>
+            </JFXTextField>
+            <Label fx:id="lbIngles" text="Ingles" underline="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
+            </Label>
+            <JFXTextField fx:id="tFNivelIngles" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+               <GridPane.margin>
+                  <Insets left="400.0" right="10.0" />
+               </GridPane.margin>
+            </JFXTextField>
+            <Label fx:id="lbNivel" text="Nivel" underline="true" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+               <GridPane.margin>
+                  <Insets right="150.0" />
+               </GridPane.margin>
+            </Label>
          </children>
       </GridPane>
    </children>

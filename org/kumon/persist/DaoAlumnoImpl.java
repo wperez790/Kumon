@@ -7,6 +7,7 @@ package org.kumon.persist;
 
 import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.List;
 import org.kumon.model.Alumno;
 import org.kumon.model.Familiar;
@@ -20,8 +21,8 @@ import org.kumon.persist.interfaces.IAlumno;
 public class DaoAlumnoImpl extends Conexion implements IAlumno {
 
     @Override
-    public void registrar(Alumno alumno) throws Exception {
-
+    public boolean registrar(Alumno alumno) throws Exception {
+        boolean ok=true;
         try {
             this.conectar();
             //TABLA ALUMNOS
@@ -31,10 +32,12 @@ public class DaoAlumnoImpl extends Conexion implements IAlumno {
             st.setString(3, alumno.getIdOrientadora());
             st.executeUpdate();
         } catch (Exception e) {
+            ok=false;
             e.printStackTrace();
         } finally {
             this.cerrar();
         }
+        return ok;
     }
 
     @Override
@@ -43,8 +46,17 @@ public class DaoAlumnoImpl extends Conexion implements IAlumno {
     }
 
     @Override
-    public void eliminar(Alumno alumno) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void eliminar(String idAlumno) throws Exception {
+         this.conectar();
+        try {
+
+            PreparedStatement st = this.conexion.prepareStatement("DELETE FROM Alumnos"
+                    + " WHERE idAlumno = '" + idAlumno + "';");
+            st.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Override

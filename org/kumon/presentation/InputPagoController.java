@@ -41,14 +41,14 @@ public class InputPagoController implements Initializable {
     private JFXButton btnPagar1;
     @FXML
     private Label labelidDeuda;
+    @FXML
+    private JFXTextField textFieldValor;
 
     //AUX
     PagosBO pagosBO;
     Pago pago;
     private static Stage primaryStage;
     Notifications notificacion;
-    @FXML
-    private JFXTextField textFieldValor;
 
     public InputPagoController() {
         pagosBO = Contexto.construirPagosBO();
@@ -71,12 +71,23 @@ public class InputPagoController implements Initializable {
         pago.setFecha(date);
         pago.setIdDeuda(Integer.parseInt(Contexto.idDeuda));
         pago.setMonto(Contexto.monto);
-        pagosBO.registrarPago(pago);
+        if (pagosBO.registrarPago(pago)) {
 
-        Image img = new Image("/org/kumon/presentation/img/ok.png");
+            Image img = new Image("/org/kumon/presentation/img/ok.png");
+            String mensaje = "Registrado con Exito";
+            notificar(img, mensaje);
+        } else {
+            Image img = new Image("/org/kumon/presentation/img/error.png");
+            String mensaje = "Error en el Registro";
+            notificar(img, mensaje);
+        }
+
+    }
+
+    private void notificar(Image img, String mensaje) throws IOException {
         notificacion = Notifications.create();
         notificacion.title("Resultado de la Operacion");
-        notificacion.text("Registrado con Exito");
+        notificacion.text(mensaje);
         notificacion.graphic(new ImageView(img));
         notificacion.hideAfter(Duration.seconds(3));
         notificacion.position(Pos.CENTER);
@@ -84,7 +95,6 @@ public class InputPagoController implements Initializable {
         primaryStage.close();
         recargar();
         notificacion.show();
-
     }
 
     private void recargar() throws IOException {
@@ -99,19 +109,16 @@ public class InputPagoController implements Initializable {
         pago.setFecha(date);
         pago.setIdDeuda(Integer.parseInt(Contexto.idDeuda));
         pago.setMonto(Double.parseDouble(textFieldValor.getText()));
-        pagosBO.registrarPago(pago);
+        if (pagosBO.registrarPago(pago)) {
 
-        Image img = new Image("/org/kumon/presentation/img/ok.png");
-        notificacion = Notifications.create();
-        notificacion.title("Resultado de la Operacion");
-        notificacion.text("Registrado con Exito");
-        notificacion.graphic(new ImageView(img));
-        notificacion.hideAfter(Duration.seconds(3));
-        notificacion.position(Pos.CENTER);
-        notificacion.darkStyle();
-        primaryStage.close();
-        recargar();
-        notificacion.show();
+            Image img = new Image("/org/kumon/presentation/img/ok.png");
+            String mensaje = "Registrado con Exito";
+            notificar(img, mensaje);
+        } else {
+            Image img = new Image("/org/kumon/presentation/img/error.png");
+            String mensaje = "Error en el Registro";
+            notificar(img, mensaje);
+        }
     }
 
     public void init() {

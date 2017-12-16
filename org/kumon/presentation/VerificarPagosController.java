@@ -51,9 +51,15 @@ public class VerificarPagosController implements Initializable {
     @FXML
     private JFXTreeTableView<Payment> tablePagos;
     //AUX
-    PagosBO pagosBO = Contexto.construirPagosBO();
+    PagosBO pagosBO;
 
     //
+
+    public VerificarPagosController() {
+        pagosBO = Contexto.construirPagosBO();
+    }
+    
+    
     /**
      * Initializes the controller class.
      */

@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.Light.Distant?>
+<?import javafx.scene.effect.Lighting?>
+<?import javafx.scene.effect.Shadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1280.0" style="-fx-background-image: url(&quot;file:src/org/kumon/presentation/img/backCeleste2.png&quot;);" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.kumon.presentation.PlanificadorController">
+   <children>
+      <GridPane layoutX="237.0" layoutY="221.0" prefHeight="800.0" prefWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <GridPane gridLinesVisible="true" style="-fx-border-color: #000000; -fx-border-width: 5;" GridPane.rowIndex="1">
+              <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <ImageView fx:id="imgHoy" fitHeight="225.0" fitWidth="125.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                  <ImageView fx:id="imgHoyMas1" fitHeight="225.0" fitWidth="125.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                  <ImageView fx:id="imgHoyMas2" fitHeight="225.0" fitWidth="125.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
+                  <ImageView fx:id="imgHoyMas3" fitHeight="225.0" fitWidth="125.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.halignment="CENTER" />
+                  <ImageView fx:id="imgHoyMas4" fitHeight="225.0" fitWidth="125.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="4" GridPane.halignment="CENTER" />
+                  <ImageView fx:id="imgHoyMas5" fitHeight="225.0" fitWidth="125.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="5" GridPane.halignment="CENTER" />
+                  <ImageView fx:id="imgHoyMas6" fitHeight="225.0" fitWidth="125.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" GridPane.halignment="CENTER" />
+                  <ImageView fx:id="imgHoyMas7" fitHeight="225.0" fitWidth="125.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="7" GridPane.halignment="CENTER" />
+                  <Label fx:id="label0" text="Label" underline="true" GridPane.halignment="CENTER" GridPane.valignment="TOP">
+                     <font>
+                        <Font name="Garuda Bold" size="14.0" />
+                     </font></Label>
+                  <Label fx:id="label1" text="Label" underline="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="TOP">
+                     <font>
+                        <Font name="Garuda Bold" size="14.0" />
+                     </font></Label>
+                  <Label fx:id="label2" text="Label" underline="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="TOP">
+                     <font>
+                        <Font name="Garuda Bold" size="14.0" />
+                     </font></Label>
+                  <Label fx:id="label3" text="Label" underline="true" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.valignment="TOP">
+                     <font>
+                        <Font name="Garuda Bold" size="14.0" />
+                     </font></Label>
+                  <Label fx:id="label4" text="Label" underline="true" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.valignment="TOP">
+                     <font>
+                        <Font name="Garuda Bold" size="14.0" />
+                     </font></Label>
+                  <Label fx:id="label5" text="Label" underline="true" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.valignment="TOP">
+                     <font>
+                        <Font name="Garuda Bold" size="14.0" />
+                     </font></Label>
+                  <Label fx:id="label6" text="Label" underline="true" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.valignment="TOP">
+                     <font>
+                        <Font name="Garuda Bold" size="14.0" />
+                     </font></Label>
+                  <Label fx:id="label7" text="Label" underline="true" GridPane.columnIndex="7" GridPane.halignment="CENTER" GridPane.valignment="TOP">
+                     <font>
+                        <Font name="Garuda Bold" size="14.0" />
+                     </font></Label>
+                  <JFXButton buttonType="RAISED" onAction="#hoyAction" prefHeight="225.0" prefWidth="125.0" ripplerFill="#2beb04" text=" " GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </JFXButton>
+                  <JFXButton buttonType="RAISED" onAction="#hoyMas1Action" prefHeight="225.0" prefWidth="125.0" ripplerFill="#2beb04" text=" " GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </JFXButton>
+                  <JFXButton buttonType="RAISED" onAction="#hoyMas2Action" prefHeight="225.0" prefWidth="125.0" ripplerFill="#2beb04" text=" " GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </JFXButton>
+                  <JFXButton buttonType="RAISED" onAction="#hoyMas3Action" prefHeight="225.0" prefWidth="125.0" ripplerFill="#2beb04" text=" " GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </JFXButton>
+                  <JFXButton buttonType="RAISED" onAction="#hoyMas4Action" prefHeight="225.0" prefWidth="125.0" ripplerFill="#2beb04" text=" " GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </JFXButton>
+                  <JFXButton buttonType="RAISED" onAction="#hoyMas5Action" prefHeight="225.0" prefWidth="125.0" ripplerFill="#2beb04" text=" " GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </JFXButton>
+                  <JFXButton buttonType="RAISED" onAction="#hoyMas6Action" prefHeight="225.0" prefWidth="125.0" ripplerFill="#2beb04" text=" " GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </JFXButton>
+                  <JFXButton buttonType="RAISED" onAction="#hoyMas7Action" prefHeight="225.0" prefWidth="125.0" ripplerFill="#2beb04" text=" " GridPane.columnIndex="7" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </JFXButton>
+               </children>
+            </GridPane>
+            <Label alignment="TOP_LEFT" text="Planificador" textFill="#70d0f6" underline="true" GridPane.halignment="LEFT" GridPane.valignment="TOP">
+               <font>
+                  <Font name="Garuda" size="28.0" />
+               </font>
+               <effect>
+                  <Lighting specularConstant="1.02" surfaceScale="4.36">
+                     <bumpInput>
+                        <Shadow />
+                     </bumpInput>
+                     <light>
+                        <Light.Distant />
+                     </light>
+                  </Lighting>
+               </effect>
+            </Label>
+            <ImageView fitHeight="100.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM">
+               <image>
+                  <Image url="@img/klargo2.jpg" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="52.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+               <image>
+                  <Image url="@img/backbutton.png" />
+               </image>
+               <GridPane.margin>
+                  <Insets bottom="10.0" left="10.0" />
+               </GridPane.margin>
+            </ImageView>
+            <JFXButton fx:id="btnBack" buttonType="RAISED" onAction="#btnBackAction" prefHeight="52.0" prefWidth="52.0" ripplerFill="BLACK" text=" " GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+               <cursor>
+                  <Cursor fx:constant="OPEN_HAND" />
+               </cursor>
+               <GridPane.margin>
+                  <Insets bottom="10.0" left="10.0" />
+               </GridPane.margin>
+            </JFXButton>
+         </children>
+      </GridPane>
+   </children>
+</AnchorPane>

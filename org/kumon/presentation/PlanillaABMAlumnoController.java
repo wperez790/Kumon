@@ -89,7 +89,7 @@ public class PlanillaABMAlumnoController implements Initializable {
     private JFXComboBox<String> comboBoxAuxiliar;
 
     //AUXILIARES
-    private static Stage primaryStage = new Stage();
+    private static Stage primaryStage;
     private Notifications notificacion;
     private Notifications error2;
     Persona persona;
@@ -112,6 +112,7 @@ public class PlanillaABMAlumnoController implements Initializable {
         adminBO = Contexto.construirAdminBO();
         lista = auxiliarBO.getAll();
         lista2 = adminBO.getAll();
+        primaryStage = new Stage();
 
     }
 
@@ -140,33 +141,33 @@ public class PlanillaABMAlumnoController implements Initializable {
         if (checkBoxIngles.isSelected()) {
             asignatura = new Asignatura();
             asignatura.setIdAsignatura(3);
-            asignatura.setNivel("0");
+            asignatura.setNivel("A1-00");
             asignatura.setNombre("Ingles");
             listaAsignaturas.add(asignatura);
         }
         if (checkBoxLengua.isSelected()) {
             asignatura = new Asignatura();
             asignatura.setIdAsignatura(2);
-            asignatura.setNivel("0");
+            asignatura.setNivel("A1-00");
             asignatura.setNombre("Lengua");
             listaAsignaturas.add(asignatura);
         }
         if (checkBoxMat.isSelected()) {
             asignatura = new Asignatura();
             asignatura.setIdAsignatura(1);
-            asignatura.setNivel("0");
+            asignatura.setNivel("A1-00");
             asignatura.setNombre("Matematica");
             listaAsignaturas.add(asignatura);
         }
         alumno.setListaAsignaturas(listaAsignaturas);
-/*Verificar cual Auxiliar  u Orientadora se eligio para su tutoria*/
+        /*Verificar cual Auxiliar  u Orientadora se eligio para su tutoria*/
         for (int i = 0; i < lista.size(); i++) {
             Auxiliar aux = (Auxiliar) lista.get(i);
             if (comboBoxAuxiliar.getSelectionModel().getSelectedItem().equalsIgnoreCase((aux.getNombre() + " " + aux.getApellido()))) {
                 alumno.setIdAuxiliar(aux.getIdAuxiliar());
 
             }
-        }        
+        }
         for (int i = 0; i < lista2.size(); i++) {
             Administrador aux = (Administrador) lista2.get(i);
             if (comboBoxAuxiliar.getSelectionModel().getSelectedItem().equalsIgnoreCase((aux.getNombre() + " " + aux.getApellido()))) {
@@ -174,25 +175,35 @@ public class PlanillaABMAlumnoController implements Initializable {
 
             }
         }
-/**/
+        /**/
         //Si todo esta ok: REGISTRA
         if (ok == true) {
             textFieldDocumento.setUnFocusColor(Color.GREEN);
 
-            alumnoBO.registrar(alumno);
-            Image img = new Image("/org/kumon/presentation/img/ok.png");
-            notificacion = Notifications.create();
-            notificacion.title("Resultado de la Operacion");
-            notificacion.text("Registrado con Exito");
-            notificacion.graphic(new ImageView(img));
-            notificacion.hideAfter(Duration.seconds(3));
-            notificacion.position(Pos.CENTER);
-            notificacion.darkStyle();
-            primaryStage.close();
-            notificacion.show();
+            if (alumnoBO.registrar(alumno)) {
+                Image img = new Image("/org/kumon/presentation/img/ok.png");
+                String mensaje= "Registrado con Exito";
+                notificar(img,mensaje);
+            } else {
+                Image img = new Image("/org/kumon/presentation/img/error.png");
+                String mensaje= "Problema en la Registración, compruebe los datos";
+                notificar(img,mensaje);
+            }
 
         }
         //
+    }
+
+    private void notificar(Image img, String mensaje) {
+        notificacion = Notifications.create();
+        notificacion.title("Resultado de la Operacion");
+        notificacion.text(mensaje);
+        notificacion.graphic(new ImageView(img));
+        notificacion.hideAfter(Duration.seconds(3));
+        notificacion.position(Pos.CENTER);
+        notificacion.darkStyle();
+        primaryStage.close();
+        notificacion.show();
     }
 
     private boolean cargarDatos() {
@@ -240,7 +251,7 @@ public class PlanillaABMAlumnoController implements Initializable {
         //FECHAS Verificacion de Fecha no null y calculo de Edad.
         java.sql.Date date = java.sql.Date.valueOf(datePickerFecha.getValue());
         alumno.setFechaNacimiento(date);
-        if (alumno.getFechaNacimiento() == null || datePickerFecha.getValue()== null) {
+        if (alumno.getFechaNacimiento() == null || datePickerFecha.getValue() == null) {
             error2 = Notifications.create();
             error2.title("Error de Parametros");
             error2.darkStyle();

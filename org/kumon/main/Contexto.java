@@ -5,10 +5,13 @@
  */
 package org.kumon.main;
 
+import java.util.Calendar;
+import java.util.List;
 import javafx.scene.control.SplitPane;
 import javafx.stage.Stage;
 import org.kumon.business.AdministradorBO;
 import org.kumon.business.AlumnoBO;
+import org.kumon.business.AsignaturaBO;
 import org.kumon.business.AsistenciaBO;
 import org.kumon.business.AuxiliarBO;
 import org.kumon.business.DeudaBO;
@@ -18,10 +21,13 @@ import org.kumon.business.PagosBO;
 import org.kumon.business.PersonaBO;
 import org.kumon.business.PrestamoBO;
 import org.kumon.business.SistemaBO;
+import org.kumon.business.TareaBO;
 import org.kumon.model.Libro;
 import org.kumon.model.Persona;
+import org.kumon.model.Tarea;
 import org.kumon.persist.DaoAdministradorImpl;
 import org.kumon.persist.DaoAlumnoImpl;
+import org.kumon.persist.DaoAsignaturaImpl;
 import org.kumon.persist.DaoAsistenciaImpl;
 import org.kumon.persist.DaoAuxiliarImpl;
 import org.kumon.persist.DaoDeudaImpl;
@@ -31,6 +37,7 @@ import org.kumon.persist.DaoPagosImpl;
 import org.kumon.persist.DaoPersonaImpl;
 import org.kumon.persist.DaoPrestamoImpl;
 import org.kumon.persist.DaoSistemaImpl;
+import org.kumon.persist.DaoTareaImpl;
 import org.kumon.presentation.AsistenciaController;
 import org.kumon.presentation.ComprobarAdminController;
 import org.kumon.presentation.ConfiguracionController;
@@ -49,6 +56,7 @@ import org.kumon.presentation.PlanillaABMController;
 import org.kumon.presentation.PlanillaABMFamiliarController;
 import org.kumon.presentation.SeleccionABM1Controller;
 import org.kumon.presentation.SeleccionABM2Controller;
+import org.kumon.presentation.VacacionesController;
 import org.kumon.presentation.VerLibroController;
 
 /*import static sun.security.jgss.GSSUtil.login;*/
@@ -69,6 +77,8 @@ public class Contexto {
     private static DaoSistemaImpl sistemaDB;
     private static DaoAdministradorImpl administradorDB;
     private static DaoAsistenciaImpl asistenciaDB;
+    private static DaoAsignaturaImpl asignaturaDB;
+    private static DaoTareaImpl tareaDB;
     static private Contexto cx;
     public static Persona persona;
     public static Persona user;
@@ -84,6 +94,11 @@ public class Contexto {
     public static boolean SeteoPago = false;
     public static String idDeuda;
     public static Double monto;
+    public static boolean pagos;
+    public static boolean prestamosVencidos;
+    public static Integer day;
+    public static Calendar fecha;
+    public static List<Tarea> lista;
 
     private Contexto() {
         try {
@@ -149,6 +164,14 @@ public class Contexto {
 
     public static AsistenciaBO construirAsistenciaBO() {
         return new AsistenciaBO();
+    }
+
+    public static AsignaturaBO construirAsignarutraBO() {
+        return new AsignaturaBO();
+    }
+
+    public static TareaBO construirTareaBO() {
+        return new TareaBO();
     }
 
     /**
@@ -290,6 +313,30 @@ public class Contexto {
     }
 
     /**/
+    /**
+     * Metodo para contruir la clase DAO de las Asignaturas
+     *
+     * @return Devuelve el objeto asignaturaDB
+     */
+    public static DaoAsignaturaImpl construirDaoAsignaturaImpl() {
+        if (asignaturaDB == null) {
+            asignaturaDB = new DaoAsignaturaImpl();
+        }
+        return asignaturaDB;
+    }
+
+    /**/
+    /**
+     * Metodo para contruir la clase DAO de las Tareas para el Planificador
+     *
+     * @return Devuelve el objeto tareaDB
+     */
+    public static DaoTareaImpl construirDaoTareaImpl() {
+        if (tareaDB == null) {
+            tareaDB = new DaoTareaImpl();
+        }
+        return tareaDB;
+    }
 
     //Llamado a la funcion para abrir la ventana de login
     public static void abrirLogin() throws Exception {
@@ -346,6 +393,11 @@ public class Contexto {
     public static void abrirInputPago() {
         InputPagoController input = new InputPagoController();
         input.init();
+    }
+
+    public static void abrirVacaciones() {
+        VacacionesController vacaciones = new VacacionesController();
+        vacaciones.init();
     }
 
     public static Persona getPersona() {

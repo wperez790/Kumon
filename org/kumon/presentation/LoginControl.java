@@ -31,7 +31,6 @@ import org.kumon.business.Bitshifter;
 import org.kumon.business.EscribirLeerArchivo;
 import org.kumon.business.PersonaBO;
 import org.kumon.main.Contexto;
-import org.kumon.persist.DaoPersonaImpl;
 
 /**
  *
@@ -52,8 +51,6 @@ public class LoginControl implements Initializable {
     @FXML
     private JFXButton btnLogin;
     @FXML
-    private JFXButton btnRecuperarUsuario;
-    @FXML
     private JFXCheckBox checkBoxGuardarContraseña;
 
     @FXML
@@ -61,6 +58,7 @@ public class LoginControl implements Initializable {
         this.ingresar();
 
     }
+
     //AUX
     private Notifications error;
     private PersonaBO personaBO;
@@ -72,6 +70,7 @@ public class LoginControl implements Initializable {
     //
     public LoginControl() throws Exception {
         personaBO = Contexto.construirPersonaBO();
+        
     }
 
     @Override
@@ -102,7 +101,7 @@ public class LoginControl implements Initializable {
             if (u != null) {
                 user.setText(Bitshifter.desencriptar(u));
             }
-            if(p!=null){
+            if (p != null) {
                 pass.setText(Bitshifter.desencriptar(p));//Cualquier valor diferente de false retorna el user
             }
 
@@ -111,6 +110,7 @@ public class LoginControl implements Initializable {
         }
         checkBoxGuardarContraseña.setSelected(true);
         checkBoxGuardarUsuario.setSelected(true);
+
 
     }
 
@@ -134,15 +134,13 @@ public class LoginControl implements Initializable {
         if (checkBoxGuardarContraseña.isSelected()) {
             passEncriptado = Bitshifter.encriptar(pass.getText());
             EscribirLeerArchivo.escribir(passEncriptado, false);
-        }
-        else{
+        } else {
             EscribirLeerArchivo.escribir("", false);
         }
         if (checkBoxGuardarUsuario.isSelected()) {
             userEncriptado = Bitshifter.encriptar(user.getText());
             EscribirLeerArchivo.escribir(userEncriptado, true);
-        }
-        else{
+        } else {
             EscribirLeerArchivo.escribir("", true);
         }
 
@@ -206,7 +204,7 @@ public class LoginControl implements Initializable {
     }
 
     public void fadeTransition(AnchorPane pane) {
-        FadeTransition fadeIn = new FadeTransition(Duration.seconds(3), pane);
+        FadeTransition fadeIn = new FadeTransition(Duration.seconds(4), pane);
         fadeIn.setFromValue(0);
         fadeIn.setToValue(1);
         fadeIn.setCycleCount(1);

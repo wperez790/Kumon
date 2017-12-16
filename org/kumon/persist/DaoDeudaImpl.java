@@ -22,7 +22,8 @@ import org.kumon.persist.interfaces.IDeudas;
 public class DaoDeudaImpl extends Conexion implements IDeudas{
 
     @Override
-    public void registrarDeuda(Deuda deuda) throws Exception {
+    public boolean registrarDeuda(Deuda deuda) throws Exception {
+        boolean ok = true;
        this.conectar();
         try {
             PreparedStatement st = this.conexion.prepareStatement("INSERT INTO Deudas(idAsignatura,idAlumno,vencimiento,monto,montoAdeudado)"
@@ -35,9 +36,11 @@ public class DaoDeudaImpl extends Conexion implements IDeudas{
             st.executeUpdate();
 
         } catch (Exception e) {
+            ok = false;
             e.printStackTrace();
         }
         this.cerrar();
+        return ok;
     }
     
 
@@ -177,6 +180,39 @@ public class DaoDeudaImpl extends Conexion implements IDeudas{
             e.printStackTrace();
         }
         this.cerrar();
+    }
+
+    public void anularDeudaByIdPersona(String idPersona) throws Exception {
+        this.conectar();
+        try {
+
+            PreparedStatement st = this.conexion.prepareStatement("DELETE FROM Deudas"
+                    + " WHERE idAlumno = " + idPersona + " AND vencimiento > CURDATE() ;");
+            st.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        this.cerrar();
+    }
+    
+    /*Retorna lista de Strings de idDeuda*/
+    public List getIdDeudaByIdPersona(String idPersona) throws Exception{
+        List lista = new ArrayList();  
+        try {
+            this.conectar();
+            Statement st = conexion.createStatement();
+            ResultSet rs = st.executeQuery("SELECT idDeuda "
+                    + " FROM Deudas where idAlumno= " + idPersona + ";");
+            /* Recorre el Result set y setea el pago con los datos y los agrega a la lista de retorno*/
+            while (rs.next()) {
+                lista.add(rs.getString("idDeuda"));
+            }
+            /**/
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        this.cerrar();
+        return lista;
     }
     
     

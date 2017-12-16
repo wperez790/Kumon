@@ -5,10 +5,13 @@
  */
 package org.kumon.persist;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,7 +26,8 @@ import org.kumon.persist.interfaces.IPersona;
 public class DaoPersonaImpl extends Conexion implements IPersona {
 
     @Override
-    public void registrar(Persona persona) throws Exception {
+    public boolean registrar(Persona persona) throws Exception {
+        boolean ok = true;
         this.conectar();
         try {
             if (Contexto.tipoUser < 3) {
@@ -66,10 +70,11 @@ public class DaoPersonaImpl extends Conexion implements IPersona {
                 st.executeUpdate();
 
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
+            ok = false;
         }
+        return ok;
     }
 
     @Override
@@ -287,9 +292,9 @@ public class DaoPersonaImpl extends Conexion implements IPersona {
 
     public void setInactivo(Persona persona) throws Exception {
 
-        this.conectar();
         try {
 
+            this.conectar();
             PreparedStatement st = this.conexion.prepareStatement("UPDATE Personas SET activo = ?"
                     + " WHERE idPersona = '" + persona.getIdPersona() + "';");
             st.setInt(1, 0);
@@ -303,9 +308,8 @@ public class DaoPersonaImpl extends Conexion implements IPersona {
 
     public void setActivo(Persona persona) throws Exception {
 
-        this.conectar();
         try {
-
+            this.conectar();
             PreparedStatement st = this.conexion.prepareStatement("UPDATE Personas SET activo = ?"
                     + " WHERE idPersona = '" + persona.getIdPersona() + "';");
             st.setInt(1, 1);
@@ -314,5 +318,34 @@ public class DaoPersonaImpl extends Conexion implements IPersona {
             e.printStackTrace();
         }
 
+    }
+
+    @Override
+    public List buscarByDate(Calendar fecha) throws Exception {
+        List lista = new ArrayList();
+        Persona persona ;
+        int month = fecha.get(Calendar.MONTH)+1;
+        int day = fecha.get(Calendar.DAY_OF_MONTH);
+        try {
+            this.conectar();
+            Statement st = conexion.createStatement();
+            ResultSet rs = st.executeQuery("SELECT dni, nombrePersona, apellido, edad"
+                    + " FROM Personas where DAYOFMONTH(fechaNacimiento) = "+day+" and MONTH(fechaNacimiento)= "+month+" order by nombrePersona, apellido");
+            /* Recorre el Result set y setea los datos que necesito en una persona auxiliar*/
+            while (rs.next()) {
+                persona = new Persona();
+                persona.setDni(Integer.parseInt(rs.getString("dni")));
+                persona.setNombre(rs.getString("nombrePersona"));
+                persona.setApellido(rs.getString("apellido"));
+                persona.setEdad(rs.getInt("edad"));
+                lista.add(persona);
+
+            }
+            /**/
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return lista;
     }
 }

@@ -14,7 +14,7 @@ import org.kumon.model.Deuda;
  */
 public interface IDeudas {
     
-     public void registrarDeuda(Deuda deuda) throws Exception;
+     public boolean registrarDeuda(Deuda deuda) throws Exception;
      public void anularDeuda(Integer idDeuda) throws Exception;
      public List obtenerDeudasVencidas() throws Exception;
      public List obtenerDeudasAVencer() throws Exception;

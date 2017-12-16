@@ -5,6 +5,7 @@
  */
 package org.kumon.persist.interfaces;
 
+import java.util.Calendar;
 import java.util.List;
 import org.kumon.model.Persona;
 
@@ -15,7 +16,7 @@ import org.kumon.model.Persona;
  */
 public interface IPersona {
     
-    public void registrar(Persona persona) throws Exception;
+    public boolean registrar(Persona persona) throws Exception;
     public void modificar(Persona persona) throws Exception;
     public void eliminar(Persona persona) throws Exception;
     public List<Persona> listar() throws Exception;
@@ -23,5 +24,6 @@ public interface IPersona {
     public boolean comprobarUser(String user) throws Exception;
     public Persona buscarById(Integer id) throws Exception;
     public Persona buscarByName(String name) throws Exception;
+    public List<Persona> buscarByDate(Calendar fecha) throws Exception;
     
 }

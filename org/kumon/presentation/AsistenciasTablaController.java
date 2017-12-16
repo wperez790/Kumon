@@ -136,10 +136,10 @@ public class AsistenciasTablaController implements Initializable {
 
     @FXML
     private void btnBackAction(ActionEvent event) throws IOException {
-         Parent pane = FXMLLoader.load(getClass().getResource("/org/kumon/presentation/MenuPrincipal.fxml"));
+        Parent pane = FXMLLoader.load(getClass().getResource("/org/kumon/presentation/MenuPrincipal.fxml"));
         Contexto.splitPane.getItems().set(0, pane);
     }
-
+/*Clase auxiliar para el manejo de la tabla*/
     private static class Assistance extends RecursiveTreeObject<Assistance> {
 
         StringProperty idPersona;

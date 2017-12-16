@@ -21,17 +21,35 @@ import org.kumon.persist.DaoAlumnoImpl;
  */
 public class AlumnoBO {
 
-    private DaoAlumnoImpl alumnoDB = Contexto.construirDaoAlumnoImpl();
-    private PersonaBO personaBO = Contexto.construirPersonaBO();
-    private DeudaBO deudaBO = Contexto.construirDeudaBO();
+    private DaoAlumnoImpl alumnoDB ;
+    private PersonaBO personaBO ;
+    private DeudaBO deudaBO ;
+    private AsignaturaBO asignaturaBO ;
+
+    public AlumnoBO() {
+        alumnoDB = Contexto.construirDaoAlumnoImpl();
+        personaBO = Contexto.construirPersonaBO();
+        deudaBO = Contexto.construirDeudaBO();
+        asignaturaBO = Contexto.construirAsignarutraBO();
+    }
     
-    public void registrar(Alumno alumno) throws Exception {
-        personaBO.registrar(alumno);
-        alumnoDB.registrar(alumno);
+    
+    public boolean registrar(Alumno alumno) throws Exception {
+        boolean ok=true;
+        
+        if(!personaBO.registrar(alumno)) ok=false;
+        if(!alumnoDB.registrar(alumno)) ok = false;
+        if(!generarDeuda(alumno)) ok =false;
+        if(!asignaturaBO.registrar(alumno.getListaAsignaturas(),alumno.getIdAlumno())) ok =false;
+        return ok;
+        
+    }
+
+    private boolean generarDeuda(Alumno alumno) throws Exception {
         Deuda deuda = new Deuda();
         SistemaBO sistemaBO = Contexto.construirSistemaBO();
         Contexto.precioPorMateria = sistemaBO.obtenerPrecioPorMateria();
-        
+        boolean ok= true;
         Calendar cal = new GregorianCalendar();
         Date fch = new java.sql.Date(cal.getTimeInMillis());
         for (int j = 1; j <= 12; j++) {
@@ -45,9 +63,13 @@ public class AlumnoBO {
                 cal.add(Calendar.DATE, j*31);
                 java.sql.Date date = new java.sql.Date(cal.getTimeInMillis());
                 deuda.setVencimiento(date);
-                deudaBO.registrarDeuda(deuda);
+                if(!deudaBO.registrarDeuda(deuda)){
+                    ok = false;
+                    break;
+                }
             }
         }
+        return ok;
     }
 
 }

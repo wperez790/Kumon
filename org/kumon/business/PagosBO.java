@@ -19,9 +19,16 @@ public class PagosBO {
         private DeudaBO deudaBO = Contexto.construirDeudaBO();
         private DaoPagosImpl pagosDB = Contexto.construirDaoPagosImpl();
         
-        public void registrarPago(Pago pagos) throws Exception{
-            pagosDB.registrarPago(pagos);
-            deudaBO.modificarMontoAdeudado(pagos);
+        public boolean registrarPago(Pago pagos) throws Exception{
+            boolean ok=true;
+            try {
+                pagosDB.registrarPago(pagos);
+                deudaBO.modificarMontoAdeudado(pagos);
+            } catch (Exception exception) {
+                exception.printStackTrace();
+                ok = false;
+            }
+            return ok;
         }
         
         public void anularPago(Integer idPago) throws Exception {

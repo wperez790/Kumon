@@ -62,10 +62,16 @@ public class VerificarPrestamosController implements Initializable {
     private JFXComboBox<String> comboBoxFiltro;
 
     //AUX
-    PrestamoBO prestamoBO = Contexto.construirPrestamoBO();
+    PrestamoBO prestamoBO;
     private Notifications notificacion;
-
     //
+
+    public VerificarPrestamosController() {
+        prestamoBO = Contexto.construirPrestamoBO();
+    }
+    
+    
+    
     /**
      * Initializes the controller class.
      */
@@ -74,9 +80,11 @@ public class VerificarPrestamosController implements Initializable {
         ObservableList<String> filtros
                 = FXCollections.observableArrayList(
                         "Todos los prestamos no Devueltos",
-                        "Todos los prestamos"
+                        "Todos los prestamos",
+                        "Prestamos Vencidos"
                 );
         comboBoxFiltro.setItems(filtros);
+
 
         /**/
  /*Seteo de la columna Nombre Libro*/
@@ -122,8 +130,10 @@ public class VerificarPrestamosController implements Initializable {
         ObservableList<VerificarPrestamosController.Loan> prestamosOList = FXCollections.observableArrayList();
         List list;
         try {
-            if (Contexto.prestamosNoDevueltos) {
+            if (Contexto.prestamosNoDevueltos && !Contexto.prestamosVencidos) {
                 list = prestamoBO.obtenerPrestamosNoDevueltos();
+            } else if (!Contexto.prestamosNoDevueltos && Contexto.prestamosVencidos) {
+                list = prestamoBO.obtenerPrestamosVencidos();
             } else {
                 list = prestamoBO.obtenerTodos();
             }
@@ -166,15 +176,20 @@ public class VerificarPrestamosController implements Initializable {
             recargar();
         } else {
             Image img = new Image("/org/kumon/presentation/img/error.png");
-            notificacion = Notifications.create();
-            notificacion.title("Resultado de la Operacion");
-            notificacion.text("Libro anteriormente devuelto");
-            notificacion.graphic(new ImageView(img));
-            notificacion.hideAfter(Duration.seconds(3));
-            notificacion.position(Pos.CENTER);
-            notificacion.darkStyle();
-            notificacion.show();
+            String mensaje= "Libro anteriormente devuelto";
+            notificar(img, mensaje);
         }
+    }
+
+    private void notificar(Image img, String mensaje) {
+        notificacion = Notifications.create();
+        notificacion.title("Resultado de la Operacion");
+        notificacion.text(mensaje);
+        notificacion.graphic(new ImageView(img));
+        notificacion.hideAfter(Duration.seconds(3));
+        notificacion.position(Pos.CENTER);
+        notificacion.darkStyle();
+        notificacion.show();
     }
 
     @FXML
@@ -185,14 +200,8 @@ public class VerificarPrestamosController implements Initializable {
             recargar();
         } else {
             Image img = new Image("/org/kumon/presentation/img/error.png");
-            notificacion = Notifications.create();
-            notificacion.title("Resultado de la Operacion");
-            notificacion.text("Libro anteriormente devuelto");
-            notificacion.graphic(new ImageView(img));
-            notificacion.hideAfter(Duration.seconds(3));
-            notificacion.position(Pos.CENTER);
-            notificacion.darkStyle();
-            notificacion.show();
+            String mensaje=  "Libro anteriormente devuelto";
+            notificar(img, mensaje);
         }
     }
 
@@ -211,8 +220,13 @@ public class VerificarPrestamosController implements Initializable {
     private void filtrarAction(ActionEvent event) throws IOException {
         if (comboBoxFiltro.getValue().equalsIgnoreCase("Todos los prestamos no Devueltos")) {
             Contexto.prestamosNoDevueltos = true;
+            Contexto.prestamosVencidos= false;
+        } else if (comboBoxFiltro.getValue().equalsIgnoreCase("Prestamos Vencidos")) {
+            Contexto.prestamosNoDevueltos = false;
+            Contexto.prestamosVencidos= true;
         } else {
             Contexto.prestamosNoDevueltos = false;
+            Contexto.prestamosVencidos= false;
         }
         recargar();
     }

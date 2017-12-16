@@ -38,19 +38,18 @@ public class MenuPrincipalController implements Initializable {
     @FXML
     private JFXButton btnAsistencia;
     @FXML
-    private JFXButton btnCalendario;
-    @FXML
     private JFXButton btnPagos;
     @FXML
     private JFXButton btnPrestamo;
-    @FXML
-    private JFXButton btnEnviarCorreo;
     @FXML
     private JFXButton btnDatos;
     @FXML
     private JFXHamburger jfxHamburger;
     @FXML
     private JFXDrawer jfxDrawer;
+    @FXML
+    private JFXButton btnPlanificador;
+   
 
     /**
      * Initializes the controller class.
@@ -77,7 +76,7 @@ public class MenuPrincipalController implements Initializable {
         } catch (IOException ex) {
             Logger.getLogger(MenuPrincipalController.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+ 
     }
 
     public void init() {
@@ -94,6 +93,7 @@ public class MenuPrincipalController implements Initializable {
 
     @FXML
     private void btnABMAction(ActionEvent event) throws Exception {
+        Contexto.pagos = false;
         AnchorPane pane = FXMLLoader.load(getClass().getResource("/org/kumon/presentation/SeleccionABM1.fxml"));
         Contexto.splitPane.getItems().set(0, pane);
 
@@ -106,13 +106,9 @@ public class MenuPrincipalController implements Initializable {
     }
 
     @FXML
-    private void btnCalendarioAction(ActionEvent event) {
-    }
-
-    @FXML
     private void btnPagosAction(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/org/kumon/presentation/Pagos.fxml"));
-        Contexto.splitPane.getItems().set(0, root);
+        Contexto.pagos = true;
+        Contexto.abrirComprobarAdmin();
     }
 
     @FXML
@@ -122,14 +118,19 @@ public class MenuPrincipalController implements Initializable {
 
     }
 
-    @FXML
-    private void btnEnviarCorreoAction(ActionEvent event) {
-    }
 
     @FXML
     private void btnDatosAction(ActionEvent event) throws IOException {
+        Contexto.setBaja(false);
+        Contexto.setModificar(false);
         Parent root = FXMLLoader.load(getClass().getResource("/org/kumon/presentation/SeleccionPersona.fxml"));
         Contexto.splitPane.getItems().set(0, root);
 
+    }
+
+    @FXML
+    private void btnPlanificadorAction(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/org/kumon/presentation/Planificador.fxml"));
+        Contexto.splitPane.getItems().set(0, root);
     }
 }

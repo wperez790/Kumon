@@ -217,32 +217,42 @@ public class PlanillaABMController implements Initializable {
             passwordField1.setUnFocusColor(Color.GREEN);
             passwordField2.setUnFocusColor(Color.GREEN);
             textFieldDocumento.setUnFocusColor(Color.GREEN);
-            personaBO.registrar(persona);
-            if (Contexto.tipoUser == 2) {
-                auxiliarBO.agregarAuxiliar(persona.getIdPersona());
+            if (personaBO.registrar(persona)) {
+                String mensaje = "Registrado con Exito";
+                Image img = new Image("/org/kumon/presentation/img/ok.png");
+                notificar(mensaje, img);
+                if (Contexto.tipoUser == 2) {
+                    auxiliarBO.agregarAuxiliar(persona.getIdPersona());
+                }
+                if (Contexto.tipoUser == 1) {
+                    adminsBO.agregarAdmin(persona.getIdPersona());
+                }
+
+            } else {
+                String mensaje = "Error en el Registro";
+                Image img = new Image("/org/kumon/presentation/img/error.png");
+                notificar(mensaje, img);
             }
-            if (Contexto.tipoUser == 1) {
-                adminsBO.agregarAdmin(persona.getIdPersona());
-            }
-            Image img = new Image("/org/kumon/presentation/img/ok.png");
-            notificacion = Notifications.create();
-            notificacion.title("Resultado de la Operacion");
-            notificacion.text("Registrado con Exito");
-            notificacion.graphic(new ImageView(img));
-            notificacion.hideAfter(Duration.seconds(3));
-            notificacion.position(Pos.CENTER);
-            notificacion.darkStyle();
-            primaryStage.close();
-            notificacion.show();
 
         }
         //
 
     }
 
+    private void notificar(String mensaje, Image img) {
+        notificacion = Notifications.create();
+        notificacion.title("Resultado de la Operacion");
+        notificacion.text(mensaje);
+        notificacion.graphic(new ImageView(img));
+        notificacion.hideAfter(Duration.seconds(3));
+        notificacion.position(Pos.CENTER);
+        notificacion.darkStyle();
+        primaryStage.close();
+        notificacion.show();
+    }
 
     public boolean comprobarUsuario() throws Exception {
-        return  personaBO.comprobarUser(textFieldUsuario.getText()); 
+        return personaBO.comprobarUser(textFieldUsuario.getText());
 
     }
 

@@ -99,6 +99,8 @@ public class Contexto {
     public static Integer day;
     public static Calendar fecha;
     public static List<Tarea> lista;
+    private static AlumnoBO alumnoBO;
+    private static PersonaBO personaBO;
 
     private Contexto() {
         try {
@@ -123,7 +125,10 @@ public class Contexto {
      * @return Devuelve el objeto PersonaBO
      */
     public static PersonaBO construirPersonaBO() {
-        return new PersonaBO();
+        if (personaBO == null) {
+            personaBO = new PersonaBO();
+        }
+        return personaBO;
     }
 
     public static PrestamoBO construirPrestamoBO() {
@@ -143,7 +148,10 @@ public class Contexto {
     }
 
     public static AlumnoBO construirAlumnoBO() {
-        return new AlumnoBO();
+        if (alumnoBO == null) {
+            alumnoBO = new AlumnoBO();
+        }
+        return alumnoBO;
     }
 
     public static FamiliarBO construirFamiliarBO() {

@@ -46,6 +46,10 @@ public class AuxiliarBO {
         return auxiliarDB.getPersonalVacaciones();
     }
 
+    public void eliminar(String idPersona) throws Exception {
+        auxiliarDB.eliminar(idPersona);
+    }
+
 
 
 }

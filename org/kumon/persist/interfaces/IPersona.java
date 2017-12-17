@@ -17,7 +17,7 @@ import org.kumon.model.Persona;
 public interface IPersona {
     
     public boolean registrar(Persona persona) throws Exception;
-    public void modificar(Persona persona) throws Exception;
+    public boolean modificar(Persona persona) throws Exception;
     public void eliminar(Persona persona) throws Exception;
     public List<Persona> listar() throws Exception;
     public Persona obtenerPersonaByUser(String user)throws Exception;

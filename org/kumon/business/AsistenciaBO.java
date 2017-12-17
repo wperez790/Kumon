@@ -31,4 +31,8 @@ public class AsistenciaBO {
     public List obtenerTodas() throws Exception {
         return asistenciaDB.obtenerTodas();
     }
+
+    void eliminarById(String idPersona) throws Exception {
+        asistenciaDB.eliminarById(idPersona);
+    }
 }

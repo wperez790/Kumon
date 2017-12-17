@@ -12,11 +12,8 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 import org.kumon.main.Contexto;
+import org.kumon.model.Deuda;
 import org.kumon.model.Persona;
-import org.kumon.persist.DaoAlumnoImpl;
-import org.kumon.persist.DaoAsistenciaImpl;
-import org.kumon.persist.DaoDeudaImpl;
-import org.kumon.persist.DaoPagosImpl;
 import org.kumon.persist.DaoPersonaImpl;
 
 /**
@@ -25,14 +22,20 @@ import org.kumon.persist.DaoPersonaImpl;
  */
 public class PersonaBO {
 
-    private DaoPersonaImpl personaDB = Contexto.construirDaoPersonaImpl();
-    private DaoDeudaImpl deudasDB = Contexto.construirDaoDeudaImpl();
-    private DaoAlumnoImpl alumnosDB = Contexto.construirDaoAlumnoImpl();
-    private DaoPagosImpl pagosDB = Contexto.construirDaoPagosImpl();
-    private DaoAsistenciaImpl asistenciaDB = Contexto.construirDaoAsistenciaImpl();
+    private DaoPersonaImpl personaDB;
+    private DeudaBO deudasBO;
+    private AlumnoBO alumnosBO;
+    private PagosBO pagosBO;
+    private AsistenciaBO asistenciaBO;
+    private AuxiliarBO auxiliarBO;
 
     public PersonaBO() {
-
+        personaDB = Contexto.construirDaoPersonaImpl();
+        deudasBO = Contexto.construirDeudaBO();
+        pagosBO = Contexto.construirPagosBO();
+        alumnosBO = Contexto.construirAlumnoBO();
+        asistenciaBO = Contexto.construirAsistenciaBO();
+        auxiliarBO = Contexto.construirAuxiliarBO();
     }
 
     public boolean comprobarUsuario(String user, String pass) throws Exception {
@@ -93,18 +96,21 @@ public class PersonaBO {
         return (personaDB.registrar(persona));
     }
 
-    public void modificar(Persona persona) throws Exception {
-        personaDB.modificar(persona);
+    public boolean modificar(Persona persona) throws Exception {
+        return personaDB.modificar(persona);
     }
 
     public void eliminar(Persona persona) throws Exception {
-        List lista = deudasDB.getIdDeudaByIdPersona(persona.getIdPersona());
+        List<String> lista = deudasBO.getIdDeudaByIdPersona(persona.getIdPersona());
+        Integer idDeuda;
         for (int i = 0; i < lista.size(); i++) {
-            pagosDB.anularPagoByIdDeuda(lista.get(i).toString());
+            idDeuda = Integer.parseInt(lista.get(i));
+            pagosBO.anularPagoByIdDeuda(idDeuda);
         }
-        deudasDB.anularDeudaByIdPersona(persona.getIdPersona());
-        asistenciaDB.eliminarById(persona.getIdPersona());
-        alumnosDB.eliminar(persona.getIdPersona());
+        deudasBO.anularDeudaByIdPersona(persona.getIdPersona());
+        asistenciaBO.eliminarById(persona.getIdPersona());
+        alumnosBO.eliminar(persona.getIdPersona());
+        auxiliarBO.eliminar(persona.getIdPersona());
         personaDB.eliminar(persona);
 
     }
@@ -119,7 +125,7 @@ public class PersonaBO {
     }
 
     public void setInactivoById(Integer dni) throws Exception {
-        deudasDB.anularDeudaByIdPersona(dni.toString());
+        deudasBO.anularDeudaByIdPersona(dni.toString());
         personaDB.setInactivo(personaDB.buscarById(dni));
     }
 
@@ -130,19 +136,22 @@ public class PersonaBO {
     public boolean eliminar(Integer dni) throws Exception {
         boolean ok = true;
         try {
-            List lista = deudasDB.getIdDeudaByIdPersona(dni.toString());
+            List<String> lista = deudasBO.getIdDeudaByIdPersona(dni.toString());
+            Integer idDeuda;
             for (int i = 0; i < lista.size(); i++) {
-                pagosDB.anularPagoByIdDeuda(lista.get(i).toString());
+                idDeuda = Integer.parseInt(lista.get(i));
+                pagosBO.anularPagoByIdDeuda(idDeuda);
             }
-            deudasDB.anularDeudaByIdPersona(dni.toString());
-            asistenciaDB.eliminarById(dni.toString());
-            alumnosDB.eliminar(dni.toString());
+            deudasBO.anularDeudaByIdPersona(dni.toString());
+            asistenciaBO.eliminarById(dni.toString());
+            alumnosBO.eliminar(dni.toString());
+            auxiliarBO.eliminar(dni.toString());
             personaDB.eliminar(personaDB.buscarById(dni));
         } catch (Exception exception) {
             exception.printStackTrace();
-            ok= false;
+            ok = false;
         }
-return ok;
+        return ok;
     }
 
     public Map<Integer, String> obtenerTodos() throws Exception {

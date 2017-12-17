@@ -28,4 +28,10 @@ public class AsignaturaBO {
         return asignaturaDB.obtenerAsignaturasById(idAlumno);
     }
 
+    public boolean modificar(List<Asignatura> lista, String idPersona) throws Exception{
+        return asignaturaDB.modificar(lista, idPersona);
+    }
+    
+    
+
 }

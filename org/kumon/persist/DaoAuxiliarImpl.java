@@ -8,6 +8,7 @@ package org.kumon.persist;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -63,35 +64,35 @@ public class DaoAuxiliarImpl extends Conexion implements IAuxiliar {
         this.cerrar();
     }
 
-    public boolean setVacaciones(Date date, String id)throws Exception {
+    public boolean setVacaciones(Date date, String id) throws Exception {
         boolean ok = true;
         this.conectar();
         try {
             PreparedStatement st = this.conexion.prepareStatement("UPDATE Auxiliares SET fechaRegreso = ? , vacaciones = 1 "
-                    + "WHERE idAuxiliar = "+id+";");
+                    + "WHERE idAuxiliar = " + id + ";");
             st.setDate(1, date);
             st.executeUpdate();
 
         } catch (Exception e) {
             e.printStackTrace();
-            ok= false;
+            ok = false;
         }
         this.cerrar();
         return ok;
     }
-    
-    public void setRetornoVacaciones(String id) throws Exception{
+
+    public void setRetornoVacaciones(String id) throws Exception {
         this.conectar();
         try {
             PreparedStatement st = this.conexion.prepareStatement("UPDATE Auxiliares SET vacaciones = 0 "
-                    + "WHERE idAuxiliar = "+id+";");
+                    + "WHERE idAuxiliar = " + id + ";");
             st.executeUpdate();
 
         } catch (Exception e) {
             e.printStackTrace();
         }
         this.cerrar();
-    
+
     }
 
     public List getPersonalVacaciones() throws Exception {
@@ -117,5 +118,19 @@ public class DaoAuxiliarImpl extends Conexion implements IAuxiliar {
 
         return lista;
     }
+
+    public void eliminar(String idPersona) throws Exception {
+        this.conectar();
+        try {
+
+            PreparedStatement st = this.conexion.prepareStatement("DELETE FROM Auxiliares"
+                    + " WHERE idAuxiliar = " + idPersona + ";");
+            st.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        this.cerrar();
+    }
+
 
 }

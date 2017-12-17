@@ -78,8 +78,8 @@ public class DaoPersonaImpl extends Conexion implements IPersona {
     }
 
     @Override
-    public void modificar(Persona persona) throws Exception {
-
+    public boolean modificar(Persona persona) throws Exception {
+        boolean ok = true;
         this.conectar();
         try {
 
@@ -100,9 +100,10 @@ public class DaoPersonaImpl extends Conexion implements IPersona {
             st.setString(12, persona.getInfo());
             st.executeUpdate();
         } catch (SQLException e) {
+            ok = false;
             e.printStackTrace();
         }
-
+        return ok;
     }
 
     @Override
@@ -162,11 +163,9 @@ public class DaoPersonaImpl extends Conexion implements IPersona {
             this.conectar();
 
             Statement st = conexion.createStatement();
-            ResultSet rs = st.executeQuery("SELECT user FROM Personas");
+            ResultSet rs = st.executeQuery("SELECT user FROM Personas where user= "+user+";");
             while (rs.next()) {
-                if (rs.getString("user").equals(user)) {
                     return false;
-                }
             }
         } catch (Exception e) {
             e.printStackTrace();

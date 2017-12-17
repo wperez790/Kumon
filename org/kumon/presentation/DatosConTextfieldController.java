@@ -88,16 +88,17 @@ public class DatosConTextfieldController implements Initializable {
     private Label lbIngles;
     @FXML
     private Label lbNivel;
-    
-    
+
     //AUXILIARES
     Persona persona1;
     private static Stage primaryStage;
     private Notifications notificacion;
     private Notifications error2;
-    PersonaBO personaBO;
-    AsignaturaBO asignaturaBO;
-    List lista;
+    private Asignatura asignatura;
+    private final PersonaBO personaBO;
+    private final AsignaturaBO asignaturaBO;
+    private List <Asignatura>lista;
+    private List <Asignatura>listaNueva;
 
     public DatosConTextfieldController() {
         personaBO = Contexto.construirPersonaBO();
@@ -105,6 +106,8 @@ public class DatosConTextfieldController implements Initializable {
         persona1 = new Persona();
         asignaturaBO = Contexto.construirAsignarutraBO();
         lista = new ArrayList();
+        listaNueva = new ArrayList();
+        asignatura = new Asignatura();
     }
 
     /**
@@ -114,33 +117,31 @@ public class DatosConTextfieldController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         Persona persona = Contexto.getPersona();
         try {
-             lista = asignaturaBO.obtenerAsignaturasById(persona.getIdPersona());
+            lista = asignaturaBO.obtenerAsignaturasById(persona.getIdPersona());
         } catch (Exception ex) {
             Logger.getLogger(DatosConTextfieldController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        if(!lista.isEmpty()){
+        if (!lista.isEmpty()) {
             String nM = null;
             String nL = null;
             String nI = null;
-            Asignatura asignatura;
-            for(int i = 0; i<lista.size(); i++){
-                asignatura = (Asignatura) lista.get(i);
-                if(asignatura.getIdAsignatura()==1){
-                    nM= asignatura.getNivel();
+            
+            for (int i = 0; i < lista.size(); i++) {
+                asignatura = lista.get(i);
+                if (asignatura.getIdAsignatura() == 1) {
+                    nM = asignatura.getNivel();
                 }
-                if(asignatura.getIdAsignatura()==2){
-                    nL= asignatura.getNivel();
+                if (asignatura.getIdAsignatura() == 2) {
+                    nL = asignatura.getNivel();
                 }
-                if(asignatura.getIdAsignatura()==3){
-                    nI= asignatura.getNivel();
+                if (asignatura.getIdAsignatura() == 3) {
+                    nI = asignatura.getNivel();
                 }
             }
             tFNivelIngles.setText(nI);
             tFNivelLengua.setText(nL);
             tFNivelMatematica.setText(nM);
-        }
-        else
-        {
+        } else {
             tFNivelIngles.setVisible(false);
             tFNivelLengua.setVisible(false);
             tFNivelMatematica.setVisible(false);
@@ -159,12 +160,10 @@ public class DatosConTextfieldController implements Initializable {
         comboBoxSexo.getSelectionModel().select(persona.getSexo());
         datePickerFecha.setValue(persona.getFechaNacimiento().toLocalDate());
         textFieldNombreImg.setText(persona.getNombreImg());
-        try{
-        Image img = new Image("/org/kumon/presentation/img/fotosPersonas/" + persona.getNombreImg());
-        imagenPersona.setImage(img);
-        }
-        catch(Exception e)
-        {
+        try {
+            Image img = new Image("/org/kumon/presentation/img/fotosPersonas/" + persona.getNombreImg());
+            imagenPersona.setImage(img);
+        } catch (Exception e) {
             e.printStackTrace();
         }
         textAreaInfoAdicional.setText(persona.getInfo());
@@ -224,25 +223,51 @@ public class DatosConTextfieldController implements Initializable {
         } else {
             persona1.setEdad(personaBO.calcularEdad(datePickerFecha));
         }
-
+        
+        //Cargar modificaciones de niveles en Asignaturas
+        for (int i = 0; i < lista.size(); i++) {
+                asignatura = lista.get(i);
+                if (asignatura.getIdAsignatura() == 1) {
+                    asignatura.setNivel(tFNivelMatematica.getText());
+                }
+                if (asignatura.getIdAsignatura() == 2) {
+                    asignatura.setNivel(tFNivelLengua.getText());
+                }
+                if (asignatura.getIdAsignatura() == 3) {
+                    asignatura.setNivel(tFNivelIngles.getText());
+                }
+                listaNueva.add(asignatura);
+            }
+        //
+        
         //Si todo esta ok: REGISTRA
         if (ok) {
             textFieldDocumento.setUnFocusColor(Color.GREEN);
-            personaBO.modificar(persona1);
-            Image img = new Image("/org/kumon/presentation/img/ok.png");
-            notificacion = Notifications.create();
-            notificacion.title("Resultado de la Operacion");
-            notificacion.text("Registrado con Exito");
-            notificacion.graphic(new ImageView(img));
-            notificacion.hideAfter(Duration.seconds(3));
-            notificacion.position(Pos.CENTER);
-            notificacion.darkStyle();
-            Parent pane = FXMLLoader.load(getClass().getResource("/org/kumon/presentation/SeleccionPersona.fxml"));
-            Contexto.splitPane.getItems().set(0, pane);
-            notificacion.show();
+            if (personaBO.modificar(persona1) && asignaturaBO.modificar(listaNueva, persona1.getIdPersona())) {
+                Image img = new Image("/org/kumon/presentation/img/ok.png");
+                String mensaje = "Registrado con Exito";
+                notificar(mensaje, img);
+            } else {
+                Image img = new Image("/org/kumon/presentation/img/error.png");
+                String mensaje = "Error en la Modificación";
+                notificar(mensaje, img);
 
+            }
         }
         //
+    }
+
+    private void notificar(String mensaje, Image img) throws IOException {
+        notificacion = Notifications.create();
+        notificacion.title("Resultado de la Operacion");
+        notificacion.text(mensaje);
+        notificacion.graphic(new ImageView(img));
+        notificacion.hideAfter(Duration.seconds(3));
+        notificacion.position(Pos.CENTER);
+        notificacion.darkStyle();
+        Parent pane = FXMLLoader.load(getClass().getResource("/org/kumon/presentation/SeleccionPersona.fxml"));
+        Contexto.splitPane.getItems().set(0, pane);
+        notificacion.show();
     }
 
     @FXML

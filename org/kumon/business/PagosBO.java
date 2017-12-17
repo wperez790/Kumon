@@ -39,5 +39,10 @@ public class PagosBO {
         public List obtenerTodos() throws Exception{
            return pagosDB.obtenerTodos();
         }
+
+    public void anularPagoByIdDeuda(Integer idDeuda) throws Exception {
+        pagosDB.anularPagoByIdDeuda(idDeuda);
+    }
+
     
 }

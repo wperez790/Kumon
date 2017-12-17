@@ -83,14 +83,14 @@ public class DeseaEliminarController implements Initializable {
 
     @FXML
     private void eliminarButtonAction(ActionEvent event) throws Exception {
-        if (personaBO.eliminar(Contexto.getPersona().getDni())); else {
+        if (personaBO.eliminar(Contexto.getPersona().getDni())){
             Image img = new Image("/org/kumon/presentation/img/ok.png");
             String mensaje = "Registrado con Exito";
             notificar(img, mensaje);
         }
-        {
+        else{
             Image img = new Image("/org/kumon/presentation/img/error.png");
-            String mensaje = "Error en el Registro";
+            String mensaje = "Error en la Baja, Contacte con su proveedor";
             notificar(img,mensaje);
         }
     }

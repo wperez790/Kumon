@@ -36,12 +36,20 @@ public class DeudaBO {
     public List obtenerTodos() throws Exception {
         return deudaDB.obtenerTodos();
     }
-    void modificarMontoAdeudado(Pago pagos) throws Exception {
+    public void modificarMontoAdeudado(Pago pagos) throws Exception {
         deudaDB.modificarMontoAdeudado(pagos);
     }
 
-    void restaurarMontoAdeudado(Integer idPago) throws Exception {
+    public void restaurarMontoAdeudado(Integer idPago) throws Exception {
         Pago pago = pagosDB.obtenerPagoById(idPago);
         deudaDB.restaurarMontoAdeudado(pago);
+    }
+
+    public List getIdDeudaByIdPersona(String idPersona) throws Exception {
+        return deudaDB.getIdDeudaByIdPersona(idPersona);
+    }
+
+    public void anularDeudaByIdPersona(String idPersona) throws Exception {
+        deudaDB.anularDeudaByIdPersona(idPersona);
     }
 }

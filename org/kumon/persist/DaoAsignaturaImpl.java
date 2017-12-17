@@ -39,17 +39,17 @@ public class DaoAsignaturaImpl extends Conexion {
         }
         return ok;
     }
-    
-    public List obtenerAsignaturasById(String idAlumno) throws Exception{
-         Asignatura asignatura ;
-         List lista = new ArrayList();
+
+    public List obtenerAsignaturasById(String idAlumno) throws Exception {
+        Asignatura asignatura;
+        List lista = new ArrayList();
         try {
             this.conectar();
             Statement st = conexion.createStatement();
             ResultSet rs = st.executeQuery("SELECT idAsignatura, nombre, idAlumno, nivel "
                     + " FROM Asignaturas "
-                    + " WHERE  idAlumno = "+ idAlumno+";");
-                   /* Recorre el Result set y setea el pago con los datos y los agrega a la lista de retorno*/
+                    + " WHERE  idAlumno = " + idAlumno + "order by idAsignatura;");
+            /* Recorre el Result set y setea el pago con los datos y los agrega a la lista de retorno*/
             while (rs.next()) {
                 asignatura = new Asignatura();
                 asignatura.setIdAsignatura(rs.getInt("idAsignatura"));
@@ -64,8 +64,26 @@ public class DaoAsignaturaImpl extends Conexion {
         }
         this.cerrar();
         return lista;
-    
+
     }
-    
+
+    public boolean modificar(List<Asignatura> lista, String idPersona) throws Exception {
+        boolean ok = true;
+        for (int i = 0; i < lista.size(); i++) {
+            this.conectar();
+            try {
+                PreparedStatement st = this.conexion.prepareStatement("UPDATE Asignaturas SET nivel = ?"
+                        + " WHERE idAlumno = "+idPersona+" and idAsignatura = "+lista.get(i).getIdAsignatura()+";");
+                st.setString(1, lista.get(i).getNivel());
+                st.executeUpdate();
+
+            } catch (Exception e) {
+                ok = false; 
+                e.printStackTrace();
+            }
+            this.cerrar();
+        }
+        return ok;
+    }
 
 }

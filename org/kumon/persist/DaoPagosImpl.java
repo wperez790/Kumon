@@ -109,7 +109,7 @@ public class DaoPagosImpl extends Conexion implements IPagos {
 
     }
 
-    public void anularPagoByIdDeuda(String idDeuda) throws Exception {
+    public void anularPagoByIdDeuda(Integer idDeuda) throws Exception {
         
       
         this.conectar();
